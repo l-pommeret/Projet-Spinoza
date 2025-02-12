@@ -238,7 +238,7 @@ Proof.
     contradiction.
 Qed.
 
-(** x=y -> y=x *)
+(** x neq y -> y neq x *)
 Lemma neq_sym : forall x y:U, 
   x <> y -> y <> x.
 Proof.
@@ -249,6 +249,7 @@ Proof.
   exact Heq.
 Qed.
 
+(* x est une substance ssi x est en soi *)
 Lemma DP1 : forall x:U,
   S_1 x <-> I_2 x x.
 Proof.
@@ -325,6 +326,8 @@ Proof.
   }
   exact H.
 Qed.
+
+
 
 Theorem P4 : forall x y:U,
   x <> y -> exists z z':U, 
