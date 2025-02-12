@@ -260,6 +260,17 @@ Proof.
     + apply A8. assumption.
 Qed.
 
+(** DP4: A substance is its own cause *)
+Lemma DP4 : forall x:U,
+  S_1 x -> K_2 x x.
+Proof.
+  intros x HS.
+  apply A4.
+  apply D3 in HS.
+  destruct HS as [_ HC].
+  exact HC.
+Qed.
+
 
 (** DP5 : Toute chose est soit une substance soit un mode *)
 Lemma DP5 : forall x:U,
@@ -327,9 +338,8 @@ Proof.
   exact H.
 Qed.
 
-
-(** DP10: Everything is either a substance or a mode, but not both *)
-Lemma DP10 : forall x:U,
+(** DPI: Everything is either a substance or a mode, but not both *)
+Theorem DPI : forall x:U,
   (S_1 x /\ ~M_1 x) \/ (~S_1 x /\ M_1 x).
 Proof.
   intro x. pose proof DP5 x.
@@ -337,34 +347,34 @@ Proof.
   split; auto; intro; apply H0; auto; split; auto.
 Qed.
 
-(** DP9: A substance is its own attribute *)
-Lemma DP9 : forall x:U,
+(** DPII: A substance is its own attribute *)
+Theorem DPII : forall x:U,
   S_1 x -> A_2 x x.
 Proof.
-  intros x. pose proof (A9 x).
-  destruct H as [y]. pose proof (DP7 y x H).
-  intro. apply H0 in H1. subst. auto.
+  intros x HS.
+  (* Pour montrer A_2 x x, on utilise D4b *)
+  apply D4b. split.
+  - (* Montrons que x est un attribut (A_1 x) *)
+    apply D4a.
+    exists x.
+    (* x est une substance (hypothèse HS) *)
+    split; [exact HS|].
+    (* De HS et D3, on obtient que x est en soi et conçu par soi *)
+    apply D3 in HS as [HIxx HCxx].
+    repeat split; assumption.
+  - (* Montrons que x est conçu à travers x (C_2 x x) *)
+    apply D3 in HS.
+    destruct HS as [_ HCxx].
+    exact HCxx.
 Qed.
 
-Hint Resolve DP9.
-
-(** DP8: Something is a substance if and only if it is self-caused *)
-Lemma DP8 : forall x:U,
-  S_1 x <-> C_2 x x.
+(** DPIII: Something is a substance if and only if it is self-caused *)
+Theorem DPIII : forall x:U,
+  S_1 x <-> K_2 x x.
 Proof.
   intros. split; intro.
   - apply A4. apply DP4. auto.
   - apply DP4. apply A4. auto.
-Qed.
-
-Theorem P4 : forall x y:U,
-  x <> y -> exists z z':U, 
-    (((A_2 z x /\ A_2 z' x /\ z <> z') \/ 
-     (A_2 z x /\ z = x /\ M_1 y)) \/ 
-     (A_2 z' y /\ z' = y /\ M_1 x)) \/ 
-     (M_1 x /\ M_1 y).
-Proof.
-
 Qed.
 
 (** P4: Two or more distinct things are distinguished one from the other, either by the 
@@ -377,29 +387,29 @@ Theorem P4 : forall x y:U,
    (M_1 x /\ M_1 y)).
 Proof.
   intros x y H. 
-  pose proof (DP10 x) as [H0 | H0].
+  pose proof (DPI x) as [H0 | H0].
   - (* x is substance *)
-    pose proof (DP10 y) as [H1 | H1].
+    pose proof (DPI y) as [H1 | H1].
     + (* Both are substances *)
       exists x; exists y.
       left. split.
-      * apply DP9. destruct H0. auto.
+      * apply DPII. destruct H0. auto.
       * split.
-        -- apply DP9. destruct H1. auto.
+        -- apply DPII. destruct H1. auto.
         -- auto.
     + (* x is substance, y is mode *)
       exists x; exists y.
       right. left. split.
-      * apply DP9. destruct H0. auto.
+      * apply DPII. destruct H0. auto.
       * split.
         -- reflexivity.
         -- destruct H1. auto.
   - (* x is mode *)
-    pose proof (DP10 y) as [H1 | H1].
+    pose proof (DPI y) as [H1 | H1].
     + (* y is substance, x is mode *)
       exists x; exists y.
       right. right. left. split.
-      * apply DP9. destruct H1. auto.
+      * apply DPII. destruct H1. auto.
       * split.
         -- reflexivity.
         -- destruct H0. auto.
@@ -408,5 +418,3 @@ Proof.
       right. right. right.
       destruct H0. destruct H1. split; auto.
 Qed.
-
-End SpinozaJarrett.
