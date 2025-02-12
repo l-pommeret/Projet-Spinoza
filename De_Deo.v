@@ -115,7 +115,7 @@ Axiom A6 : forall x:U,
 Axiom A7 : forall x:U,
   M(~ exists y:U, y = x) <-> ~ L(exists y:U, y = x).
 
-(* AXIOMES SUPPLÉMENTAIRES *)
+(* AXIOMES SUPPLÉMENTAIRES, découverts par Charles Jarrett *)
 (* A8 : Si x est en y alors x est conçu par y *)
 Axiom A8 : forall x y:U, I_2 x y -> C_2 x y.
 
@@ -328,6 +328,34 @@ Proof.
 Qed.
 
 
+(** DP10: Everything is either a substance or a mode, but not both *)
+Lemma DP10 : forall x:U,
+  (S_1 x /\ ~M_1 x) \/ (~S_1 x /\ M_1 x).
+Proof.
+  intro x. pose proof DP5 x.
+  pose proof DP6 x. destruct H; [left | right];
+  split; auto; intro; apply H0; auto; split; auto.
+Qed.
+
+(** DP9: A substance is its own attribute *)
+Lemma DP9 : forall x:U,
+  S_1 x -> A_2 x x.
+Proof.
+  intros x. pose proof (A9 x).
+  destruct H as [y]. pose proof (DP7 y x H).
+  intro. apply H0 in H1. subst. auto.
+Qed.
+
+Hint Resolve DP9.
+
+(** DP8: Something is a substance if and only if it is self-caused *)
+Lemma DP8 : forall x:U,
+  S_1 x <-> C_2 x x.
+Proof.
+  intros. split; intro.
+  - apply A4. apply DP4. auto.
+  - apply DP4. apply A4. auto.
+Qed.
 
 Theorem P4 : forall x y:U,
   x <> y -> exists z z':U, 
@@ -336,6 +364,49 @@ Theorem P4 : forall x y:U,
      (A_2 z' y /\ z' = y /\ M_1 x)) \/ 
      (M_1 x /\ M_1 y).
 Proof.
-Admitted.
+
+Qed.
+
+(** P4: Two or more distinct things are distinguished one from the other, either by the 
+    difference of the attributes of the substances, or by the difference of their modifications. *)
+Theorem P4 : forall x y:U,
+  x <> y -> exists z z':U,
+  ((A_2 z x /\ A_2 z' y /\ z <> z') \/
+   (A_2 z x /\ z = x /\ M_1 y) \/
+   (A_2 z' y /\ z' = y /\ M_1 x) \/
+   (M_1 x /\ M_1 y)).
+Proof.
+  intros x y H. 
+  pose proof (DP10 x) as [H0 | H0].
+  - (* x is substance *)
+    pose proof (DP10 y) as [H1 | H1].
+    + (* Both are substances *)
+      exists x; exists y.
+      left. split.
+      * apply DP9. destruct H0. auto.
+      * split.
+        -- apply DP9. destruct H1. auto.
+        -- auto.
+    + (* x is substance, y is mode *)
+      exists x; exists y.
+      right. left. split.
+      * apply DP9. destruct H0. auto.
+      * split.
+        -- reflexivity.
+        -- destruct H1. auto.
+  - (* x is mode *)
+    pose proof (DP10 y) as [H1 | H1].
+    + (* y is substance, x is mode *)
+      exists x; exists y.
+      right. right. left. split.
+      * apply DP9. destruct H1. auto.
+      * split.
+        -- reflexivity.
+        -- destruct H0. auto.
+    + (* Both are modes *)
+      exists x; exists y.
+      right. right. right.
+      destruct H0. destruct H1. split; auto.
+Qed.
 
 End SpinozaJarrett.
