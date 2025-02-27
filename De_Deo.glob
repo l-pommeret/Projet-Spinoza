@@ -1,4 +1,4 @@
-DIGEST a5aabacf9c59b6358233b9c1f4cf8149
+DIGEST 63721c6b6f0b7fa6ebd556b25c680203
 FDe_Deo
 R15:28 Coq.Init.Logic <> <> lib
 R46:64 Coq.Logic.Classical <> <> lib
@@ -3877,22 +3877,140 @@ R70957:70959 Coq.Init.Logic <> ::type_scope:x_'='_x not
 R70956:70956 De_Deo <> v:439 var
 R71059:71061 De_Deo <> P27 thm
 R71059:71061 De_Deo <> P27 thm
-R71474:71477 Coq.Init.Logic <> ::type_scope:x_'\/'_x not
-R71469:71471 De_Deo <> SpinozaJarrett.S_1 var
-R71478:71480 De_Deo <> SpinozaJarrett.M_1 var
-R71474:71477 Coq.Init.Logic <> ::type_scope:x_'\/'_x not
-R71469:71471 De_Deo <> SpinozaJarrett.S_1 var
-R71478:71480 De_Deo <> SpinozaJarrett.M_1 var
-R71498:71500 De_Deo <> DP5 thm
-R71498:71500 De_Deo <> DP5 thm
-R71663:71665 Coq.Init.Logic <> ::type_scope:x_'='_x not
-R71663:71665 Coq.Init.Logic <> ::type_scope:x_'='_x not
-R71834:71836 De_Deo <> P16 thm
-R71834:71836 De_Deo <> P16 thm
-R71953:71955 Coq.Init.Logic <> ::type_scope:x_'='_x not
-R71953:71955 Coq.Init.Logic <> ::type_scope:x_'='_x not
-R71985:71989 De_Deo <> P14_A thm
-R72027:72029 Coq.Init.Logic <> ::type_scope:x_'='_x not
-R72027:72029 Coq.Init.Logic <> ::type_scope:x_'='_x not
-R72084:72086 Coq.Init.Logic <> ::type_scope:x_'='_x not
-R72084:72086 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R71484:71487 Coq.Init.Logic <> ::type_scope:x_'\/'_x not
+R71479:71481 De_Deo <> SpinozaJarrett.S_1 var
+R71488:71490 De_Deo <> SpinozaJarrett.M_1 var
+R71484:71487 Coq.Init.Logic <> ::type_scope:x_'\/'_x not
+R71479:71481 De_Deo <> SpinozaJarrett.S_1 var
+R71488:71490 De_Deo <> SpinozaJarrett.M_1 var
+R71508:71510 De_Deo <> DP5 thm
+R71508:71510 De_Deo <> DP5 thm
+R71673:71675 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R71673:71675 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R72044:72044 Coq.Init.Logic <> ::type_scope:'~'_x not
+R72045:72045 De_Deo <> SpinozaJarrett.M var
+R72047:72048 Coq.Init.Logic <> ::type_scope:'~'_x not
+R72066:72066 Coq.Init.Logic <> ::type_scope:'~'_x not
+R72049:72055 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R72059:72060 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R72058:72058 De_Deo <> SpinozaJarrett.U var
+binder 72056:72056 <> v:440
+R72062:72064 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R72061:72061 De_Deo <> v:440 var
+R72044:72044 Coq.Init.Logic <> ::type_scope:'~'_x not
+R72045:72045 De_Deo <> SpinozaJarrett.M var
+R72047:72048 Coq.Init.Logic <> ::type_scope:'~'_x not
+R72066:72066 Coq.Init.Logic <> ::type_scope:'~'_x not
+R72049:72055 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R72059:72060 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R72058:72058 De_Deo <> SpinozaJarrett.U var
+binder 72056:72056 <> v:441
+R72062:72064 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R72061:72061 De_Deo <> v:441 var
+R72081:72082 De_Deo <> R9 prfax
+R72081:72082 De_Deo <> R9 prfax
+R72312:72312 De_Deo <> SpinozaJarrett.M var
+R72314:72314 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R72332:72337 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R72367:72367 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R72315:72321 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R72325:72326 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R72324:72324 De_Deo <> SpinozaJarrett.U var
+binder 72322:72322 <> v:442
+R72328:72330 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R72327:72327 De_Deo <> v:442 var
+R72338:72344 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R72348:72349 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R72347:72347 De_Deo <> SpinozaJarrett.U var
+binder 72345:72345 <> z:443
+R72356:72359 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R72351:72354 Coq.Init.Logic <> ::type_scope:x_'<>'_x not
+R72350:72350 De_Deo <> z:443 var
+R72360:72362 De_Deo <> SpinozaJarrett.K_2 var
+R72366:72366 De_Deo <> z:443 var
+R72312:72312 De_Deo <> SpinozaJarrett.M var
+R72314:72314 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R72332:72337 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R72367:72367 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R72315:72321 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R72325:72326 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R72324:72324 De_Deo <> SpinozaJarrett.U var
+binder 72322:72322 <> v:444
+R72328:72330 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R72327:72327 De_Deo <> v:444 var
+R72338:72344 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R72348:72349 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R72347:72347 De_Deo <> SpinozaJarrett.U var
+binder 72345:72345 <> z:445
+R72356:72359 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R72351:72354 Coq.Init.Logic <> ::type_scope:x_'<>'_x not
+R72350:72350 De_Deo <> z:445 var
+R72360:72362 De_Deo <> SpinozaJarrett.K_2 var
+R72366:72366 De_Deo <> z:445 var
+R72382:72384 De_Deo <> R12 prfax
+R72382:72384 De_Deo <> R12 prfax
+prf 73300:73302 <> P34
+R73315:73315 De_Deo <> SpinozaJarrett.U var
+binder 73313:73313 <> x:446
+R73320:73326 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R73330:73331 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R73329:73329 De_Deo <> SpinozaJarrett.U var
+binder 73327:73327 <> g:447
+R73337:73341 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R73361:73361 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R73332:73334 De_Deo <> SpinozaJarrett.G_1 var
+R73336:73336 De_Deo <> g:447 var
+R73349:73353 Coq.Init.Logic <> ::type_scope:x_'<->'_x not
+R73342:73344 De_Deo <> SpinozaJarrett.A_2 var
+R73346:73346 De_Deo <> x:446 var
+R73348:73348 De_Deo <> g:447 var
+R73354:73356 De_Deo <> SpinozaJarrett.P_2 var
+R73358:73358 De_Deo <> x:446 var
+R73360:73360 De_Deo <> g:447 var
+prf 73465:73467 <> P35
+R73471:73477 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R73481:73484 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R73480:73480 De_Deo <> SpinozaJarrett.U var
+binder 73478:73478 <> g:448
+R73490:73493 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R73485:73487 De_Deo <> SpinozaJarrett.G_1 var
+R73489:73489 De_Deo <> g:448 var
+R73514:73518 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R73546:73546 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R73494:73494 De_Deo <> SpinozaJarrett.L var
+R73496:73502 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R73506:73507 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R73505:73505 De_Deo <> SpinozaJarrett.U var
+binder 73503:73503 <> x:449
+R73509:73511 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R73508:73508 De_Deo <> x:449 var
+R73512:73512 De_Deo <> g:448 var
+R73528:73528 De_Deo <> SpinozaJarrett.U var
+binder 73526:73526 <> x:450
+R73537:73540 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R73532:73535 Coq.Init.Logic <> ::type_scope:x_'<>'_x not
+R73531:73531 De_Deo <> x:450 var
+R73536:73536 De_Deo <> g:448 var
+R73541:73543 De_Deo <> SpinozaJarrett.N_1 var
+R73545:73545 De_Deo <> x:450 var
+prf 73731:73733 <> P36
+R73746:73746 De_Deo <> SpinozaJarrett.U var
+binder 73744:73744 <> x:451
+R73751:73751 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R73769:73774 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R73794:73794 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R73752:73758 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R73762:73763 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R73761:73761 De_Deo <> SpinozaJarrett.U var
+binder 73759:73759 <> v:452
+R73765:73767 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R73764:73764 De_Deo <> v:452 var
+R73768:73768 De_Deo <> x:451 var
+R73775:73781 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R73785:73786 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R73784:73784 De_Deo <> SpinozaJarrett.U var
+binder 73782:73782 <> y:453
+R73787:73789 De_Deo <> SpinozaJarrett.K_2 var
+R73791:73791 De_Deo <> x:451 var
+R73793:73793 De_Deo <> y:453 var
+R73812:73825 De_Deo SpinozaJarrett <> sec

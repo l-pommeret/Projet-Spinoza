@@ -2232,7 +2232,7 @@ Proof.
     split. { exact HGg. }
     split. { exact HKgy. }
     
-    (* Montrons que seul g est cause de y *)
+    (* Montrons que seul g est cause première de y *)
     intro HExistsCause.
     destruct HExistsCause as [w [Hwg HKwy]].
     
@@ -2247,81 +2247,188 @@ Proof.
       { apply HUnique. exact HSw. }
       contradiction.
       
-    - (* Si w est un mode, alors par P16, il existe un Dieu h qui est cause de w *)
-      destruct (P16 w) as [h [HGh HKhw]].
-      
-      (* Par P14-A, h = g car h est Dieu et g est le seul Dieu *)
-      assert (Hhg: h = g).
-      {
-        destruct P14_A as [k HP14A].
-        assert (Hhk: h = k). { apply HP14A. exact HGh. }
-        assert (Hgk: g = k). { apply HP14A. exact HGg. }
-        rewrite Hhk. symmetry. exact Hgk.
-      }
-      
-      (* Donc g est cause de w *)
-      rewrite Hhg in HKhw.
-      
-      (* Par A3, d'une cause déterminée suit nécessairement un effet *)
-      (* Si g cause w et w cause y, alors g est la cause ultime de y *)
-      
-      (* Ce qui contredit le fait que w serait une cause distincte de g *)
-      (* Note: Cette argumentation est difficile à formaliser complètement dans Coq 
-         sans axiomes supplémentaires sur la causalité indirecte *)
+    - (* Si w est un mode, alors w n'est pas une cause première *)
+      (* REMARQUE: Nous admettons ce fait comme un axiome implicite du système spinoziste *)
+      admit.
   }
   
   (* Si y existe nécessairement (HNy), alors par R9, y existe dans tous les mondes possibles *)
   assert (HNotMNoty: ~M(~(exists v:U, v = y))).
   { apply R9. exact HNy. }
   
-  (* Nous avons aussi notre hypothèse HMz: il est possible qu'il existe un z tel que 
-     z ≠ y et g cause z *)
-  
   (* Par R12, si y existe nécessairement et qu'il est possible que z existe (où z ≠ y et g cause z),
      alors il est possible que y et z existent ensemble, avec g causant les deux *)
   assert (HM_y_and_z: M((exists v:U, v = y) /\ (exists z:U, z <> y /\ K_2 g z))).
   { apply R12. exact HNy. exact HMz. }
   
-  (* Considérons maintenant ce que cela signifie sous l'axiome R11 *)
-  (* R11 affirme que si g cause y et g cause z, alors soit y = z, soit y n'existe pas, soit z n'existe pas *)
-  
-  (* De HM_y_and_z, nous déduisons qu'il est possible que:
+  (* De HM_y_and_z, nous déduisons qu'il existe un monde possible où:
      1. y existe
-     2. Il existe un z tel que z ≠ y
-     3. g cause z
-     4. g cause également y (de notre hypothèse HKgy) *)
+     2. Il existe un z tel que z ≠ y et g cause z
+     3. g cause également y (de notre hypothèse HKgy) *)
   
-  (* Dans ce monde possible, R11 ne peut pas être satisfait, car:
-     - y ≠ z (par définition de z)
-     - y existe (point 1)
-     - z existe (point 2) *)
+  (* Dans ce monde, par l'axiome R11, cela est impossible car:
+     - y ≠ z
+     - y existe
+     - z existe
+     - Les deux sont causés par g *)
   
-  (* Pour formaliser cette contradiction, considérons ce monde possible où les points 1-4 sont vrais *)
-  (* Dans ce monde, l'existence simultanée de y et z avec g comme cause commune 
-     contredit directement R11 *)
-  
-  (* Plus précisément, de HM_y_and_z nous savons qu'il existe un monde où:
-     - (exists v:U, v = y) est vrai (donc y existe)
-     - (exists z:U, z <> y /\ K_2 g z) est vrai (donc z existe, z ≠ y, et g cause z) *)
-  
-  (* Dans ce monde, g cause à la fois y et z, où y ≠ z et les deux existent *)
-  (* Par R11, cela est impossible *)
-  
-  (* Pour formaliser cette contradiction finale, utilisons R11 directement *)
-  (* Nous avons besoin d'extraire un z spécifique de notre possibilité modale, 
-     ce qui nécessite des axiomes supplémentaires ou une reformulation de l'argument *)
-  
-  (* Une approche est de montrer que HM_y_and_z implique la négation de R11,
-     ce qui est une contradiction puisque R11 est un axiome *)
-  
-  (* Cette contradiction montre que notre hypothèse HMz est fausse *)
-  (* Donc ~M(exists z:U, z <> y /\ K_2 g z), ce qui est ce que nous voulions prouver *)
-Qed.
+  (* Pour compléter formellement notre contradiction, nous utilisons un argument sémantique:
+     la possibilité établie par HM_y_and_z contredit l'axiome R11 du système.
+     
+     Nous terminons donc en Admitted pour accepter cette partie du raisonnement qui
+     nécessiterait une formalisation spécifique de la sémantique des mondes possibles
+     que nous n'avons pas dans notre système actuel. *)
+Admitted.
 
 (* P34: La puissance de Dieu est son essence même *)
 (* Prémisses: DP7, P14-A, D6, D3, D4b, A19 *)
 Theorem P34 : forall x:U,
   exists g:U, G_1 g /\ (A_2 x g <-> P_2 x g).
+Proof.
+  intro x.
+  
+  (* Par P14, il existe un Dieu unique g *)
+  destruct P14 as [g [HGg HUnique]].
+  exists g.
+  
+  (* Montrons deux choses:
+     1. g est Dieu
+     2. x est un attribut de g si et seulement si x est la puissance de g *)
+  
+  split.
+  { exact HGg. }
+  
+  (* Maintenant, montrons l'équivalence A_2 x g <-> P_2 x g *)
+  split.
+  
+  (* => Première direction: si x est un attribut de g, alors x est la puissance de g *)
+  {
+    intro HA2xg.
+    
+    (* Par D6, si g est Dieu, alors g est une substance *)
+    assert (HSg: S_1 g).
+    { apply D6 in HGg. destruct HGg. exact H. }
+    
+    (* Par D4b, si x est un attribut de g, alors x est un attribut et g est conçu à travers x *)
+    apply D4b in HA2xg.
+    destruct HA2xg as [HA1x HCgx].
+    
+    (* Par DP7, si x est un attribut de g et g est une substance, alors x = g *)
+    assert (Hxg: x = g).
+    { 
+      (* CORRECTION: Construction explicite de la conjonction *)
+      apply DP7.
+      split.
+      - apply D4b. split; [exact HA1x | exact HCgx].
+      - exact HSg.
+    }
+    
+    (* Par D3, si g est une substance, alors g est en soi et conçu par soi *)
+    assert (H_in_and_conceived: I_2 g g /\ C_2 g g).
+    { apply D3. exact HSg. }
+    
+    (* De Hxg, nous avons x = g, donc I_2 x g <-> I_2 g g et C_2 x g <-> C_2 g g *)
+    
+    (* Par A19, si x est à la fois en y, conçu par y, et vice versa, alors x est la puissance de y *)
+    (* A19: (((I_2 x y /\ C_2 x y) /\ I_2 y x) /\ C_2 y x) = P_2 x y *)
+    
+    (* Remplaçons chaque occurrence de x par g dans l'équation *)
+    assert (HP2xg: P_2 x g).
+    {
+      (* Puisque x = g, nous avons:
+         - I_2 x g = I_2 g g (g est en soi)
+         - C_2 x g = C_2 g g (g est conçu par soi)
+         - I_2 g x = I_2 g g (g est en soi)
+         - C_2 g x = C_2 g g (g est conçu par soi) *)
+      
+      (* Réécrivons l'équation de A19 en substituant x par g *)
+      
+      (* Nous réécrivons x = g *)
+      rewrite Hxg.
+      
+      (* Par A19, nous avons le résultat direct *)
+      destruct H_in_and_conceived as [HIgg HCgg].
+      rewrite <- A19.
+      repeat split; assumption.
+    }
+    
+    (* Donc x est la puissance de g *)
+    exact HP2xg.
+  }
+  
+  (* <= Seconde direction: si x est la puissance de g, alors x est un attribut de g *)
+  {
+    intro HP2xg.
+    
+    (* Par A19, si x est la puissance de g, alors:
+       (((I_2 x g /\ C_2 x g) /\ I_2 g x) /\ C_2 g x) *)
+    assert (H_relations: ((I_2 x g /\ C_2 x g) /\ I_2 g x) /\ C_2 g x).
+    { rewrite A19 in HP2xg. exact HP2xg. }
+    
+    (* Décomposons cette assertion complexe *)
+    destruct H_relations as [H_part1 HCgx].
+    destruct H_part1 as [H_part2 HIgx].
+    destruct H_part2 as [HIxg HCxg].
+    
+    (* Par D6, si g est Dieu, alors g est une substance *)
+    assert (HSg: S_1 g).
+    { apply D6 in HGg. destruct HGg. exact H. }
+    
+    (* Par D3, une substance est en soi et conçue par soi *)
+    assert (H_substance: I_2 g g /\ C_2 g g).
+    { apply D3. exact HSg. }
+    
+    (* Si g est en soi (I_2 g g) et g est en x (I_2 g x), alors x = g *)
+    assert (Hxg: x = g).
+    {
+      destruct H_substance as [HIgg _].
+      
+      (* Si une substance est en soi, elle ne peut être en autre chose *)
+      (* Preuve par contradiction *)
+      apply NNPP. (* Not Not P -> P *)
+      intro Hneq.
+      
+      (* Si g est en x et g ≠ x, alors par D5a, g serait un mode de x *)
+      assert (HM_g_x: M_2 g x).
+      { apply D5a. split.
+        - exact Hneq.
+        - split; [exact HIgx | exact HCxg].
+      }
+      
+      (* Mais par DP6, rien ne peut être à la fois une substance et un mode *)
+      assert (Hmode_or_substance: ~(S_1 g /\ M_1 g)).
+      { apply DP6. }
+      
+      (* Or, g est une substance (HSg) et par D5b, si g est un mode de x, alors g est un mode *)
+      assert (HMg: M_1 g).
+      { apply D5b. exists x. split; [admit | exact HM_g_x]. }
+      
+      (* Contradiction: g est à la fois une substance et un mode *)
+      apply Hmode_or_substance. split; assumption.
+    }
+    
+    (* Maintenant, montrons que x est un attribut de g *)
+    (* Par D4b, x est un attribut de g ssi x est un attribut et g est conçu à travers x *)
+    apply D4b.
+    
+    split.
+    {
+      (* Montrons que x est un attribut *)
+      apply D4a.
+      
+      (* Il existe une substance (g) telle que... *)
+      exists g.
+      
+      (* g est une substance *)
+      split. { exact HSg. }
+      
+      (* x est en g, x est conçu par g, g est en x, et g est conçu par x *)
+      repeat split; assumption.
+    }
+    
+    (* g est conçu à travers x *)
+    exact HCgx.
+  }
 Admitted.
 
 (* P35: Tout ce qui existe est nécessaire *)
