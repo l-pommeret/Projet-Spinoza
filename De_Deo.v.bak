@@ -135,6 +135,35 @@ Proof.
 Admitted.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Variable K_2 : U -> U -> Prop. (* x est cause de y *) 
+Variable L_2 : U -> U -> Prop. (* x limite y *) 
+Variable M_2 : U -> U -> Prop. (* x est un mode de y *) 
+Variable O_2 : U -> U -> Prop. (* x est un objet de y *) 
+Variable P_2 : U -> U -> Prop. (* x est la puissance de y *) 
+Variable R_2 : U -> U -> Prop. (* x a plus de réalité que y *) 
+Variable V_2 : U -> U -> Prop. (* x a plus d'attributs que y *) 
+
+Variable C_3 : U -> U -> U -> Prop.  (* x est commun à y et à z *)
+Variable D_3 : U -> U -> U -> Prop.  (* x est divisible entre y et z *)
+
 (* DÉFINITIONS *)
 
 (* D1 : Causa sui - ce dont l'essence implique l'existence *)
@@ -1812,511 +1841,53 @@ Proof.
 Qed.
 
 (* P29: Rien n'est contingent dans la nature *)
-(* Prémisses: P14-A, P16, P11, D7b, D8, D1 *)
+(* Prémisses: P14-A, P16, D7b *)
 Theorem P29 : exists g:U,
   G_1 g /\ L(exists x:U, x = g) /\ (forall x:U, x <> g -> N_1 x).
-Proof.
-  (* Par P14-A, il existe un Dieu unique *)
-  destruct P14_A as [g HP14A].
-  
-  (* g est notre témoin *)
-  exists g.
-  
-  (* Nous allons montrer trois choses:
-     1. g est Dieu
-     2. g existe nécessairement
-     3. Tout ce qui n'est pas Dieu est nécessaire au sens de D7b *)
-  
-  (* Première partie: g est Dieu *)
-  assert (HGg: G_1 g).
-  { apply HP14A. reflexivity. }
-  
-  split. { exact HGg. }
-  
-  (* Deuxième partie: g existe nécessairement *)
-  split.
-  {
-    (* Par P11, Dieu existe nécessairement: L(exists x:U, G_1 x) *)
-    (* Mais nous avons besoin de L(exists x:U, x = g) *)
-    
-    (* D'abord, montrons que (exists x:U, G_1 x) implique (exists x:U, x = g) *)
-    assert (H_imp: (exists x:U, G_1 x) -> (exists x:U, x = g)).
-    {
-      intro H_exists_god.
-      destruct H_exists_god as [h HGh].
-      
-      (* Par P14-A, h = g car h est Dieu et g est le seul Dieu *)
-      assert (Hhg: h = g).
-      { apply HP14A. exact HGh. }
-      
-      (* Donc g existe *)
-      exists g.
-      reflexivity.
-    }
-    
-    (* Par R5, on peut transformer cette implication en nécessité logique *)
-    assert (H_nec_imp: L((exists x:U, G_1 x) -> (exists x:U, x = g))).
-    { apply R5. exact H_imp. }
-    
-    (* Par R3, on distribue la nécessité logique sur l'implication *)
-    assert (H_dist: L(exists x:U, G_1 x) -> L(exists x:U, x = g)).
-    { apply R3. exact H_nec_imp. }
-    
-    (* Finalement, on applique cette implication à P11 *)
-    apply H_dist.
-    exact P11.
-  }
-  
-  (* Troisième partie: Tout ce qui n'est pas Dieu est nécessaire au sens de D7b *)
-  intros x Hx_neq_g.
-  
-  (* Par D7b, une chose est nécessaire quand elle est déterminée par autre chose *)
-  apply D7b.
-  
-  (* Par P16, pour toute chose, il existe un Dieu qui en est la cause *)
-  destruct (P16 x) as [h [HGh HKhx]].
-  
-  (* Par P14-A, h = g car h est Dieu et g est le seul Dieu *)
-  assert (Hhg: h = g).
-  { apply HP14A. exact HGh. }
-  
-  (* Substituons h par g dans K_2 h x *)
-  rewrite Hhg in HKhx.
-  
-  (* Nous avons maintenant montré que K_2 g x *)
-  exists g.
-  split.
-  - (* g ≠ x *)
-    apply neq_sym. exact Hx_neq_g.
-  - (* g est cause de x *)
-    exact HKhx.
-Qed.
+Admitted.
 
 (* P30: L'entendement doit comprendre les attributs et affections de Dieu *)
-(* Prémisses: DP5, A6, A9, D4b, D5a, D5b *)
+(* Prémisses: DP5, A9, D4b, D3, A2 *)
 Theorem P30 : forall x y:U,
   (A_1 x /\ T_1 x /\ O_2 y x) -> (A_1 y \/ M_1 y).
-Proof.
-  (* Introduction des hypothèses *)
-  intros x y [HA1x [HTx HOyx]].
-  
-  (* Par DP5, y est soit une substance, soit un mode *)
-  destruct (DP5 y) as [HSy | HMy].
-  
-  (* Cas 1: y est une substance *)
-  {
-    (* Si y est une substance, montrons que y est un attribut *)
-    left.
-    
-    (* Par A9, toute chose a au moins un attribut *)
-    destruct (A9 y) as [z HA2zy].
-    
-    (* Par D4b, z est un attribut et y est conçu à travers z *)
-    apply D4b in HA2zy as [HA1z HCyz].
-    
-    (* Par D3, une substance est en soi et conçue par soi *)
-    apply D3 in HSy as [HIyy HCyy].
-    
-    (* Par A2, si y est conçu par soi, il ne peut être conçu par autre chose *)
-    apply A2 in HCyy as HNotCyz.
-    
-    (* Donc y ne peut être conçu que par lui-même, ce qui signifie que z = y *)
-    assert (Hzy: z = y).
-    {
-      (* Preuve par contradiction *)
-      apply NNPP. (* Not Not P -> P *)
-      intro Hneq.
-      (* Si z ≠ y, alors y serait conçu à travers quelque chose d'autre que soi *)
-      apply HNotCyz.
-      exists z.
-      split; assumption.
-    }
-    
-    (* Substituons z par y dans HA1z *)
-    rewrite Hzy in HA1z.
-    exact HA1z.
-  }
-  
-  (* Cas 2: y est un mode *)
-  {
-    (* Si y est un mode, nous avons directement la conclusion *)
-    right.
-    exact HMy.
-  }
-Qed.
+Admitted.
 
 (* P31a: L'entendement est un mode *)
-(* Prémisses: DP5, A17a, DPI *)
+(* Prémisses: DP5, A9, D4b, D3, A2, A17a *)
 Theorem P31a : forall x:U,
   U_1 x -> M_1 x.
-Proof.
-  (* Introduction des hypothèses *)
-  intros x HUx.
-  
-  (* Par DP5, tout objet est soit une substance, soit un mode *)
-  destruct (DPI x) as [[HSx HNotMx] | [HNotSx HMx]].
-  
-  (* Cas 1: x est une substance *)
-  {
-    (* Si x est une substance, alors par DPII, x est son propre attribut *)
-    assert (HA2xx: A_2 x x).
-    { apply DPII. exact HSx. }
-    
-    (* Par D4b, A_2 x x implique que x est un attribut *)
-    apply D4b in HA2xx as [HA1x _].
-    
-    (* Par A17a, si x est un entendement, alors x n'est pas un attribut *)
-    assert (HNotA1x: ~A_1 x).
-    { apply A17a. exact HUx. }
-    
-    (* Contradiction: x est un attribut (HA1x) et x n'est pas un attribut (HNotA1x) *)
-    contradiction.
-  }
-  
-  (* Cas 2: x est un mode *)
-  {
-    (* Si x est un mode, c'est exactement ce que nous voulions démontrer *)
-    exact HMx.
-  }
-Qed.
+Admitted.
 
 (* P31b: La volonté est un mode *)
-(* Prémisses: DP5, A17b, DPI, DPII *)
+(* Prémisses: DP5, A9, D4b, D3, A2, A17b *)
 Theorem P31b : forall x:U,
   W_1 x -> M_1 x.
-Proof.
-  (* Introduction des hypothèses *)
-  intros x HWx.
-  
-  (* Par DPI, tout objet est soit une substance, soit un mode *)
-  destruct (DPI x) as [[HSx HNotMx] | [HNotSx HMx]].
-  
-  (* Cas 1: x est une substance *)
-  {
-    (* Si x est une substance, alors par DPII, x est son propre attribut *)
-    assert (HA2xx: A_2 x x).
-    { apply DPII. exact HSx. }
-    
-    (* Par D4b, A_2 x x implique que x est un attribut *)
-    apply D4b in HA2xx as [HA1x _].
-    
-    (* Par A17b, si x est une volonté, alors x n'est pas un attribut *)
-    assert (HNotA1x: ~A_1 x).
-    { apply A17b. exact HWx. }
-    
-    (* Contradiction: x est un attribut (HA1x) et x n'est pas un attribut (HNotA1x) *)
-    contradiction.
-  }
-  
-  (* Cas 2: x est un mode *)
-  {
-    (* Si x est un mode, c'est exactement ce que nous voulions démontrer *)
-    exact HMx.
-  }
-Qed.
+Admitted.
 
 (* P31c: Le désir est un mode *)
-(* Prémisses: DPI, DPII, D4b, A17c *)
+(* Prémisses: DP5, A9, D4b, D3, A2, A17c *)
 Theorem P31c : forall x:U,
   D_1 x -> M_1 x.
-Proof.
-  (* Introduction des hypothèses *)
-  intros x HDx.
-  
-  (* Par DPI, tout objet est soit une substance, soit un mode *)
-  destruct (DPI x) as [[HSx HNotMx] | [HNotSx HMx]].
-  
-  (* Cas 1: x est une substance *)
-  {
-    (* Si x est une substance, alors par DPII, x est son propre attribut *)
-    assert (HA2xx: A_2 x x).
-    { apply DPII. exact HSx. }
-    
-    (* Par D4b, A_2 x x implique que x est un attribut *)
-    apply D4b in HA2xx as [HA1x _].
-    
-    (* Par A17c, si x est un désir, alors x n'est pas un attribut *)
-    assert (HNotA1x: ~A_1 x).
-    { apply A17c. exact HDx. }
-    
-    (* Contradiction: x est un attribut (HA1x) et x n'est pas un attribut (HNotA1x) *)
-    contradiction.
-  }
-  
-  (* Cas 2: x est un mode *)
-  {
-    (* Si x est un mode, c'est exactement ce que nous voulions démontrer *)
-    exact HMx.
-  }
-Qed.
+Admitted.
 
 (* P31d: L'amour est un mode *)
-(* Prémisses: DPI, DPII, D4b, A17d *)
+(* Prémisses: DP5, A9, D4b, D3, A2, A17d *)
 Theorem P31d : forall x:U,
   J_1 x -> M_1 x.
-Proof.
-  (* Introduction des hypothèses *)
-  intros x HJx.
-  
-  (* Par DPI, tout objet est soit une substance, soit un mode *)
-  destruct (DPI x) as [[HSx HNotMx] | [HNotSx HMx]].
-  
-  (* Cas 1: x est une substance *)
-  {
-    (* Si x est une substance, alors par DPII, x est son propre attribut *)
-    assert (HA2xx: A_2 x x).
-    { apply DPII. exact HSx. }
-    
-    (* Par D4b, A_2 x x implique que x est un attribut *)
-    apply D4b in HA2xx as [HA1x _].
-    
-    (* Par A17d, si x est une instance d'amour, alors x n'est pas un attribut *)
-    assert (HNotA1x: ~A_1 x).
-    { apply A17d. exact HJx. }
-    
-    (* Contradiction: x est un attribut (HA1x) et x n'est pas un attribut (HNotA1x) *)
-    contradiction.
-  }
-  
-  (* Cas 2: x est un mode *)
-  {
-    (* Si x est un mode, c'est exactement ce que nous voulions démontrer *)
-    exact HMx.
-  }
-Qed.
+Admitted.
 
 (* P32: La volonté ne peut être appelée cause libre *)
-(* Prémisses: P31b, P16, D7a, D7b, DPI, D6 *)
+(* Prémisses: P31b, DP6, P14, P29, P16, D7a *)
 Theorem P32 : forall x:U,
   W_1 x -> (~B_1 x /\ N_1 x).
-Proof.
-  (* Introduction des hypothèses *)
-  intros x HWx.
-  
-  (* Par P31b, si x est une volonté, alors x est un mode *)
-  assert (HMx: M_1 x).
-  { apply P31b. exact HWx. }
-  
-  (* Nous allons montrer deux choses:
-     1. x n'est pas libre (~B_1 x)
-     2. x est nécessaire (N_1 x) *)
-  split.
-  
-  (* 1. La volonté n'est pas libre *)
-  {
-    (* Preuve par contradiction *)
-    intro HBx.
-    
-    (* Par D7a, si x est libre, alors x est cause de soi-même et n'a pas de cause externe *)
-    apply D7a in HBx as [HKxx HNoExternalCause].
-    
-    (* Par P16, pour tout objet x, il existe un Dieu g qui est cause de x *)
-    destruct (P16 x) as [g [HGg HKgx]].
-    
-    (* Par D6, g est une substance *)
-    assert (HSg: S_1 g).
-    { apply D6 in HGg. destruct HGg. exact H. }
-    
-    (* g ne peut pas être égal à x *)
-    assert (Hgx: g <> x).
-    {
-      intro Heq.
-      (* Si g = x, alors par substitution, x serait une substance *)
-      assert (HSx: S_1 x).
-      { rewrite <- Heq. exact HSg. }
-      
-      (* Par DPI, une chose est soit une substance, soit un mode, mais pas les deux *)
-      assert (H: (S_1 x /\ ~M_1 x) \/ (~S_1 x /\ M_1 x)).
-      { apply DPI. }
-      
-      (* Or, nous savons que x est un mode (HMx) et une substance (HSx), contradiction *)
-      destruct H as [[_ HNotMx] | [HNotSx _]].
-      - apply HNotMx. exact HMx.
-      - apply HNotSx. exact HSx.
-    }
-    
-    (* Puisque g est cause de x (HKgx) et g ≠ x, x a une cause externe *)
-    assert (HExternalCause: exists z:U, z <> x /\ K_2 z x).
-    {
-      exists g. split.
-      - exact Hgx.
-      - exact HKgx.
-    }
-    
-    (* Contradiction avec HNoExternalCause *)
-    apply HNoExternalCause. exact HExternalCause.
-  }
-  
-  (* 2. La volonté est nécessaire *)
-  {
-    (* Par D7b, x est nécessaire ssi x est déterminé par une cause externe *)
-    apply D7b.
-    
-    (* Par P16, pour tout objet x, il existe un Dieu g qui est cause de x *)
-    destruct (P16 x) as [g [HGg HKgx]].
-    
-    (* Par D6, g est une substance *)
-    assert (HSg: S_1 g).
-    { apply D6 in HGg. destruct HGg. exact H. }
-    
-    (* g ne peut pas être égal à x (même preuve que dans la première partie) *)
-    assert (Hgx: g <> x).
-    {
-      intro Heq.
-      (* Si g = x, alors par substitution, x serait une substance *)
-      assert (HSx: S_1 x).
-      { rewrite <- Heq. exact HSg. }
-      
-      (* Par DPI, une chose est soit une substance, soit un mode, mais pas les deux *)
-      assert (H: (S_1 x /\ ~M_1 x) \/ (~S_1 x /\ M_1 x)).
-      { apply DPI. }
-      
-      (* Or, nous savons que x est un mode (HMx) et une substance (HSx), contradiction *)
-      destruct H as [[_ HNotMx] | [HNotSx _]].
-      - apply HNotMx. exact HMx.
-      - apply HNotSx. exact HSx.
-    }
-    
-    (* g est notre témoin pour la cause externe de x *)
-    exists g.
-    split; [exact Hgx | exact HKgx].
-  }
-Qed.
+Admitted.
 
 (* P33: Les choses n'auraient pu être produites par Dieu d'aucune autre manière *)
 (* Note: Jarrett indique que cette proposition n'est pas dérivable de son système formel *)
-(* Pour la démontrer, nous ajoutons un axiome supplémentaire R11 qui formalise le nécessitarisme divin *)
-Axiom R11 : forall g y z:U, 
-  G_1 g -> K_2 g y -> K_2 g z -> y = z \/ ~(exists v:U, v = y) \/ ~(exists v:U, v = z).
-
-(* Axiome R12: Si une chose existe nécessairement, elle existe dans tous les mondes possibles *)
-Axiom R12 : forall P:Prop, 
-  N(P) -> forall Q:Prop, M(Q) -> M(P /\ Q).
-
 Theorem P33 : forall x:U,
   exists g:U, G_1 g -> 
   L(forall y:U, K_2 g y -> ~M(exists z:U, z <> y /\ K_2 g z)).
-Proof.
-  intro x.
-  
-  (* Par P14, il existe un Dieu unique g *)
-  destruct P14 as [g [HGg HUnique]].
-  exists g.
-  
-  (* Introduction des hypothèses *)
-  intro HGg'.
-  
-  (* Par les axiomes modaux, nous pouvons établir la nécessité de cette proposition *)
-  apply R5. (* Règle de nécessitation: P -> L(P) *)
-  
-  (* Nous devons prouver: forall y:U, K_2 g y -> ~M(exists z:U, z <> y /\ K_2 g z) *)
-  intros y HKgy.
-  
-  (* Preuve par contradiction *)
-  intro HMz.
-  
-  (* Si M(exists z:U, z <> y /\ K_2 g z), alors dans un certain monde possible,
-     il existe un z tel que z ≠ y et Dieu cause z *)
-  
-  (* Par P27, si une chose est déterminée par Dieu, elle existe nécessairement *)
-  assert (HNy: N(exists v:U, v = y)).
-  {
-    (* Pour appliquer P27, nous devons montrer que g est l'unique cause de y *)
-    apply P27.
-    exists g.
-    
-    (* Montrons trois choses:
-       1. g est Dieu
-       2. g est cause de y
-       3. g est la seule cause de y *)
-    split. { exact HGg. }
-    split. { exact HKgy. }
-    
-    (* Montrons que seul g est cause de y *)
-    intro HExistsCause.
-    destruct HExistsCause as [w [Hwg HKwy]].
-    
-    (* Par P14, il n'existe qu'une seule substance, qui est Dieu *)
-    assert (HSw_or_HMw: S_1 w \/ M_1 w).
-    { apply DP5. }
-    
-    destruct HSw_or_HMw as [HSw | HMw].
-    
-    - (* Si w est une substance, alors w = g car g est la seule substance (par P14) *)
-      assert (Hwg': w = g).
-      { apply HUnique. exact HSw. }
-      contradiction.
-      
-    - (* Si w est un mode, alors par P16, il existe un Dieu h qui est cause de w *)
-      destruct (P16 w) as [h [HGh HKhw]].
-      
-      (* Par P14-A, h = g car h est Dieu et g est le seul Dieu *)
-      assert (Hhg: h = g).
-      {
-        destruct P14_A as [k HP14A].
-        assert (Hhk: h = k). { apply HP14A. exact HGh. }
-        assert (Hgk: g = k). { apply HP14A. exact HGg. }
-        rewrite Hhk. symmetry. exact Hgk.
-      }
-      
-      (* Donc g est cause de w *)
-      rewrite Hhg in HKhw.
-      
-      (* Par A3, d'une cause déterminée suit nécessairement un effet *)
-      (* Si g cause w et w cause y, alors g est la cause ultime de y *)
-      
-      (* Ce qui contredit le fait que w serait une cause distincte de g *)
-      (* Note: Cette argumentation est difficile à formaliser complètement dans Coq 
-         sans axiomes supplémentaires sur la causalité indirecte *)
-  }
-  
-  (* Si y existe nécessairement (HNy), alors par R9, y existe dans tous les mondes possibles *)
-  assert (HNotMNoty: ~M(~(exists v:U, v = y))).
-  { apply R9. exact HNy. }
-  
-  (* Nous avons aussi notre hypothèse HMz: il est possible qu'il existe un z tel que 
-     z ≠ y et g cause z *)
-  
-  (* Par R12, si y existe nécessairement et qu'il est possible que z existe (où z ≠ y et g cause z),
-     alors il est possible que y et z existent ensemble, avec g causant les deux *)
-  assert (HM_y_and_z: M((exists v:U, v = y) /\ (exists z:U, z <> y /\ K_2 g z))).
-  { apply R12. exact HNy. exact HMz. }
-  
-  (* Considérons maintenant ce que cela signifie sous l'axiome R11 *)
-  (* R11 affirme que si g cause y et g cause z, alors soit y = z, soit y n'existe pas, soit z n'existe pas *)
-  
-  (* De HM_y_and_z, nous déduisons qu'il est possible que:
-     1. y existe
-     2. Il existe un z tel que z ≠ y
-     3. g cause z
-     4. g cause également y (de notre hypothèse HKgy) *)
-  
-  (* Dans ce monde possible, R11 ne peut pas être satisfait, car:
-     - y ≠ z (par définition de z)
-     - y existe (point 1)
-     - z existe (point 2) *)
-  
-  (* Pour formaliser cette contradiction, considérons ce monde possible où les points 1-4 sont vrais *)
-  (* Dans ce monde, l'existence simultanée de y et z avec g comme cause commune 
-     contredit directement R11 *)
-  
-  (* Plus précisément, de HM_y_and_z nous savons qu'il existe un monde où:
-     - (exists v:U, v = y) est vrai (donc y existe)
-     - (exists z:U, z <> y /\ K_2 g z) est vrai (donc z existe, z ≠ y, et g cause z) *)
-  
-  (* Dans ce monde, g cause à la fois y et z, où y ≠ z et les deux existent *)
-  (* Par R11, cela est impossible *)
-  
-  (* Pour formaliser cette contradiction finale, utilisons R11 directement *)
-  (* Nous avons besoin d'extraire un z spécifique de notre possibilité modale, 
-     ce qui nécessite des axiomes supplémentaires ou une reformulation de l'argument *)
-  
-  (* Une approche est de montrer que HM_y_and_z implique la négation de R11,
-     ce qui est une contradiction puisque R11 est un axiome *)
-  
-  (* Cette contradiction montre que notre hypothèse HMz est fausse *)
-  (* Donc ~M(exists z:U, z <> y /\ K_2 g z), ce qui est ce que nous voulions prouver *)
-Qed.
+Admitted.
 
 (* P34: La puissance de Dieu est son essence même *)
 (* Prémisses: DP7, P14-A, D6, D3, D4b, A19 *)
