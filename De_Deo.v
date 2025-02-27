@@ -259,9 +259,8 @@ Axiom A18 : forall x y:U,
 Axiom A19 : forall x y:U,
   (((I_2 x y /\ C_2 x y) /\ I_2 y x) /\ C_2 y x) = P_2 x y.
 
+  
 (*PROPOSITIONS*)
-
-
 
 (* P1 : Si x est un mode de y et y est une substance, alors x est en y et y est en soi *)
 Theorem P1 : forall x y:U, 
@@ -2363,7 +2362,13 @@ Proof.
     (* Par A19, si x est la puissance de g, alors:
        (((I_2 x g /\ C_2 x g) /\ I_2 g x) /\ C_2 g x) *)
     assert (H_relations: ((I_2 x g /\ C_2 x g) /\ I_2 g x) /\ C_2 g x).
-    { rewrite A19 in HP2xg. exact HP2xg. }
+    { 
+      (* A19 établit une égalité entre cette expression et P_2 x g *)
+      pose proof (A19 x g) as Heq.
+      (* Puisque nous avons P_2 x g (HP2xg), nous pouvons utiliser l'égalité *)
+      rewrite <- Heq in HP2xg.
+      exact HP2xg.
+    }
     
     (* Décomposons cette assertion complexe *)
     destruct H_relations as [H_part1 HCgx].
@@ -2374,73 +2379,167 @@ Proof.
     assert (HSg: S_1 g).
     { apply D6 in HGg. destruct HGg. exact H. }
     
-    (* Par D3, une substance est en soi et conçue par soi *)
-    assert (H_substance: I_2 g g /\ C_2 g g).
-    { apply D3. exact HSg. }
+    (* Par D4b, x est un attribut de g ssi x est un attribut et g est conçu par x *)
+    apply D4b. split.
     
-    (* Si g est en soi (I_2 g g) et g est en x (I_2 g x), alors x = g *)
-    assert (Hxg: x = g).
-    {
-      destruct H_substance as [HIgg _].
-      
-      (* Si une substance est en soi, elle ne peut être en autre chose *)
-      (* Preuve par contradiction *)
-      apply NNPP. (* Not Not P -> P *)
-      intro Hneq.
-      
-      (* Si g est en x et g ≠ x, alors par D5a, g serait un mode de x *)
-      assert (HM_g_x: M_2 g x).
-      { apply D5a. split.
-        - exact Hneq.
-        - split; [exact HIgx | exact HCxg].
-      }
-      
-      (* Mais par DP6, rien ne peut être à la fois une substance et un mode *)
-      assert (Hmode_or_substance: ~(S_1 g /\ M_1 g)).
-      { apply DP6. }
-      
-      (* Or, g est une substance (HSg) et par D5b, si g est un mode de x, alors g est un mode *)
-      assert (HMg: M_1 g).
-      { apply D5b. exists x. split; [admit | exact HM_g_x]. }
-      
-      (* Contradiction: g est à la fois une substance et un mode *)
-      apply Hmode_or_substance. split; assumption.
-    }
-    
-    (* Maintenant, montrons que x est un attribut de g *)
-    (* Par D4b, x est un attribut de g ssi x est un attribut et g est conçu à travers x *)
-    apply D4b.
-    
-    split.
-    {
-      (* Montrons que x est un attribut *)
-      apply D4a.
-      
-      (* Il existe une substance (g) telle que... *)
-      exists g.
-      
+    (* 1. Montrons que x est un attribut *)
+    - apply D4a. exists g.
       (* g est une substance *)
       split. { exact HSg. }
-      
-      (* x est en g, x est conçu par g, g est en x, et g est conçu par x *)
+      (* x est en g, x est conçu par g, g est en x, g est conçu par x *)
       repeat split; assumption.
-    }
     
-    (* g est conçu à travers x *)
-    exact HCgx.
+    (* 2. g est conçu par x *)
+    - exact HCgx.
   }
-Admitted.
+Qed.
 
 (* P35: Tout ce qui existe est nécessaire *)
 (* Prémisses: identiques à P29 *)
 Theorem P35 : exists g:U,
   G_1 g /\ L(exists x:U, x = g) /\ (forall x:U, x <> g -> N_1 x).
-Admitted.
+Proof.
+  (* Par P14-A, il existe un Dieu unique *)
+  destruct P14_A as [g HP14A].
+  
+  (* g est notre témoin *)
+  exists g.
+  
+  (* Nous allons montrer trois choses:
+     1. g est Dieu
+     2. g existe nécessairement
+     3. Tout ce qui n'est pas Dieu est nécessaire au sens de D7b *)
+  
+  (* Première partie: g est Dieu *)
+  assert (HGg: G_1 g).
+  { apply HP14A. reflexivity. }
+  
+  split. { exact HGg. }
+  
+  (* Deuxième partie: g existe nécessairement *)
+  split.
+  {
+    (* Par P11, Dieu existe nécessairement: L(exists x:U, G_1 x) *)
+    (* Mais nous avons besoin de L(exists x:U, x = g) *)
+    
+    (* D'abord, montrons que (exists x:U, G_1 x) implique (exists x:U, x = g) *)
+    assert (H_imp: (exists x:U, G_1 x) -> (exists x:U, x = g)).
+    {
+      intro H_exists_god.
+      destruct H_exists_god as [h HGh].
+      
+      (* Par P14-A, h = g car h est Dieu et g est le seul Dieu *)
+      assert (Hhg: h = g).
+      { apply HP14A. exact HGh. }
+      
+      (* Donc g existe *)
+      exists g.
+      reflexivity.
+    }
+    
+    (* Par R5, on peut transformer cette implication en nécessité logique *)
+    assert (H_nec_imp: L((exists x:U, G_1 x) -> (exists x:U, x = g))).
+    { apply R5. exact H_imp. }
+    
+    (* Par R3, on distribue la nécessité logique sur l'implication *)
+    assert (H_dist: L(exists x:U, G_1 x) -> L(exists x:U, x = g)).
+    { apply R3. exact H_nec_imp. }
+    
+    (* Finalement, on applique cette implication à P11 *)
+    apply H_dist.
+    exact P11.
+  }
+  
+  (* Troisième partie: Tout ce qui n'est pas Dieu est nécessaire au sens de D7b *)
+  intros x Hx_neq_g.
+  
+  (* Par D7b, une chose est nécessaire quand elle est déterminée par autre chose *)
+  apply D7b.
+  
+  (* Par P16, pour toute chose, il existe un Dieu qui en est la cause *)
+  destruct (P16 x) as [h [HGh HKhx]].
+  
+  (* Par P14-A, h = g car h est Dieu et g est le seul Dieu *)
+  assert (Hhg: h = g).
+  { apply HP14A. exact HGh. }
+  
+  (* Substituons h par g dans K_2 h x *)
+  rewrite Hhg in HKhx.
+  
+  (* Nous avons maintenant montré que K_2 g x *)
+  exists g.
+  split.
+  - (* g ≠ x *)
+    apply neq_sym. exact Hx_neq_g.
+  - (* g est cause de x *)
+    exact HKhx.
+Qed.
 
 (* P36: Il n'existe rien dont la nature ne produise quelque effet *)
 (* Note: Jarrett indique que cette proposition n'est pas dérivable de son système formel *)
 Theorem P36 : forall x:U,
   (exists v:U, v = x) -> (exists y:U, K_2 x y).
+Proof.
+  (* Introduction des hypothèses *)
+  intros x Hexists.
+  
+  (* Nous allons examiner si x est une substance ou un mode *)
+  destruct (DP5 x) as [HSx | HMx].
+  
+  (* Cas 1: x est une substance *)
+  {
+    (* Par DPIII, toute substance est cause de soi-même *)
+    assert (HKxx: K_2 x x).
+    { apply DPIII. exact HSx. }
+    
+    (* x est cause de soi-même, donc il existe un y (à savoir x) tel que K_2 x y *)
+    exists x.
+    exact HKxx.
+  }
+  
+  (* Cas 2: x est un mode *)
+  {
+    (* Par D5b, si x est un mode, alors il existe une substance s dont x est un mode *)
+    apply D5b in HMx.
+    destruct HMx as [s [HSs HM_x_s]].
+    
+    (* Par le lemme DP4, toute substance est cause de soi-même *)
+    assert (HKss: K_2 s s).
+    { apply DP4. exact HSs. }
+    
+    (* Par D5a, si x est un mode de s, alors x est en s et conçu par s *)
+    apply D5a in HM_x_s.
+    destruct HM_x_s as [Hneq [HIxs HCxs]].
+    
+    (* Par la définition de Spinoza, la nature d'une chose détermine ses effets.
+       Si x est un mode, son essence est déterminée par la substance dont il est un mode.
+       Nous ne pouvons pas directement prouver que x produit un effet sans hypothèses 
+       supplémentaires sur la nature des modes. *)
+       
+    (* Cependant, nous pouvons invoquer P16 qui établit que Dieu est cause de toutes choses *)
+    destruct (P16 x) as [g [HGg HKgx]].
+    
+    (* Puisque g est Dieu, il a une infinité d'attributs et produit une infinité d'effets,
+       dont l'un est x. Par transitivité de la causalité (qui n'est pas formellement
+       établie dans le système de Jarrett), x doit également produire des effets. *)
+       
+    (* Nous devons admettre ce point par la cohérence du système spinoziste, car comme 
+       l'indique Jarrett, P36 n'est pas directement dérivable dans son système formel. *)
+       
+    (* Pour compléter la preuve en utilisant explicitement les axiomes disponibles,
+       nous pouvons ajouter un axiome supplémentaire qui formalise cette propriété
+       de la causalité dans le système spinoziste:
+       
+       Axiom Transitive_Causality: forall x y z:U, K_2 x y /\ K_2 y z -> exists w:U, K_2 y w.
+       
+       Mais puisque nous n'avons pas cet axiome, nous admettons cette étape. *)
+    
+    (* Puisque le système de Spinoza est déterministe et que toute chose découle
+       nécessairement de l'essence divine, nous pouvons affirmer que tout mode
+       a un effet, même si nous ne pouvons pas le démontrer formellement. *)
+    
+    admit.
+  }
 Admitted.
 
 End SpinozaJarrett.
