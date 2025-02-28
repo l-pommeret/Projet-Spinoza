@@ -208,7 +208,7 @@ $\begin{nd}
 \subsection{Proposition 2 (P2)}
 
 \begin{center}
-Deux substances qui ont des attributs différents n'ont rien en commun entre elles.
+Deux substances ayant des attributs différents n'ont rien en commun entre elles.
 \end{center}
 
 \begin{center}
@@ -227,48 +227,29 @@ $\begin{nd}
 \have {8} {S_1(y) \leftrightarrow (I_2(y,y) \land C_2(y,y))} \by{D3}{}
 \have {9} {I_2(y,y) \land C_2(y,y)} \ie{3,8}
 \have {10} {C_2(y,y)} \ae{9}
-\have {11} {(\neg \exists w (w \neq x \land C_2(x,w))) \leftrightarrow C_2(x,x)} \by{A2}{}
-\have {12} {\neg \exists w (w \neq x \land C_2(x,w))} \ie{7,11}
-\have {13} {\neg C_2(x,y)} \by{}{\text{Puisque } x \neq y \text{ (4), par (12), on ne peut avoir } C_2(x,y)}
-\have {14} {(\neg \exists w (w \neq y \land C_2(y,w))) \leftrightarrow C_2(y,y)} \by{A2}{}
-\have {15} {\neg \exists w (w \neq y \land C_2(y,w))} \ie{10,14}
-\have {16} {\neg C_2(y,x)} \by{}{\text{Puisque } y \neq x \text{ (4), par (15), on ne peut avoir } C_2(y,x)}
-\have {17} {\neg C_2(x,y) \land \neg C_2(y,x)} \ai{13,16}
-\have {18} {(\neg \exists z (C_3(z,x,y))) \leftrightarrow (\neg C_2(x,y) \land \neg C_2(y,x))} \by{A5}{}
-\have {19} {\neg \exists z (C_3(z,x,y))} \ie{17,18}
+\have {11} {(\neg \exists z (z \neq x \land C_2(x,z))) \leftrightarrow C_2(x,x)} \by{A2}{}
+\have {12} {C_2(x,x) \rightarrow \neg \exists z (z \neq x \land C_2(x,z))} \ae{11}
+\have {13} {\neg \exists z (z \neq x \land C_2(x,z))} \ie{7,12}
+\have {14} {\neg (y \neq x \land C_2(x,y))} \Ae{13}
+\have {15} {y \neq x \rightarrow \neg C_2(x,y)} \ie{14}
+\have {16} {x \neq y \rightarrow y \neq x} \by{Logique}{}
+\have {17} {x \neq y} \ae{1}
+\have {18} {y \neq x} \ie{17,16}
+\have {19} {\neg C_2(x,y)} \ie{18,15}
+\have {20} {(\neg \exists z (z \neq y \land C_2(y,z))) \leftrightarrow C_2(y,y)} \by{A2}{}
+\have {21} {C_2(y,y) \rightarrow \neg \exists z (z \neq y \land C_2(y,z))} \ae{20}
+\have {22} {\neg \exists z (z \neq y \land C_2(y,z))} \ie{10,21}
+\have {23} {\neg (x \neq y \land C_2(y,x))} \Ae{22}
+\have {24} {x \neq y \rightarrow \neg C_2(y,x)} \ie{23}
+\have {25} {\neg C_2(y,x)} \ie{4,24}
+\have {26} {(\neg \exists z (C_3(z,x,y))) \leftrightarrow (\neg C_2(x,y) \land \neg C_2(y,x))} \by{A5}{}
+\have {27} {(\neg C_2(x,y) \land \neg C_2(y,x)) \rightarrow \neg \exists z (C_3(z,x,y))} \ae{26}
+\have {28} {\neg C_2(x,y) \land \neg C_2(y,x)} \ai{19,25}
+\have {29} {\neg \exists z (C_3(z,x,y))} \ie{28,27}
 \close
-\have {20} {S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg \exists z (C_3(z,x,y))} \ii{1-19}
-\have {21} {\forall y (S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg \exists z (C_3(z,x,y)))} \Ai{20}
-\have {22} {\forall x \forall y (S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg \exists z (C_3(z,x,y)))} \Ai{21}
+\have {30} {S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg \exists z (C_3(z,x,y))} \ii{1-29}
+\have {31} {\forall y (S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg \exists z (C_3(z,x,y)))} \Ai{30}
+\have {32} {\forall x \forall y (S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg \exists z (C_3(z,x,y)))} \Ai{31}
 \end{nd}$
-
-\subsection{Proposition 3 (P3)}
-
-\begin{center}
-Des choses qui n'ont rien en commun entre elles ne peuvent pas être cause l'une de l'autre.
-\end{center}
-
-\begin{center}
-$\forall x \forall y (\neg \exists z (C_3(z,x,y)) \rightarrow \neg K_2(x,y) \land \neg K_2(y,x))$
-\end{center}
-
-$\begin{nd}
-\open
-\hypo {1} {\neg \exists z (C_3(z,x,y))}
-\have {2} {(\neg \exists z (C_3(z,x,y))) \leftrightarrow (\neg C_2(x,y) \land \neg C_2(y,x))} \by{A5}{}
-\have {3} {\neg C_2(x,y) \land \neg C_2(y,x)} \ie{1,2}
-\have {4} {\neg C_2(x,y)} \ae{3}
-\have {5} {\neg C_2(y,x)} \ae{3}
-\have {6} {K_2(x,y) \leftrightarrow C_2(y,x)} \by{A4}{}
-\have {7} {K_2(y,x) \leftrightarrow C_2(x,y)} \by{A4}{}
-\have {8} {\neg K_2(x,y)} \ie{5,6}
-\have {9} {\neg K_2(y,x)} \ie{4,7}
-\have {10} {\neg K_2(x,y) \land \neg K_2(y,x)} \ai{8,9}
-\close
-\have {11} {\neg \exists z (C_3(z,x,y)) \rightarrow \neg K_2(x,y) \land \neg K_2(y,x)} \ii{1-10}
-\have {12} {\forall y (\neg \exists z (C_3(z,x,y)) \rightarrow \neg K_2(x,y) \land \neg K_2(y,x))} \Ai{11}
-\have {13} {\forall x \forall y (\neg \exists z (C_3(z,x,y)) \rightarrow \neg K_2(x,y) \land \neg K_2(y,x))} \Ai{12}
-\end{nd}$
-
 
 \end{document}
