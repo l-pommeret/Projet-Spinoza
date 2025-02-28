@@ -1,0 +1,204 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{fitch} % Pour les preuves en notation Fitch
+\usepackage{array}
+\usepackage{proof} % Pour les preuves en déduction naturelle
+
+\geometry{a4paper, margin=2.5cm}
+
+\title{Preuves en Déduction Naturelle pour le système de Spinoza}
+\author{D'après la formalisation de Jarrett}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Ce document présente les preuves en déduction naturelle (système DN) pour les propositions principales de l'\textit{Éthique} de Spinoza, d'après la formalisation de Charles Jarrett présentée dans \textit{The Logical Structure of Spinoza's Ethics, Part I}.
+
+\section{Notation et symboles}
+
+\subsection{Lexique}
+
+\subsubsection{Opérateurs modaux}
+\begin{itemize}
+    \item $L(p)$ : Nécessité logique - $p$ est logiquement nécessaire
+    \item $M(p)$ : Possibilité - $p$ est possible
+    \item $N(p)$ : Nécessité naturelle - $p$ est naturellement nécessaire
+\end{itemize}
+
+\subsection{Règles modales}
+\begin{itemize}
+    \item \textbf{R1} : $\forall P (L(P) \rightarrow N(P))$ \\
+    La nécessité logique implique la nécessité naturelle
+    
+    \item \textbf{R2} : $\forall P (N(P) \rightarrow P)$ \\
+    Axiome T pour la nécessité naturelle
+    
+    \item \textbf{R3} : $\forall P \forall Q (L(P \rightarrow Q) \rightarrow (L(P) \rightarrow L(Q)))$ \\
+    Axiome K pour la nécessité logique
+    
+    \item \textbf{R4} : $\forall P (M(P) \rightarrow L(M(P)))$ \\
+    Axiome S5 - possibilité et nécessité
+    
+    \item \textbf{R5} : $\forall P (P \rightarrow L(P))$ \\
+    Règle de nécessitation
+    
+    \item \textbf{R6} : $\forall P \forall Q (N(P \rightarrow Q) \rightarrow (N(P) \rightarrow N(Q)))$ \\
+    Axiome de distributivité pour la nécessité naturelle
+\end{itemize}
+
+\subsubsection{Prédicats unaires}
+\begin{itemize}
+    \item $A_1(x)$ : $x$ est un attribut
+    \item $B_1(x)$ : $x$ est libre
+    \item $D_1(x)$ : $x$ est une instance de désir
+    \item $E_1(x)$ : $x$ est éternel
+    \item $F_1(x)$ : $x$ est fini
+    \item $G_1(x)$ : $x$ est un dieu
+    \item $J_1(x)$ : $x$ est une instance d'amour
+    \item $K_1(x)$ : $x$ est une idée
+    \item $M_1(x)$ : $x$ est un mode
+    \item $N_1(x)$ : $x$ est nécessaire
+    \item $S_1(x)$ : $x$ est une substance
+    \item $T_1(x)$ : $x$ est vrai
+    \item $U_1(x)$ : $x$ est un intellect
+    \item $W_1(x)$ : $x$ est une volonté
+\end{itemize}
+
+\subsubsection{Prédicats binaires}
+\begin{itemize}
+    \item $A_2(x,y)$ : $x$ est un attribut de $y$
+    \item $C_2(x,y)$ : $x$ est conçu à travers $y$
+    \item $I_2(x,y)$ : $x$ est en $y$
+    \item $K_2(x,y)$ : $x$ est cause de $y$
+    \item $L_2(x,y)$ : $x$ limite $y$
+    \item $M_2(x,y)$ : $x$ est un mode de $y$
+    \item $O_2(x,y)$ : $x$ est un objet de $y$
+    \item $P_2(x,y)$ : $x$ est la puissance de $y$
+    \item $R_2(x,y)$ : $x$ a plus de réalité que $y$
+    \item $V_2(x,y)$ : $x$ a plus d'attributs que $y$
+\end{itemize}
+
+\subsubsection{Prédicats ternaires}
+\begin{itemize}
+    \item $C_3(x,y,z)$ : $x$ est commun à $y$ et à $z$
+    \item $D_3(x,y,z)$ : $x$ est divisible entre $y$ et $z$
+\end{itemize}
+
+\subsection{Définitions}
+\begin{itemize}
+    \item \textbf{D1} : $K_2(x,x) \land \neg \exists y (y \neq x \land K_2(y,x)) \leftrightarrow L(\exists y (y = x))$ \\
+    \textit{Causa sui} - ce dont l'essence implique l'existence
+    
+    \item \textbf{D2} : $F_1(x) \leftrightarrow \exists y (y \neq x \land L_2(y,x) \land \forall z (A_2(z,x) \leftrightarrow A_2(z,y)))$ \\
+    Une chose est finie quand elle peut être limitée par une autre de même nature
+    
+    \item \textbf{D3} : $S_1(y) \leftrightarrow (I_2(y,y) \land C_2(y,y))$ \\
+    Une substance est ce qui est en soi et est conçu par soi
+    
+    \item \textbf{D4a} : $A_1(x) \leftrightarrow \exists y (S_1(y) \land I_2(x,y) \land C_2(x,y) \land I_2(y,x) \land C_2(y,x))$ \\
+    Un attribut est ce que l'intellect perçoit de la substance comme constituant son essence
+    
+    \item \textbf{D4b} : $A_2(x,y) \leftrightarrow (A_1(x) \land C_2(y,x))$ \\
+    $x$ est un attribut de $y$
+    
+    \item \textbf{D5a} : $M_2(x,y) \leftrightarrow (x \neq y \land I_2(x,y) \land C_2(x,y))$ \\
+    Un mode est ce qui est dans autre chose et est conçu par elle
+    
+    \item \textbf{D5b} : $M_1(x) \leftrightarrow \exists y (S_1(y) \land M_2(x,y))$ \\
+    $x$ est un mode
+    
+    \item \textbf{D6} : $G_1(x) \leftrightarrow (S_1(x) \land \forall y (A_1(y) \rightarrow A_2(y,x)))$ \\
+    Dieu est une substance constituée d'une infinité d'attributs
+    
+    \item \textbf{D7a} : $B_1(x) \leftrightarrow (K_2(x,x) \land \neg \exists y (y \neq x \land K_2(y,x)))$ \\
+    Une chose est libre quand elle n'est cause que d'elle-même
+    
+    \item \textbf{D7b} : $N_1(x) \leftrightarrow \exists y (y \neq x \land K_2(y,x))$ \\
+    Une chose est nécessaire quand elle est déterminée par autre chose
+    
+    \item \textbf{D8} : $E_1(x) \leftrightarrow L(\exists v (v = x))$ \\
+    L'éternité est l'existence même en tant que nécessaire
+\end{itemize}
+
+\subsection{Axiomes}
+\begin{itemize}
+    \item \textbf{A1} : $\forall x (I_2(x,x) \lor \exists y (y \neq x \land I_2(x,y)))$ \\
+    Tout ce qui est, est soit en soi, soit en autre chose
+    
+    \item \textbf{A2} : $\forall x ((\neg \exists y (y \neq x \land C_2(x,y))) \leftrightarrow C_2(x,x))$ \\
+    Ce qui ne peut être conçu par un autre doit être conçu par soi
+    
+    \item \textbf{A3} : $\forall x \forall y (K_2(y,x) \rightarrow N((\exists v (v = y)) \leftrightarrow \exists v (v = x)))$ \\
+    D'une cause déterminée suit nécessairement un effet
+    
+    \item \textbf{A4} : $\forall x \forall y (K_2(x,y) \leftrightarrow C_2(y,x))$ \\
+    La connaissance de l'effet dépend de la connaissance de la cause
+    
+    \item \textbf{A5} : $\forall x \forall y ((\neg \exists z (C_3(z,x,y))) \leftrightarrow (\neg C_2(x,y) \land \neg C_2(y,x)))$ \\
+    Les choses qui n'ont rien en commun ne peuvent être conçues l'une par l'autre
+    
+    \item \textbf{A6} : $\forall x (K_1(x) \rightarrow (T_1(x) \leftrightarrow \exists y (O_2(y,x) \land K_2(x,y))))$ \\
+    L'idée vraie doit s'accorder avec son objet
+    
+    \item \textbf{A7} : $\forall x (M(\neg \exists y (y = x)) \leftrightarrow \neg L(\exists y (y = x)))$ \\
+    Si une chose peut être conçue comme non existante, son essence n'implique pas l'existence
+    
+    \item \textbf{A8} : $\forall x \forall y (I_2(x,y) \rightarrow C_2(x,y))$ \\
+    Si $x$ est en $y$ alors $x$ est conçu par $y$
+    
+    \item \textbf{A9} : $\forall x (\exists y (A_2(y,x)))$ \\
+    Toute chose a un attribut
+    
+    \item \textbf{A10} : $\forall x \forall y \forall z (D_3(x,y,z) \rightarrow M(\neg \exists w (w = x)))$ \\
+    Si $x$ est divisible en $y$ et $z$ alors il est possible que $x$ n'existe pas
+    
+    \item \textbf{A11} : $\forall x \forall y (S_1(x) \land L_2(y,x) \rightarrow S_1(y))$ \\
+    Si $x$ est une substance et $y$ limite $x$ alors $y$ est une substance
+    
+    \item \textbf{A12} : $\forall x ((\exists y (M_2(x,y))) \rightarrow M_1(x))$ \\
+    Si $x$ est un mode de quelque chose alors $x$ est un mode
+    
+    \item \textbf{A13} : $M(\exists x (G_1(x)))$ \\
+    Il est possible qu'un Dieu existe
+    
+    \item \textbf{A14} : $\forall x (N(\exists y (y = x)) \leftrightarrow \neg F_1(x))$ \\
+    $x$ existe nécessairement si et seulement si $x$ n'est pas fini
+\end{itemize}
+
+\section{Preuves en déduction naturelle}
+
+\subsection{Proposition 1 (P1)}
+
+\begin{center}
+Si $x$ est un mode de $y$ et $y$ est une substance, alors $x$ est en $y$ et $y$ est en soi.
+\end{center}
+
+\begin{center}
+$\forall x \forall y (M_2(x,y) \land S_1(y) \rightarrow I_2(x,y) \land I_2(y,y))$
+\end{center}
+
+\vskip20pt
+$\begin{nd}
+\hypo {1} {M_2(x,y) \land S_1(y)}
+\have {2} {M_2(x,y)} \ae{1}
+\have {3} {S_1(y)} \ae{1}
+\have {4} {S_1(y) \leftrightarrow (I_2(y,y) \land C_2(y,y))} \by{D3}{}
+\have {5} {I_2(y,y) \land C_2(y,y)} \ie{3,4}
+\have {6} {I_2(y,y)} \ae{5}
+\have {7} {M_2(x,y) \leftrightarrow (x \neq y \land I_2(x,y) \land C_2(x,y))} \by{D5a}{}
+\have {8} {x \neq y \land I_2(x,y) \land C_2(x,y)} \ie{2,7}
+\have {9} {I_2(x,y)} \ae{8}
+\have {10} {I_2(x,y) \land I_2(y,y)} \ai{9,6}
+\end{nd}$
+\vskip20pt
+
+\end{document}

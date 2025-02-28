@@ -1,0 +1,156 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{fitch} % Pour les preuves en notation Fitch
+\usepackage{array}
+\usepackage{booktabs}% Package pour les preuves en déduction naturelle
+
+\geometry{a4paper, margin=2.5cm}
+
+\title{Preuves en Déduction Naturelle pour le système de Spinoza}
+\author{D'après la formalisation de Jarrett}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Ce document présente les preuves en déduction naturelle (système DN) pour les propositions principales de l'\textit{Éthique} de Spinoza, d'après la formalisation de Charles Jarrett présentée dans \textit{The Logical Structure of Spinoza's Ethics, Part I}.
+
+\section{Notation et symboles}
+
+\begin{itemize}
+    \item $I_2(x,y)$ : $x$ est en $y$
+    \item $C_2(x,y)$ : $x$ est conçu à travers $y$
+    \item $K_2(x,y)$ : $x$ est cause de $y$
+    \item $A_1(x)$ : $x$ est un attribut
+    \item $A_2(x,y)$ : $x$ est un attribut de $y$
+    \item $S_1(x)$ : $x$ est une substance
+    \item $G_1(x)$ : $x$ est un dieu
+    \item $M_1(x)$ : $x$ est un mode
+    \item $M_2(x,y)$ : $x$ est un mode de $y$
+    \item $F_1(x)$ : $x$ est fini
+    \item $L(\phi)$ : $\phi$ est logiquement nécessaire
+    \item $N(\phi)$ : $\phi$ est naturellement nécessaire
+\end{itemize}
+
+\section{Propositions dérivées (DP)}
+
+\subsection{DP1 : $S_1(x) \leftrightarrow I_2(x,x)$ (Une chose est une substance ssi elle est en soi)}
+
+\vskip20pt
+$\begin{nd}
+\hypo {1} {S_1(x) \rightarrow I_2(x,x)} 
+\hypo {2} {I_2(x,x) \rightarrow S_1(x)} 
+\have {3} {S_1(x) \leftrightarrow I_2(x,x)} \be{1,2}
+\end{nd}$
+\vskip20pt
+
+Preuve de $S_1(x) \rightarrow I_2(x,x)$:
+\vskip20pt
+$\begin{nd}
+\hypo {1} {S_1(x)}
+\hypo {2} {S_1(x) \leftrightarrow (I_2(x,x) \land C_2(x,x))} \text{(D3 : définition de substance)}
+\have {3} {I_2(x,x) \land C_2(x,x)} \be{1,2}
+\have {4} {I_2(x,x)} \land e{3}
+\end{nd}$
+\vskip20pt
+
+Preuve de $I_2(x,x) \rightarrow S_1(x)$:
+\vskip20pt
+$\begin{nd}
+\hypo {1} {I_2(x,x)}
+\hypo {2} {I_2(x,x) \rightarrow C_2(x,x)} \text{(A8 : si $x$ est en $y$ alors $x$ est conçu par $y$)}
+\have {3} {C_2(x,x)} \to e{1,2}
+\have {4} {I_2(x,x) \land C_2(x,x)} \ai{1,3}
+\hypo {5} {S_1(x) \leftrightarrow (I_2(x,x) \land C_2(x,x))} \text{(D3 : définition de substance)}
+\have {6} {S_1(x)} \be{4,5}
+\end{nd}$
+\vskip20pt
+
+\subsection{DP4 : $S_1(x) \rightarrow K_2(x,x)$ (Une substance est cause d'elle-même)}
+
+\vskip20pt
+$\begin{nd}
+\hypo {1} {S_1(x)}
+\hypo {2} {S_1(x) \leftrightarrow (I_2(x,x) \land C_2(x,x))} \text{(D3 : définition de substance)}
+\have {3} {I_2(x,x) \land C_2(x,x)} \be{1,2}
+\have {4} {C_2(x,x)} \ai{3}
+\hypo {5} {C_2(y,z) \leftrightarrow K_2(z,y)} \text{(A4 : l'effet est conçu par sa cause)}
+\have {6} {C_2(x,x) \leftrightarrow K_2(x,x)} \text{(substitution de $x$ pour $y$ et $z$ dans A4)}
+\have {7} {K_2(x,x)} \be{4,6}
+\end{nd}$
+\vskip20pt
+
+\subsection{DP5 : $S_1(x) \lor M_1(x)$ (Toute chose est soit une substance soit un mode)}
+
+\vskip20pt
+$\begin{nd}
+\hypo {1} {I_2(x,x) \lor \exists y(y \neq x \land I_2(x,y))} \text{(A1 : tout est en soi ou en autre chose)}
+\open
+\hypo {2} {I_2(x,x)}
+\hypo {3} {S_1(x) \leftrightarrow I_2(x,x)} \text{(DP1 : $x$ est substance ssi $x$ est en soi)}
+\have {4} {S_1(x)} \be{2,3}
+\have {5} {S_1(x) \lor M_1(x)} \lor i{4}
+\close
+\open
+\hypo {6} {\exists y(y \neq x \land I_2(x,y))}
+\open
+\hypo {7} {y \neq x \land I_2(x,y)}
+\have {8} {y \neq x} \ai{7}
+\have {9} {I_2(x,y)} \ai{7}
+\hypo {10} {I_2(x,y) \rightarrow C_2(x,y)} \text{(A8 : si $x$ est en $y$ alors $x$ est conçu par $y$)}
+\have {11} {C_2(x,y)} \ie{9,10}
+\have {12} {y \neq x \land I_2(x,y) \land C_2(x,y)} \ai{8,9,11}
+\hypo {13} {M_2(x,y) \leftrightarrow (x \neq y \land I_2(x,y) \land C_2(x,y))} \text{(D5a : définition d'un mode)}
+\have {14} {M_2(x,y)} \be{12,13}
+\hypo {15} {\exists y(S_1(y) \land M_2(x,y)) \rightarrow M_1(x)} \text{(D5b : $x$ est un mode)}
+\hypo {16} {\exists z(M_2(x,z)) \rightarrow M_1(x)} \text{(A12 : si $x$ est un mode de quelque chose, alors $x$ est un mode)}
+\have {17} {M_2(x,y) \rightarrow M_1(x)} \text{(par logique des prédicats à partir de 16)}
+\have {18} {M_1(x)} \ie{14,17}
+\have {19} {S_1(x) \lor M_1(x)} \lor i{18}
+\close
+\have {20} {S_1(x) \lor M_1(x)} \exists e{6,7-19}
+\close
+\have {21} {S_1(x) \lor M_1(x)} \lor e{1,2-5,6-20}
+\end{nd}$
+\vskip20pt
+
+\subsection{DP6 : $\neg(S_1(x) \land M_1(x))$ (Une chose ne peut pas être à la fois substance et mode)}
+
+\vskip20pt
+$\begin{nd}
+\hypo {1} {S_1(x) \land M_1(x)}
+\have {2} {S_1(x)} \ai{1}
+\have {3} {M_1(x)} \ai{1}
+\hypo {4} {M_1(x) \rightarrow \exists y(S_1(y) \land M_2(x,y))} \text{(D5b : un mode implique l'existence d'une substance dont il est le mode)}
+\have {5} {\exists y(S_1(y) \land M_2(x,y))} \ie{3,4}
+\open
+\hypo {6} {S_1(y) \land M_2(x,y)}
+\have {7} {M_2(x,y)} \ai{6}
+\hypo {8} {M_2(x,y) \rightarrow (x \neq y \land I_2(x,y) \land C_2(x,y))} \text{(D5a : définition d'un mode)}
+\have {9} {x \neq y \land I_2(x,y) \land C_2(x,y)} \ie{7,8}
+\have {10} {C_2(x,y)} \ai{9}
+\hypo {11} {S_1(x) \leftrightarrow (I_2(x,x) \land C_2(x,x))} \text{(D3 : définition de substance)}
+\have {12} {I_2(x,x) \land C_2(x,x)} \be{2,11}
+\have {13} {C_2(x,x)} \ai{12}
+\hypo {14} {C_2(x,x) \rightarrow \neg\exists z(z \neq x \land C_2(x,z))} \text{(A2 : ce qui est conçu par soi ne peut être conçu par autre chose)}
+\have {15} {\neg\exists z(z \neq x \land C_2(x,z))} \ie{13,14}
+\have {16} {x \neq y} \ai{9}
+\have {17} {y \neq x} \text{(symétrie de l'inégalité)}
+\have {18} {y \neq x \land C_2(x,y)} \ai{17,10}
+\have {19} {\exists z(z \neq x \land C_2(x,z))} \exists i{18}
+\have {20} {\bot} \ne{15,19}
+\close
+\have {21} {\bot} \exists e{5,6-20}
+\end{nd}$
+\vskip20pt
+
+
+\end{document}
