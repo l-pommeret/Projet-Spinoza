@@ -1,3 +1,5 @@
+(* Preuves des propositions du livre I de l'Ethique d'après la traduction logique de Charles Jarrett.  *)
+
 Require Import Coq.Init.Logic.
 Require Import Coq.Logic.Classical.
 
@@ -201,19 +203,25 @@ Qed.
 (* ====DÉFINITIONS==== *)
 
 
-(* D1 : Causa sui - ce dont l'essence implique l'existence *)
+(* D1 : J’entends par cause de soi ce dont l’essence enveloppe l’existence ; 
+autrement dit, ce dont la nature ne peut être conçue sinon comme existante. *)
 Axiom D1 : forall x:U,
   (K_2 x x /\ ~ exists y:U, y <> x /\ K_2 y x) <-> L(exists y:U, y = x).
 
-(* D2 : Une chose est finie quand elle peut être limitée par une autre de même nature *)
+(* D2 : Cette chose est dite finie en son genre, qui peut être limitée par une autre de même nature. 
+Par exemple un corps est dit fini, parce que nous en concevons toujours un autre plus grand. 
+De même une pensée est limitée par une autre pensée. 
+Mais un corps n’est pas limité par une pensée, ni une pensée par un corps. *)
 Axiom D2 : forall x:U,
   F_1 x <-> exists y:U, (y <> x /\ L_2 y x /\ forall z:U, A_2 z x <-> A_2 z y).
 
-(* D3 : Une substance est ce qui est en soi et est conçu par soi *)
+(* D3 : J’entends par substance ce qui est en soi et est conçu par soi : 
+c’est-à-dire ce dont le concept n’a pas besoin du concept d’une autre chose, 
+duquel il doive être formé. *)
 Axiom D3 : forall x:U, 
   S_1 x <-> (I_2 x x /\ C_2 x x).
 
-(* D4a : Un attribut est ce que l'intellect perçoit de la substance comme constituant son essence *)
+(* D4a : J’entends par attribut ce que l’entendement perçoit d’une substance comme constituant son essence. *)
 Axiom D4a : forall x:U,
   A_1 x <-> exists y:U, (S_1 y /\ I_2 x y /\ C_2 x y /\ I_2 y x /\ C_2 y x).
 
@@ -221,7 +229,9 @@ Axiom D4a : forall x:U,
 Axiom D4b : forall x y:U,
   A_2 x y <-> (A_1 x /\ C_2 y x).
 
-(* D5a : Un mode est ce qui est dans autre chose et est conçu par elle *)
+(* D5a : J’entends par mode les affections d’une substance, 
+autrement dit ce qui est dans une autre chose, 
+par le moyen de laquelle il est aussi conçu. *)
 Axiom D5a : forall x y:U,
   M_2 x y <-> (x <> y /\ I_2 x y /\ C_2 x y).
 
@@ -229,11 +239,18 @@ Axiom D5a : forall x y:U,
 Axiom D5b : forall x:U,
   M_1 x <-> exists y:U, (S_1 y /\ M_2 x y).
 
-(* D6 : Dieu est une substance constituée d'une infinité d'attributs *)
+(* D6 : J’entends par Dieu un être absolument infini, 
+c’est-à-dire une substance constituée par une infinité 
+d’attributs dont chacun exprime une essence éternelle et infinie. *)
 Axiom D6 : forall x:U,
   G_1 x <-> (S_1 x /\ forall y:U, A_1 y -> A_2 y x).
 
-(* D7a : Une chose est libre quand elle n'est cause que d'elle-même *)
+(* D7a : Cette chose sera dite libre qui existe par la seule nécessité 
+de sa nature et est déterminée par soi seule à agir : 
+cette chose sera dite nécessaire ou plutôt contrainte 
+qui est déterminée par une autre à exister et à produire 
+quelque effet dans une condition certaine et déterminée. *)
+
 Axiom D7a : forall x:U,
   B_1 x <-> (K_2 x x /\ ~ exists y:U, y <> x /\ K_2 y x).
 
@@ -241,7 +258,8 @@ Axiom D7a : forall x:U,
 Axiom D7b : forall x:U,
   N_1 x <-> exists y:U, y <> x /\ K_2 y x.
 
-(* D8 : L'éternité est l'existence même en tant que nécessaire *)
+(* D8 : J’entends par éternité l’existence elle-même en tant qu’elle est 
+conçue comme suivant nécessairement de la seule définition d’une chose éternelle. *)
 Axiom D8 : forall x:U,
   E_1 x <-> L(exists v:U, v = x).
 
@@ -251,31 +269,33 @@ Axiom D8 : forall x:U,
 
 (* AXIOMES DE SPINOZA *)
 
-(* A1 : Tout ce qui est, est soit en soi, soit en autre chose *)
+(* A1 : Tout ce qui est, est ou bien en soi, ou bien en autre chose. *)
 Axiom A1 : forall x:U,
   I_2 x x \/ exists y:U, y <> x /\ I_2 x y.
 
-(* A2 : Ce qui ne peut être conçu par un autre doit être conçu par soi *)
+(* A2 : Ce qui ne peut être conçu par le moyen d’une autre chose, doit être conçu par soi. *)
 Axiom A2 : forall x:U,
   (~ exists y:U, y <> x /\ C_2 x y) <-> C_2 x x.
 
-(* A3 : D'une cause déterminée suit nécessairement un effet *)
+(* A3 : D’une cause déterminée que l’on suppose donnée, suit nécessairement un effet, 
+et au contraire si nulle cause déterminée n’est donnée, il est impossible qu’un effet suive. *)
 Axiom A3 : forall x y:U,
   K_2 y x -> N((exists v:U, v = y) <-> exists v:U, v = x).
 
-(* A4 : La connaissance de l'effet dépend de la connaissance de la cause *)
+(* A4 : La connaissance de l’effet dépend de la connaissance de la cause et l’enveloppe. *)
 Axiom A4 : forall x y:U,
   K_2 x y <-> C_2 y x.
 
-(* A5 : Les choses qui n'ont rien en commun ne peuvent être conçues l'une par l'autre *)
+(* A5 : Les choses qui n’ont rien de commun l’une avec l’autre ne se peuvent non plus connaître l’une par l’autre ; 
+autrement dit, le concept de l’une n’enveloppe pas le concept de l’autre. *)
 Axiom A5 : forall x y:U,
   (~ exists z:U, C_3 z x y) <-> (~ C_2 x y /\ ~ C_2 y x).
 
-(* A6 : L'idée vraie doit s'accorder avec son objet *)
+(* A6 : Une idée vraie doit s’accorder avec l’objet dont elle est l’idée. *)
 Axiom A6 : forall x:U,
   K_1 x -> (T_1 x <-> exists y:U, O_2 y x /\ K_2 x y).
 
-(* A7 : Si une chose peut être conçue comme non existante, son essence n'implique pas l'existence *)
+(* A7 : Toute chose qui peut être conçue comme non existante, son essence n’enveloppe pas l’existence. *)
 Axiom A7 : forall x:U,
   M(~ exists y:U, y = x) <-> ~ L(exists y:U, y = x).
 
@@ -333,7 +353,7 @@ Axiom A19 : forall x y:U,
 (* ====PROPOSITIONS==== *)
 
 
-(* P1 : Si x est un mode de y et y est une substance, alors x est en y et y est en soi *)
+(* P1 : Une substance est antérieure en nature à ses affections. *)
 Theorem P1 : forall x y:U, 
   M_2 x y /\ S_1 y -> I_2 x y /\ I_2 y y.
 Proof.
@@ -362,6 +382,7 @@ Proof.
   - exact HIyy. (* y est en soi *)
 Qed.
 
+(* P2 : Deux substances ayant des attributs différents n’ont rien de commun entre elles. *)
 Theorem P2 : forall x y:U,
   S_1 x /\ S_1 y /\ x <> y -> ~ exists z:U, C_3 z x y.
 Proof.
@@ -399,7 +420,7 @@ Proof.
   - exact HNoCyx.
 Qed.
 
-(* P3 : Si x et y n'ont rien en commun, alors x ne peut pas être cause de y et y ne peut pas être cause de x *)
+(* P3 : Si des choses n’ont rien de commun entre elles, l’une d’elles ne peut être cause de l’autre. *)
 Theorem P3 : forall x y:U,
   (~ exists z:U, C_3 z x y) -> ~ K_2 x y /\ ~ K_2 y x.
 Proof.
@@ -429,7 +450,9 @@ Proof.
     contradiction.
 Qed.
 
-(** x neq y -> y neq x *)
+(* QUELQUES LEMMES INTERMEDIAIRES DONNES PAR JARRETT *)
+
+(* x différent de y -> y différent de x *)
 Lemma neq_sym : forall x y:U, 
   x <> y -> y <> x.
 Proof.
@@ -440,7 +463,7 @@ Proof.
   exact Heq.
 Qed.
 
-(* x est une substance ssi x est en soi *)
+(* DP1 : x est une substance ssi x est en soi *)
 Lemma DP1 : forall x:U,
   S_1 x <-> I_2 x x.
 Proof.
@@ -462,7 +485,6 @@ Proof.
   exact HC.
 Qed.
 
-
 (** DP5 : Toute chose est soit une substance soit un mode *)
 Lemma DP5 : forall x:U,
   S_1 x \/ M_1 x.
@@ -475,7 +497,6 @@ Proof.
     + apply neq_sym. assumption.
     + split; assumption.
 Qed.
-
 
 (** DP6 : Une substance et un mode ne peuvent jamais être la même chose *)
 Lemma DP6 : forall x:U,
@@ -528,6 +549,8 @@ Proof.
   }
   exact H.
 Qed.
+
+(* Des propositions très importantes *)
 
 (** DPI: Tout est soit une substance, soit un mode, mais pas les deux *)
 Theorem DPI : forall x:U,
@@ -588,8 +611,9 @@ Proof.
       destruct HC. exists y. split; assumption.
 Qed.
 
-(** P4: Deux ou plusieurs choses distinctes ne peuvent se distinguer que par 
-la diversité des attributs de leurs substances, ou par la diversité des affections de ces mêmes substances. *)
+(** P4: Deux ou plusieurs choses distinctes se distinguent entre elles 
+ou bien par la diversité des attributs des substances, 
+ou bien par la diversité des affections des substances. *)
 Theorem P4 : forall x y:U,
   x <> y -> exists z z':U,
   ((A_2 z x /\ A_2 z' y /\ z <> z') \/
@@ -599,32 +623,32 @@ Theorem P4 : forall x y:U,
 Proof.
   intros x y H. 
   pose proof (DPI x) as [H0 | H0].
-  - (* x is substance *)
+  - (* x est une substance *)
     pose proof (DPI y) as [H1 | H1].
-    + (* Both are substances *)
+    + (* Les deux sont des substances *)
       exists x; exists y.
       left. split.
       * apply DPII. destruct H0. auto.
       * split.
         -- apply DPII. destruct H1. auto.
         -- auto.
-    + (* x is substance, y is mode *)
+    + (* x est une substance, y est un mode *)
       exists x; exists y.
       right. left. split.
       * apply DPII. destruct H0. auto.
       * split.
         -- reflexivity.
         -- destruct H1. auto.
-  - (* x is mode *)
+  - (* x est un mode *)
     pose proof (DPI y) as [H1 | H1].
-    + (* y is substance, x is mode *)
+    + (* y est une substance, x est un mode *)
       exists x; exists y.
       right. right. left. split.
       * apply DPII. destruct H1. auto.
       * split.
         -- reflexivity.
         -- destruct H0. auto.
-    + (* Both are modes *)
+    + (* Les deux sont des modes *)
       exists x; exists y.
       right. right. right.
       destruct H0. destruct H1. split; auto.
@@ -685,7 +709,7 @@ Proof.
   contradiction.
 Qed.
 
-(* P6c: Corollaire de P6 *)
+(* P6c : Il suit de là qu’une substance ne peut pas être produite par autre chose *)
 (* Prémisses: D3, A2, A4 *)
 Corollary P6c : forall x:U,
   S_1 x -> ~(exists y:U, y <> x /\ K_2 y x).
@@ -777,8 +801,8 @@ Proof.
   apply H_no_common_attr. exists z. split; assumption.
 Qed.
 
-(* P9: Suivant qu'une chose a plus de réalité ou d'être, 
-un plus grand nombre d'attributs lui appartient. *)
+(* P9: À proportion de la réalité ou de l’être que possède chaque chose, 
+un plus grand nombre d’attributs lui appartiennent. *)
 (* Prémisses: A18 - Relation entre réalité et attributs *)
 Theorem P9 : forall x y:U,
   (S_1 x /\ S_1 y) -> (R_2 x y <-> V_2 x y).
@@ -789,7 +813,7 @@ Proof.
   exact H.
 Qed.
 
-(* P10: Tout attribut d'une substance doit être conçu par soi. *)
+(* P10: Chacun des attributs d’une même substance doit être conçu par soi. *)
 (* Prémisses: D3, D4a, A2 *)
 Theorem P10 : forall x:U,
   A_1 x -> C_2 x x.
@@ -892,8 +916,8 @@ Proof.
     exact H_nec_God_to_nec.
 Qed.
 
-(* P12: On ne peut concevoir selon sa véritable nature aucun attribut de la substance 
-duquel il résulte que la substance soit divisible. *)
+(* P12: De nul attribut d’une substance il ne peut être formé un concept vrai 
+d’où il suivrait que cette substance pût être divisée. *)
 (* Prémisses: A10, P7 *)
 Theorem P12 : forall x y z:U,
   S_1 x -> ~D_3 x y z.
@@ -937,7 +961,7 @@ Proof.
   contradiction.
 Qed.
 
-(* P13: La substance absolument infinie est indivisible. *)
+(* P13: Une substance absolument infinie est indivisible. *)
 (* Prémisses: P12 *)
 Theorem P13 : forall x y z:U,
   (S_1 x /\ (forall w:U, A_1 w -> A_2 w x)) -> ~D_3 x y z.
@@ -953,7 +977,7 @@ Proof.
   exact HS.
 Qed.
 
-(* P14: Il ne peut exister et on ne peut concevoir aucune autre substance que Dieu. *)
+(* P14: Nulle substance en dehors de Dieu ne peut être donnée ni conçue. *)
 (* Prémisses: P11, D6, A9, D4b, et soit DP7 soit P5 *)
 Theorem P14 : exists x:U,
   G_1 x /\ (forall y:U, S_1 y -> y = x).
@@ -1066,7 +1090,7 @@ Proof.
     exact HGg.
 Qed.
 
-(* P15: Tout ce qui existe est en Dieu et rien ne peut être ni être conçu sans Dieu *)
+(* P15: Tout ce qui est, est en Dieu et rien ne peut sans Dieu être ni être conçu. *)
 (* Prémisses: DP5, P14, D3, D5b, D5a *)
 Theorem P15 : forall x:U,
   exists g:U, G_1 g /\ I_2 x g /\ C_2 x g.
@@ -1132,7 +1156,8 @@ Proof.
 Qed.
 
 
-(* P16: Dieu est cause de toutes choses *)
+(* P16: De la nécessité de la nature divine doivent suivre en une infinité de modes une infinité de choses, 
+c’est-à-dire tout ce qui peut tomber sous un entendement infini. *)
 (* Prémisses: P15, A4 *)
 Theorem P16 : forall x:U,
   exists g:U, G_1 g /\ K_2 g x.
@@ -1154,7 +1179,7 @@ Proof.
   exact HCxg.
 Qed.
 
-(* P17: Dieu agit par les seules lois de sa nature *)
+(* P17: Dieu agit par les seules lois de sa nature et sans subir aucune contrainte. *)
 (* Prémisses: P14, P15, P16, D7a *)
 Theorem P17 : exists g:U,
   G_1 g /\ ~(exists x:U, ~I_2 x g /\ K_2 x g) /\ (forall x:U, K_2 g x).
@@ -1230,7 +1255,7 @@ Qed.
 
 (* P17c2: Dieu seul est cause libre *)
 (* Prémisses: P17, D7a, P14 *)
-Theorem P17c2 : exists g:U,
+Corollary P17c2 : exists g:U,
   G_1 g /\ B_1 g /\ (forall x:U, B_1 x -> x = g).
 Proof.
   (* Par P17, il existe un Dieu g qui est cause de toutes choses et n'est déterminé par aucune cause externe *)
@@ -1340,7 +1365,7 @@ Proof.
   exact HSx.
 Qed.
 
-(* P18: Dieu est cause immanente de toutes choses *)
+(* P18: Dieu est cause immanente mais non transitive de toutes choses. *)
 (* Prémisses: P15, P16 *)
 Theorem P18 : exists g:U,
   G_1 g /\ (forall x:U, I_2 x g <-> K_2 g x).
@@ -1392,7 +1417,7 @@ Proof.
     exact HIxh.
 Qed.
 
-(* P19: Dieu et tous ses attributs sont éternels *)
+(* P19: Dieu est éternel, autrement dit tous les attributs de Dieu sont éternels. *)
 (* Prémisses: D8, P14, P14-A, D4b, P10, DP4 *)
 Theorem P19 : exists g:U,
   G_1 g /\ E_1 g /\ (forall x:U, A_2 x g -> E_1 x).
@@ -1455,7 +1480,7 @@ Proof.
   exact HEg.
 Qed.
 
-(* P20: L'existence et l'essence de Dieu sont une seule et même chose *)
+(* P20: L’existence de Dieu et son essence sont une seule et même chose. *)
 (* Prémisses: D4b, P10, DP4, P14, P14-A *)
 Theorem P20 : forall x:U,
   exists g:U, G_1 g /\ (A_2 x g -> x = g).
@@ -1484,7 +1509,9 @@ Proof.
   apply DP7. split; assumption.
 Qed.
 
-(* P21: Tout ce qui suit de l'essence absolue d'un attribut de Dieu existe nécessairement et infiniment *)
+(* P21: Tout ce qui suit de la nature d’un attribut de Dieu prise absolument, 
+a toujours dû exister et est infini, 
+autrement dit est infini et éternel par la vertu de cet attribut. *)
 (* Prémisses: P19, D8, A3, A14, R1, R6, R7, P20, DP7 *)
 Theorem P21 : forall x:U,
   (exists g y:U, G_1 g /\ A_2 y g /\ x <> g /\ K_2 y x /\ ~(exists z:U, z <> y /\ K_2 z x)) ->
@@ -1567,7 +1594,10 @@ Proof.
     apply HNecDist. exact HNg.
 Qed.
 
-(* P22: Tout ce qui suit d'un attribut de Dieu en tant que modifié est éternel et infini *)
+(* P22: Tout ce qui suit d’un attribut de Dieu, 
+en tant qu’il est affecté d’une modification qui par la vertu 
+de cet attribut existe nécessairement et est infinie, 
+doit aussi exister nécessairement et être infini. *)
 (* Prémisses: DP6, P14, P14-A, D1, P19, D8, A3, A14, R1, R6, R7 *)
 Theorem P22 : forall x:U,
   (exists g y y':U, G_1 g /\ A_2 y g /\ M_1 y' /\ ~F_1 y' /\ N(exists v:U, v = y') /\ 
@@ -1630,7 +1660,9 @@ Proof.
     apply HNecDist. exact HNy'.
 Qed.
 
-(* P23: Tout mode qui existe nécessairement et infiniment découle d'un attribut de Dieu *)
+(* P23: Tout mode qui existe nécessairement et est infini, 
+a dû suivre nécessairement ou bien de la nature d’un attribut de Dieu prise absolument, 
+ou bien d’un attribut affecté d’une modification qui elle-même existe nécessairement et est infinie. *)
 (* Prémisses: P14, A9, P19, D8 *)
 Theorem P23 : forall x:U,
   N(exists v:U, v = x) -> 
@@ -1710,7 +1742,7 @@ Proof.
   exact HNyimpx.
 Qed.
 
-(* P24: L'essence des choses produites par Dieu n'implique pas l'existence *)
+(* P24: L’essence des choses produites par Dieu n’enveloppe pas l’existence. *)
 (* Prémisses: D1 *)
 Theorem P24 : forall x:U,
   (exists g:U, G_1 g /\ x <> g /\ K_2 g x) -> ~L(exists v:U, v = x).
@@ -1739,7 +1771,8 @@ Proof.
   - exact HKgx.
 Qed.
 
-(* P25: Dieu est cause efficiente de l'essence et de l'existence des choses *)
+(* P25: Dieu n’est pas seulement cause efficiente de l’existence, 
+mais aussi de l’essence des choses. *)
 (* Prémisses: P15, A4 *)
 Theorem P25 : forall x:U,
   exists g:U, G_1 g /\ K_2 g x.
@@ -1764,7 +1797,8 @@ Proof.
   apply A4. exact HCxg.
 Qed.
 
-(* P26: Une chose déterminée à produire un effet a été déterminée par Dieu *)
+(* P26: Une chose qui est déterminée à produire quelque effet a été nécessairement déterminée par Dieu ; 
+et celle qui n’a pas été déterminée par Dieu ne peut se déterminer elle-même à produire un effet. *)
 (* Prémisses: P16 *)
 Theorem P26 : forall x y:U,
   (exists z z':U, M_2 y z /\ M_2 z' z /\ K_2 x y) -> 
@@ -1780,7 +1814,7 @@ Proof.
   apply P16.
 Qed.
 
-(* P27: Une chose déterminée par Dieu ne peut se rendre indéterminée *)
+(* P27: Une chose qui est déterminée par Dieu à produire quelque effet ne peut se rendre elle-même indéterminée. *)
 (* Prémisses: P14-A, A3 *)
 Theorem P27 : forall x:U,
   (exists g:U, G_1 g /\ K_2 g x /\ ~(exists z:U, z <> g /\ K_2 z x)) -> 
@@ -1837,7 +1871,15 @@ Proof.
   apply HNDist. exact HNg.
 Qed.
 
-(* P28: Tout mode fini est déterminé à exister par un autre mode fini *)
+(* P28 : Une chose singulière quelconque, 
+autrement dit toute chose qui est finie et a une existence déterminée, 
+ne peut exister et être déterminée à produire quelque effet, 
+si elle n’est déterminée à exister et à produire cet effet par une autre cause 
+qui est elle-même finie et a une existence déterminée ; 
+et à son tour cette cause ne peut non plus exister et être déterminée à produire quelque effet, 
+si elle n’est déterminée à exister et à produire cet effet par une autre qui est aussi finie 
+et a une existence déterminée, et ainsi à l’infini. *)
+(* Autrement dit : Tout mode fini est déterminé à exister par un autre mode fini *)
 (* Prémisses: P14-A, P16, A8, A4, A14, A3, R10, DP4, P8 *)
 Theorem P28 : forall x:U,
   (F_1 x /\ ~N(exists v:U, v = x)) -> 
@@ -1886,7 +1928,9 @@ Proof.
   apply R10. split; assumption.
 Qed.
 
-(* P29: Rien n'est contingent dans la nature *)
+(* P29: Il n’est rien donné de contingent dans la nature, 
+mais tout y est déterminé par la nécessité de la nature divine à exister 
+et à produire quelque effet d’une certaine manière. *)
 (* Prémisses: P14-A, P16, P11, D7b, D8, D1 *)
 Theorem P29 : exists g:U,
   G_1 g /\ L(exists x:U, x = g) /\ (forall x:U, x <> g -> N_1 x).
@@ -1967,7 +2011,8 @@ Proof.
     exact HKhx.
 Qed.
 
-(* P30: L'entendement doit comprendre les attributs et affections de Dieu *)
+(* P30: Un entendement, actuellement fini ou actuellement infini, 
+doit comprendre les attributs de Dieu et les affections de Dieu et rien autre chose. *)
 (* Prémisses: DP5, A6, A9, D4b, D5a, D5b *)
 Theorem P30 : forall x y:U,
   (A_1 x /\ T_1 x /\ O_2 y x) -> (A_1 y \/ M_1 y).
@@ -2019,6 +2064,10 @@ Proof.
     exact HMy.
   }
 Qed.
+
+(* P31 : L’entendement en acte, qu’il soit fini ou infini, 
+comme aussi la volonté, le désir, l’amour, etc., 
+doivent être rapportés à la Nature Naturée et non à la Naturante. *)
 
 (* P31a: L'entendement est un mode *)
 (* Prémisses: DP5, A17a, DPI *)
@@ -2160,7 +2209,7 @@ Proof.
   }
 Qed.
 
-(* P32: La volonté ne peut être appelée cause libre *)
+(* P32: La volonté ne peut être appelée cause libre, mais seulement cause nécessaire. *)
 (* Prémisses: P31b, P16, D7a, D7b, DPI, D6 *)
 Theorem P32 : forall x:U,
   W_1 x -> (~B_1 x /\ N_1 x).
@@ -2258,7 +2307,8 @@ Proof.
   }
 Qed.
 
-(* P33: Les choses n'auraient pu être produites par Dieu d'aucune autre manière *)
+(* P33: Les choses n’ont pu être produites par Dieu d’aucune manière autre et dans aucun ordre autre, 
+que de la manière et dans l’ordre où elles ont été produites. *)
 (* Note: Jarrett indique que cette proposition n'est pas dérivable de son système formel *)
 (* Pour la démontrer, nous ajoutons un axiome supplémentaire R11 qui formalise le nécessitarisme divin *)
 Axiom R11 : forall g y z:U, 
@@ -2355,7 +2405,7 @@ Proof.
      que nous n'avons pas dans notre système actuel. *)
 Admitted.
 
-(* P34: La puissance de Dieu est son essence même *)
+(* P34: La puissance de Dieu est son essence même. *)
 (* Prémisses: DP7, P14-A, D6, D3, D4b, A19 *)
 Theorem P34 : forall x:U,
   exists g:U, G_1 g /\ (A_2 x g <-> P_2 x g).
@@ -2470,7 +2520,7 @@ Proof.
   }
 Qed.
 
-(* P35: Tout ce qui existe est nécessaire *)
+(* P35: Tout ce que nous concevons qui est au pouvoir de Dieu, est nécessairement. *)
 (* Prémisses: identiques à P29 *)
 Theorem P35 : exists g:U,
   G_1 g /\ L(exists x:U, x = g) /\ (forall x:U, x <> g -> N_1 x).
@@ -2551,7 +2601,7 @@ Proof.
     exact HKhx.
 Qed.
 
-(* P36: Il n'existe rien dont la nature ne produise quelque effet *)
+(* P36: Rien n’existe de la nature de quoi ne suive quelque effet. *)
 (* Note: Jarrett indique que cette proposition n'est pas dérivable de son système formel *)
 Theorem P36 : forall x:U,
   (exists v:U, v = x) -> (exists y:U, K_2 x y).

@@ -1,5 +1,4 @@
-\vskip20pt
-\documentclass[11pt,a4paper]{article}
+\documentclass[10pt,a3paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
@@ -9,20 +8,70 @@
 \usepackage{fitch} % Pour les preuves en notation Fitch
 \usepackage{array}
 \usepackage{proof} % Pour les preuves en déduction naturelle
+\usepackage{graphicx}
 
-\geometry{a4paper, margin=2.5cm}
+\geometry{a4paper, margin=2cm}
 
-\title{Preuves en Déduction Naturelle pour le système de Spinoza}
-\author{D'après la formalisation de Jarrett}
+\title{Preuves en déduction naturelle du livre I de l'\textit{Ethique} de Spinoza}
+\author{Luc \textsc{Pommeret} \\ D'après la traduction de Jarrett}
 \date{\today}
 
 \begin{document}
 
 \maketitle
 
+\begin{abstract}
+Ce document présente une formalisation en déduction naturelle \cite{rougemont} des propositions du livre I de l'\textit{Éthique} de Spinoza, s'appuyant sur le travail de Charles Jarrett \cite{jarrett1978logical} dans son article fondamental ``The Logical Structure of Spinoza's Ethics, Part I'' (1978). À l'aide d'une logique bimodale, nous démontrons rigoureusement l'enchaînement logique des 36 propositions de la partie \textit{De Deo} (De Dieu), établissant ainsi une cohérence interne de l'architecture métaphysique spinoziste. Cette formalisation explicite les relations déductives entre les définitions, axiomes et propositions, offrant un aperçu de la rigueur déductive que Spinoza a insufflée à son système philosophique. Notre travail s'inscrit dans une double tradition : celle des études formelles de l'Éthique initiée par Jarrett et poursuivie par d'autres chercheurs \cite{gueroult1968spinoza, bennett1984study}, et celle de la vérification assistée par ordinateur des raisonnements philosophiques, rendue possible grâce à l'implémentation complète de ces preuves dans l'assistant de preuve Coq \cite{pommeret2025github}.
+\end{abstract}
+
+\tableofcontents
+
+% Introduction section
 \section{Introduction}
 
-Ce document présente les preuves en déduction naturelle (système DN) pour les propositions principales de l'\textit{Éthique} de Spinoza, d'après la formalisation de Charles Jarrett présentée dans \textit{The Logical Structure of Spinoza's Ethics, Part I}.
+\subsection{Contexte philosophique et historique}
+
+L'\textit{Éthique} de Baruch Spinoza (1632-1677) constitue l'une des œuvres majeures de la philosophie occidentale, remarquable tant par sa profondeur conceptuelle que par sa structure déductive rigoureuse \textit{more geometrico}. Rédigée selon un modèle géométrique inspiré des \textit{Éléments} d'Euclide, l'œuvre procède par définitions, axiomes, propositions et démonstrations, formant un système métaphysique, épistémologique et éthique cohérent. Le livre I, \textit{De Deo} (De Dieu), pose les fondements métaphysiques du système spinoziste, établissant la nature de Dieu comme substance unique, et déployant les conséquences de cette ontologie moniste \cite{spinoza1965ethique}.
+
+La structure démonstrative adoptée par Spinoza suggère une aspiration à la même certitude que celle des mathématiques. Cette aspiration a naturellement conduit plusieurs chercheurs à examiner la validité formelle des arguments de Spinoza, en utilisant des outils logiques modernes. Parmi ces travaux, l'article de Charles Jarrett, ``The Logical Structure of Spinoza's Ethics, Part I'' (1978) \cite{jarrett1978logical}, représente une contribution majeure, proposant une formalisation complète des concepts et des raisonnements du premier livre de l'\textit{Éthique} dans un système de logique modale.
+
+D'autres formalisation ont été faites par Baptiste Mélès (jusqu'à la proposition 8) a partir des écrits de Martial Guéroult. Voir pour cela son Github : https://github.com/BapMel/ethicoq.
+
+\subsection{Objectifs et méthodologie}
+
+Ce document s'inscrit dans cette tradition d'analyse formelle, avec pour objectif principal de présenter de manière claire et systématique les preuves en déduction naturelle des propositions du livre I de l'\textit{Éthique}, selon la formalisation proposée par Jarrett. La déduction naturelle, système d'inférence développé par Gerhard Gentzen dans les années 1930 \cite{gentzen1969investigations}, offre un cadre particulièrement adapté pour représenter les raisonnements philosophiques, en permettant d'expliciter chaque étape déductive.
+
+Notre approche méthodologique comprend :
+
+\begin{enumerate}
+    \item Un lexique formel traduisant les concepts spinozistes en prédicats logiques, tiré de Jarrett \cite{jarrett1978logical}
+    \item La formulation des définitions et axiomes dans ce langage formel, également tiré de \cite{jarrett1978logical}
+    \item La construction pas à pas des preuves pour chacune des 36 propositions du livre I
+    \item Des théorèmes implicites et lemmes intermédiaires nécessaires aux démonstrations
+\end{enumerate}
+
+Il faut noter que cette formalisation est une interprétation du système spinoziste ! Celle de Charles Jarrett. Les preuves que je fournis suivent donc cette interprétation Jarrettienne de Spinoza.
+
+\subsection{Implémentation en Coq et validation computationnelle}
+
+Au-delà de la présentation formelle contenue dans ce document, l'ensemble des preuves a été implémenté dans l'assistant de preuve Coq, permettant une vérification computationnelle de leur validité. Cette implémentation, disponible sur GitHub \cite{pommeret2025github}, constitue une étape significative dans l'application des méthodes de vérification formelle à l'histoire de la philosophie.
+
+L'utilisation de Coq apporte plusieurs avantages :
+\begin{itemize}
+    \item Une vérification rigoureuse de chaque étape déductive
+    \item L'identification précise des hypothèses implicites dans les raisonnements de Spinoza
+    \item La génération automatique de preuves complètes et vérifiables
+    \item Un cadre pour l'extension future du projet aux autres livres de l'\textit{Éthique}, ce qui constitue la librairie \texttt{SpinozaJarrett}
+\end{itemize}
+
+Notre travail s'inscrit ainsi dans un courant émergent de ``philosophie formelle assistée par ordinateur'', rejoignant d'autres efforts comme ceux de \cite{meles2019pratique} et de chercheurs ayant appliqué la vérification formelle à des arguments philosophiques \cite{bentzen2021computational}.
+
+\subsection{État de l'art et positionnement}
+
+L'examen formel de l'\textit{Éthique} de Spinoza a une histoire riche. Au-delà du travail logique de Jarrett, on peut citer les analyses de Martial Guéroult \cite{gueroult1968spinoza} en France, qui, sans toujours utiliser la logique formelle contemporaine, a minutieusement étudié l'architecture démonstrative de l'œuvre. Plus récemment, plusieurs chercheurs ont exploré l'application des méthodes formelles modernes à l'\textit{Éthique} \cite{seni2018github}.
+
+Ce document se veut ainsi à la fois un outil pédagogique pour comprendre la structure logique de l'\textit{Éthique}, une contribution à l'étude formelle de l'œuvre de Spinoza, et une démonstration de l'applicabilité des méthodes de vérification formelle à l'histoire de la philosophie \cite{coquand1988calculus}.
+
 
 \section{Notation et symboles}
 
@@ -97,62 +146,60 @@ Ce document présente les preuves en déduction naturelle (système DN) pour les
 \subsection{Définitions}
 \begin{itemize}
     \item \textbf{D1} : $K_2(x,x) \land \neg \exists y (y \neq x \land K_2(y,x)) \leftrightarrow L(\exists y (y = x))$ \\
-    \textit{Causa sui} - ce dont l'essence implique l'existence
+    J’entends par cause de soi ce dont l’essence enveloppe l’existence ; autrement dit, ce dont la nature ne peut être conçue sinon comme existante.
     
     \item \textbf{D2} : $F_1(x) \leftrightarrow \exists y (y \neq x \land L_2(y,x) \land \forall z (A_2(z,x) \leftrightarrow A_2(z,y)))$ \\
-    Une chose est finie quand elle peut être limitée par une autre de même nature
+    Cette chose est dite finie en son genre, qui peut être limitée par une autre de même nature. Par exemple un corps est dit fini, parce que nous en concevons toujours un autre plus grand. De même une pensée est limitée par une autre pensée. Mais un corps n’est pas limité par une pensée, ni une pensée par un corps.
     
     \item \textbf{D3} : $S_1(y) \leftrightarrow (I_2(y,y) \land C_2(y,y))$ \\
-    Une substance est ce qui est en soi et est conçu par soi
+    J’entends par substance ce qui est en soi et est conçu par soi : c’est-à-dire ce dont le concept n’a pas besoin du concept d’une autre chose, duquel il doive être formé.
     
-    \item \textbf{D4a} : $A_1(x) \leftrightarrow \exists y (S_1(y) \land I_2(x,y) \land C_2(x,y) \land I_2(y,x) \land C_2(y,x))$ \\
-    Un attribut est ce que l'intellect perçoit de la substance comme constituant son essence
-    
+    \item \textbf{D4a} : $A_1(x) \leftrightarrow \exists y (S_1(y) \land I_2(x,y) \land C_2(x,y) \land I_2(y,x) \land C_2(y,x))$ \\    
     \item \textbf{D4b} : $A_2(x,y) \leftrightarrow (A_1(x) \land C_2(y,x))$ \\
-    $x$ est un attribut de $y$
+    J’entends par attribut ce que l’entendement perçoit d’une substance comme constituant son essence.
     
-    \item \textbf{D5a} : $M_2(x,y) \leftrightarrow (x \neq y \land I_2(x,y) \land C_2(x,y))$ \\
-    Un mode est ce qui est dans autre chose et est conçu par elle
-    
+    \item \textbf{D5a} : $M_2(x,y) \leftrightarrow (x \neq y \land I_2(x,y) \land C_2(x,y))$ \\    
     \item \textbf{D5b} : $M_1(x) \leftrightarrow \exists y (S_1(y) \land M_2(x,y))$ \\
-    $x$ est un mode
+    J’entends par mode les affections d’une substance, autrement dit ce qui est dans une autre chose, par le moyen de laquelle il est aussi conçu.
     
     \item \textbf{D6} : $G_1(x) \leftrightarrow (S_1(x) \land \forall y (A_1(y) \rightarrow A_2(y,x)))$ \\
-    Dieu est une substance constituée d'une infinité d'attributs
+    J’entends par Dieu un être absolument infini, c’est-à-dire une substance constituée par une infinité d’attributs dont chacun exprime une essence éternelle et infinie.
     
     \item \textbf{D7a} : $B_1(x) \leftrightarrow (K_2(x,x) \land \neg \exists y (y \neq x \land K_2(y,x)))$ \\
-    Une chose est libre quand elle n'est cause que d'elle-même
-    
     \item \textbf{D7b} : $N_1(x) \leftrightarrow \exists y (y \neq x \land K_2(y,x))$ \\
-    Une chose est nécessaire quand elle est déterminée par autre chose
+    Cette chose sera dite libre qui existe par la seule nécessité de sa nature et est déterminée par soi seule à agir : cette chose sera dite nécessaire ou plutôt contrainte qui est déterminée par une autre à exister et à produire quelque effet dans une condition certaine et déterminée.
     
     \item \textbf{D8} : $E_1(x) \leftrightarrow L(\exists v (v = x))$ \\
-    L'éternité est l'existence même en tant que nécessaire
+    J’entends par éternité l’existence elle-même en tant qu’elle est conçue comme suivant nécessairement de la seule définition d’une chose éternelle.
 \end{itemize}
 
 \subsection{Axiomes}
 \begin{itemize}
     \item \textbf{A1} : $\forall x (I_2(x,x) \lor \exists y (y \neq x \land I_2(x,y)))$ \\
-    Tout ce qui est, est soit en soi, soit en autre chose
+    Tout ce qui est, est ou bien en soi, ou bien en autre chose.
     
     \item \textbf{A2} : $\forall x ((\neg \exists y (y \neq x \land C_2(x,y))) \leftrightarrow C_2(x,x))$ \\
-    Ce qui ne peut être conçu par un autre doit être conçu par soi
+    Ce qui ne peut être conçu par le moyen d’une autre chose, doit être conçu par soi.
     
     \item \textbf{A3} : $\forall x \forall y (K_2(y,x) \rightarrow N((\exists v (v = y)) \leftrightarrow \exists v (v = x)))$ \\
-    D'une cause déterminée suit nécessairement un effet
+    D’une cause déterminée que l’on suppose donnée, suit nécessairement un effet, et au contraire si nulle cause déterminée n’est donnée, il est impossible qu’un effet suive.
     
     \item \textbf{A4} : $\forall x \forall y (K_2(x,y) \leftrightarrow C_2(y,x))$ \\
-    La connaissance de l'effet dépend de la connaissance de la cause
+    La connaissance de l’effet dépend de la connaissance de la cause et l’enveloppe.
     
     \item \textbf{A5} : $\forall x \forall y ((\neg \exists z (C_3(z,x,y))) \leftrightarrow (\neg C_2(x,y) \land \neg C_2(y,x)))$ \\
-    Les choses qui n'ont rien en commun ne peuvent être conçues l'une par l'autre
+    Les choses qui n’ont rien de commun l’une avec l’autre ne se peuvent non plus connaître l’une par l’autre ; autrement dit, le concept de l’une n’enveloppe pas le concept de l’autre.
     
     \item \textbf{A6} : $\forall x (K_1(x) \rightarrow (T_1(x) \leftrightarrow \exists y (O_2(y,x) \land K_2(x,y))))$ \\
-    L'idée vraie doit s'accorder avec son objet
+    Une idée vraie doit s’accorder avec l’objet dont elle est l’idée.
     
     \item \textbf{A7} : $\forall x (M(\neg \exists y (y = x)) \leftrightarrow \neg L(\exists y (y = x)))$ \\
-    Si une chose peut être conçue comme non existante, son essence n'implique pas l'existence
+    Toute chose qui peut être conçue comme non existante, son essence n’enveloppe pas l’existence.
+\end{itemize}    
+
+\subsubsection*{Axiomes découverts par Charles Jarrett, implicites chez Spinoza}
     
+\begin{itemize}
     \item \textbf{A8} : $\forall x \forall y (I_2(x,y) \rightarrow C_2(x,y))$ \\
     Si $x$ est en $y$ alors $x$ est conçu par $y$
     
@@ -175,12 +222,14 @@ Ce document présente les preuves en déduction naturelle (système DN) pour les
     $x$ existe nécessairement si et seulement si $x$ n'est pas fini
 \end{itemize}
 
+\clearpage
+
 \section{Preuves en déduction naturelle}
 
 \subsection{Proposition 1 (P1)}
 
 \begin{center}
-Si $x$ est un mode de $y$ et $y$ est une substance, alors $x$ est en $y$ et $y$ est en soi.
+Une substance est antérieure en nature à ses affections.
 \end{center}
 
 \begin{center}
@@ -205,10 +254,12 @@ $\begin{nd}
 \have {13} {\forall x \forall y (M_2(x,y) \land S_1(y) \rightarrow I_2(x,y) \land I_2(y,y))} \Ai{12}
 \end{nd}$
 
+\clearpage
+
 \subsection{Proposition 2 (P2)}
 
 \begin{center}
-Deux substances ayant des attributs différents n'ont rien en commun entre elles.
+Deux substances ayant des attributs différents n’ont rien de commun entre elles.
 \end{center}
 
 \begin{center}
@@ -251,5 +302,2466 @@ $\begin{nd}
 \have {31} {\forall y (S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg \exists z (C_3(z,x,y)))} \Ai{30}
 \have {32} {\forall x \forall y (S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg \exists z (C_3(z,x,y)))} \Ai{31}
 \end{nd}$
+
+\clearpage
+
+\subsection{Proposition 3 (P3)}
+
+\begin{center}
+Si des choses n’ont rien de commun entre elles, l’une d’elles ne peut être cause de l’autre.
+\end{center}
+
+\begin{center}
+$\forall x \forall y (\neg \exists z (C_3(z,x,y)) \rightarrow \neg K_2(x,y) \land \neg K_2(y,x))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {\neg \exists z (C_3(z,x,y))}
+\have {2} {(\neg \exists z (C_3(z,x,y))) \leftrightarrow (\neg C_2(x,y) \land \neg C_2(y,x))} \by{A5}{}
+\have {3} {\neg C_2(x,y) \land \neg C_2(y,x)} \ie{1,2}
+\have {4} {\neg C_2(x,y)} \ae{3}
+\have {5} {\neg C_2(y,x)} \ae{3}
+\have {6} {\forall a \forall b (K_2(a,b) \leftrightarrow C_2(b,a))} \by{A4}{}
+\have {7} {K_2(x,y) \leftrightarrow C_2(y,x)} \Ae{6}
+\have {8} {K_2(y,x) \leftrightarrow C_2(x,y)} \Ae{6}
+\open
+\hypo {9} {K_2(x,y)}
+\have {10} {C_2(y,x)} \ie{9,7}
+\have {11} {\neg C_2(y,x)} \r{5}
+\have {12} {C_2(y,x) \land \neg C_2(y,x)} \ai{10,11}
+\have {13} {\bot} \be{12}
+\close
+\have {14} {\neg K_2(x,y)} \ni{9-13}
+\open
+\hypo {15} {K_2(y,x)}
+\have {16} {C_2(x,y)} \ie{15,8}
+\have {17} {\neg C_2(x,y)} \r{4}
+\have {18} {C_2(x,y) \land \neg C_2(x,y)} \ai{16,17}
+\have {19} {\bot} \be{18}
+\close
+\have {20} {\neg K_2(y,x)} \ni{15-19}
+\have {21} {\neg K_2(x,y) \land \neg K_2(y,x)} \ai{14,20}
+\close
+\have {22} {\neg \exists z (C_3(z,x,y)) \rightarrow \neg K_2(x,y) \land \neg K_2(y,x)} \ii{1-21}
+\have {23} {\forall y (\neg \exists z (C_3(z,x,y)) \rightarrow \neg K_2(x,y) \land \neg K_2(y,x))} \Ai{22}
+\have {24} {\forall x \forall y (\neg \exists z (C_3(z,x,y)) \rightarrow \neg K_2(x,y) \land \neg K_2(y,x))} \Ai{23}
+\end{nd}$
+
+\clearpage
+\subsection*{Lemmes intermédiaires énoncés par Jarrett}
+
+\subsubsection{Lemme DP1}
+
+\begin{center}
+$x$ est une substance si et seulement si $x$ est en soi.
+\end{center}
+
+\begin{center}
+$\forall x (S_1(x) \leftrightarrow I_2(x,x))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {S_1(x)}
+\have {2} {S_1(x) \leftrightarrow (I_2(x,x) \land C_2(x,x))} \by{D3}{}
+\have {3} {I_2(x,x) \land C_2(x,x)} \ie{1,2}
+\have {4} {I_2(x,x)} \ae{3}
+\close
+\have {5} {S_1(x) \rightarrow I_2(x,x)} \ii{1-4}
+\open
+\hypo {6} {I_2(x,x)}
+\have {7} {I_2(x,x) \rightarrow C_2(x,x)} \by{A8}{}
+\have {8} {C_2(x,x)} \ie{6,7}
+\have {9} {I_2(x,x) \land C_2(x,x)} \ai{6,8}
+\have {10} {S_1(x) \leftrightarrow (I_2(x,x) \land C_2(x,x))} \by{D3}{}
+\have {11} {S_1(x)} \ie{9,10}
+\close
+\have {12} {I_2(x,x) \rightarrow S_1(x)} \ii{6-11}
+\have {13} {S_1(x) \leftrightarrow I_2(x,x)} \ii{5,12}
+\have {14} {\forall x (S_1(x) \leftrightarrow I_2(x,x))} \Ai{13}
+\end{nd}$
+
+\subsubsection{Lemme DP4}
+
+\begin{center}
+Une substance est sa propre cause.
+\end{center}
+
+\begin{center}
+$\forall x (S_1(x) \rightarrow K_2(x,x))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {S_1(x)}
+\have {2} {S_1(x) \leftrightarrow (I_2(x,x) \land C_2(x,x))} \by{D3}{}
+\have {3} {I_2(x,x) \land C_2(x,x)} \ie{1,2}
+\have {4} {C_2(x,x)} \ae{3}
+\have {5} {\forall a \forall b (K_2(a,b) \leftrightarrow C_2(b,a))} \by{A4}{}
+\have {6} {K_2(x,x) \leftrightarrow C_2(x,x)} \Ae{5}
+\have {7} {K_2(x,x)} \ie{4,6}
+\close
+\have {8} {S_1(x) \rightarrow K_2(x,x)} \ii{1-7}
+\have {9} {\forall x (S_1(x) \rightarrow K_2(x,x))} \Ai{8}
+\end{nd}$
+
+\clearpage
+
+\subsubsection{Lemme DP5}
+
+\begin{center}
+Toute chose est soit une substance soit un mode.
+\end{center}
+
+\begin{center}
+$\forall x (S_1(x) \lor M_1(x))$
+\end{center}
+
+$\begin{nd}
+\hypo {1} {\forall x (I_2(x,x) \lor \exists y (y \neq x \land I_2(x,y)))} \by{A1}{}
+\have {2} {I_2(x,x) \lor \exists y (y \neq x \land I_2(x,y))} \Ae{1}
+\open
+\hypo {3} {I_2(x,x)}
+\have {4} {S_1(x) \leftrightarrow I_2(x,x)} \by{DP1}{}
+\have {5} {S_1(x)} \ie{3,4}
+\have {6} {S_1(x) \lor M_1(x)} \oi{5}
+\close
+\open
+\hypo {7} {\exists y (y \neq x \land I_2(x,y))}
+\open
+\hypo {8} {y \neq x \land I_2(x,y)}
+\have {9} {y \neq x} \ae{8}
+\have {10} {I_2(x,y)} \ae{8}
+\have {11} {I_2(x,y) \rightarrow C_2(x,y)} \by{A8}{}
+\have {12} {C_2(x,y)} \ie{10,11}
+\have {13} {y \neq x \land I_2(x,y) \land C_2(x,y)} \ai{9,10,12}
+\have {14} {M_2(x,y) \leftrightarrow (x \neq y \land I_2(x,y) \land C_2(x,y))} \by{D5a}{}
+\have {15} {x \neq y \leftrightarrow y \neq x} \by{Logique}{}
+\have {16} {x \neq y} \ie{9,15}
+\have {17} {x \neq y \land I_2(x,y) \land C_2(x,y)} \ai{16,10,12}
+\have {18} {M_2(x,y)} \ie{17,14}
+\have {19} {(\exists y (M_2(x,y))) \rightarrow M_1(x)} \by{A12}{}
+\have {20} {\exists y (M_2(x,y))} \Ei{18}
+\have {21} {M_1(x)} \ie{20,19}
+\have {22} {S_1(x) \lor M_1(x)} \oi{21}
+\close
+\have {23} {S_1(x) \lor M_1(x)} \Ee{7,8-22}
+\close
+\have {24} {S_1(x) \lor M_1(x)} \oe{2,3-6,7-23}
+\have {25} {\forall x (S_1(x) \lor M_1(x))} \Ai{24}
+\end{nd}$
+
+
+\clearpage
+\subsubsection{Lemme DP6}
+
+\begin{center}
+Une substance et un mode ne peuvent jamais être la même chose.
+\end{center}
+
+\begin{center}
+$\forall x (\neg(S_1(x) \land M_1(x)))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {S_1(x) \land M_1(x)}
+\have {2} {S_1(x)} \ae{1}
+\have {3} {M_1(x)} \ae{1}
+\have {4} {M_1(x) \leftrightarrow \exists y (S_1(y) \land M_2(x,y))} \by{D5b}{}
+\have {5} {\exists y (S_1(y) \land M_2(x,y))} \ie{3,4}
+\open
+\hypo {6} {S_1(y) \land M_2(x,y)}
+\have {7} {M_2(x,y)} \ae{6}
+\have {8} {M_2(x,y) \leftrightarrow (x \neq y \land I_2(x,y) \land C_2(x,y))} \by{D5a}{}
+\have {9} {x \neq y \land I_2(x,y) \land C_2(x,y)} \ie{7,8}
+\have {10} {x \neq y} \ae{9}
+\have {11} {C_2(x,y)} \ae{9}
+\have {12} {S_1(x) \leftrightarrow (I_2(x,x) \land C_2(x,x))} \by{D3}{}
+\have {13} {I_2(x,x) \land C_2(x,x)} \ie{2,12}
+\have {14} {C_2(x,x)} \ae{13}
+\have {15} {(\neg \exists z (z \neq x \land C_2(x,z))) \leftrightarrow C_2(x,x)} \by{A2}{}
+\have {16} {C_2(x,x) \rightarrow \neg \exists z (z \neq x \land C_2(x,z))} \ae{15}
+\have {17} {\neg \exists z (z \neq x \land C_2(x,z))} \ie{14,16}
+\have {18} {\neg (y \neq x \land C_2(x,y))} \Ae{17}
+\have {19} {y \neq x \leftrightarrow x \neq y} \by{Logique}{}
+\have {20} {y \neq x} \ie{10,19}
+\have {21} {y \neq x \land C_2(x,y)} \ai{20,11}
+\have {22} {\neg (y \neq x \land C_2(x,y)) \land (y \neq x \land C_2(x,y))} \ai{18,21}
+\have {23} {\bot} \be{22}
+\close
+\have {24} {\bot} \Ee{5,6-23}
+\close
+\have {25} {\neg(S_1(x) \land M_1(x))} \ni{1-24}
+\have {26} {\forall x (\neg(S_1(x) \land M_1(x)))} \Ai{25}
+\end{nd}$
+
+\clearpage
+
+\subsubsection{Lemme DP7}
+
+\begin{center}
+Si $x$ est un attribut de $y$ et $y$ est une substance, alors $x = y$.
+\end{center}
+
+\begin{center}
+$\forall x \forall y (A_2(x,y) \land S_1(y) \rightarrow x = y)$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {A_2(x,y) \land S_1(y)}
+\have {2} {A_2(x,y)} \ae{1}
+\have {3} {S_1(y)} \ae{1}
+\have {4} {A_2(x,y) \leftrightarrow (A_1(x) \land C_2(y,x))} \by{D4b}{}
+\have {5} {A_1(x) \land C_2(y,x)} \ie{2,4}
+\have {6} {C_2(y,x)} \ae{5}
+\have {7} {S_1(y) \leftrightarrow (I_2(y,y) \land C_2(y,y))} \by{D3}{}
+\have {8} {I_2(y,y) \land C_2(y,y)} \ie{3,7}
+\have {9} {C_2(y,y)} \ae{8}
+\have {10} {(\neg \exists z (z \neq y \land C_2(y,z))) \leftrightarrow C_2(y,y)} \by{A2}{}
+\have {11} {C_2(y,y) \rightarrow \neg \exists z (z \neq y \land C_2(y,z))} \ae{10}
+\have {12} {\neg \exists z (z \neq y \land C_2(y,z))} \ie{9,11}
+\have {13} {\neg (x \neq y \land C_2(y,x))} \Ae{12}
+\have {14} {x \neq y \rightarrow \neg C_2(y,x)} \ie{13}
+\have {15} {C_2(y,x) \rightarrow \neg (x \neq y)} \by{Contraposée}{}
+\have {16} {C_2(y,x)} \r{6}
+\have {17} {\neg (x \neq y)} \ie{16,15}
+\have {18} {x = y} \ne{17}
+\close
+\have {19} {A_2(x,y) \land S_1(y) \rightarrow x = y} \ii{1-18}
+\have {20} {\forall y (A_2(x,y) \land S_1(y) \rightarrow x = y)} \Ai{19}
+\have {21} {\forall x \forall y (A_2(x,y) \land S_1(y) \rightarrow x = y)} \Ai{20}
+\end{nd}$
+
+\clearpage
+
+\subsection*{Théorème implicites importants chez Spinoza}
+
+\subsubsection{Théorème DPI}
+
+\begin{center}
+Tout est soit une substance, soit un mode, mais pas les deux.
+\end{center}
+
+\begin{center}
+$\forall x ((S_1(x) \land \neg M_1(x)) \lor (\neg S_1(x) \land M_1(x)))$
+\end{center}
+
+$\begin{nd}
+\have {1} {\forall x (S_1(x) \lor M_1(x))} \by{DP5}{}
+\have {2} {S_1(x) \lor M_1(x)} \Ae{1}
+\have {3} {\forall x (\neg(S_1(x) \land M_1(x)))} \by{DP6}{}
+\have {4} {\neg(S_1(x) \land M_1(x))} \Ae{3}
+\open
+\hypo {5} {S_1(x)}
+\open
+\hypo {6} {M_1(x)}
+\have {7} {S_1(x) \land M_1(x)} \ai{5,6}
+\have {8} {\neg(S_1(x) \land M_1(x))} \r{4}
+\have {9} {(S_1(x) \land M_1(x)) \land \neg(S_1(x) \land M_1(x))} \ai{7,8}
+\have {10} {\bot} \be{9}
+\close
+\have {11} {\neg M_1(x)} \ni{6-10}
+\have {12} {S_1(x) \land \neg M_1(x)} \ai{5,11}
+\have {13} {(S_1(x) \land \neg M_1(x)) \lor (\neg S_1(x) \land M_1(x))} \oi{12}
+\close
+\open
+\hypo {14} {M_1(x)}
+\open
+\hypo {15} {S_1(x)}
+\have {16} {S_1(x) \land M_1(x)} \ai{15,14}
+\have {17} {\neg(S_1(x) \land M_1(x))} \r{4}
+\have {18} {(S_1(x) \land M_1(x)) \land \neg(S_1(x) \land M_1(x))} \ai{16,17}
+\have {19} {\bot} \be{18}
+\close
+\have {20} {\neg S_1(x)} \ni{15-19}
+\have {21} {\neg S_1(x) \land M_1(x)} \ai{20,14}
+\have {22} {(S_1(x) \land \neg M_1(x)) \lor (\neg S_1(x) \land M_1(x))} \oi{21}
+\close
+\have {23} {(S_1(x) \land \neg M_1(x)) \lor (\neg S_1(x) \land M_1(x))} \oe{2,5-13,14-22}
+\have {24} {\forall x ((S_1(x) \land \neg M_1(x)) \lor (\neg S_1(x) \land M_1(x)))} \Ai{23}
+\end{nd}$
+
+
+\clearpage
+\subsubsection{Théorème DPII}
+
+\begin{center}
+Une substance est ses propres attributs.
+\end{center}
+
+\begin{center}
+$\forall x (S_1(x) \rightarrow A_2(x,x))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {S_1(x)}
+\have {2} {A_2(x,y) \leftrightarrow (A_1(x) \land C_2(y,x))} \by{D4b}{}
+\have {3} {S_1(x) \leftrightarrow (I_2(x,x) \land C_2(x,x))} \by{D3}{}
+\have {4} {I_2(x,x) \land C_2(x,x)} \ie{1,3}
+\have {5} {C_2(x,x)} \ae{4}
+\open
+\hypo {6} {A_1(x) \land C_2(x,x)}
+\have {7} {A_2(x,x)} \ie{6,2}
+\close
+\have {8} {A_1(x) \land C_2(x,x) \rightarrow A_2(x,x)} \ii{6-7}
+\have {9} {A_1(x) \leftrightarrow \exists y (S_1(y) \land I_2(x,y) \land C_2(x,y) \land I_2(y,x) \land C_2(y,x))} \by{D4a}{}
+\have {10} {\exists y (S_1(y) \land I_2(x,y) \land C_2(x,y) \land I_2(y,x) \land C_2(y,x)) \rightarrow A_1(x)} \ae{9}
+\have {11} {S_1(x) \land I_2(x,x) \land C_2(x,x) \land I_2(x,x) \land C_2(x,x)} \ai{1,4,4}
+\have {12} {\exists y (S_1(y) \land I_2(x,y) \land C_2(x,y) \land I_2(y,x) \land C_2(y,x))} \Ei{11}
+\have {13} {A_1(x)} \ie{12,10}
+\have {14} {A_1(x) \land C_2(x,x)} \ai{13,5}
+\have {15} {A_2(x,x)} \ie{14,8}
+\close
+\have {16} {S_1(x) \rightarrow A_2(x,x)} \ii{1-15}
+\have {17} {\forall x (S_1(x) \rightarrow A_2(x,x))} \Ai{16}
+\end{nd}$
+
+\clearpage
+
+\subsubsection{Théorème DPIII}
+
+\begin{center}
+Quelque chose est une substance si et seulement si elle est causa sui.
+\end{center}
+
+\begin{center}
+$\forall x (S_1(x) \leftrightarrow K_2(x,x))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {S_1(x)}
+\have {2} {\forall y (S_1(y) \rightarrow K_2(y,y))} \by{DP4}{}
+\have {3} {S_1(x) \rightarrow K_2(x,x)} \Ae{2}
+\have {4} {K_2(x,x)} \ie{1,3}
+\close
+\have {5} {S_1(x) \rightarrow K_2(x,x)} \ii{1-4}
+\open
+\hypo {6} {K_2(x,x)}
+\have {7} {\forall a \forall b (K_2(a,b) \leftrightarrow C_2(b,a))} \by{A4}{}
+\have {8} {K_2(x,x) \leftrightarrow C_2(x,x)} \Ae{7}
+\have {9} {C_2(x,x)} \ie{6,8}
+\have {10} {\forall y (I_2(y,y) \lor \exists z (z \neq y \land I_2(y,z)))} \by{A1}{}
+\have {11} {I_2(x,x) \lor \exists z (z \neq x \land I_2(x,z))} \Ae{10}
+\open
+\hypo {12} {I_2(x,x)}
+\have {13} {I_2(x,x) \land C_2(x,x)} \ai{12,9}
+\have {14} {S_1(x) \leftrightarrow (I_2(x,x) \land C_2(x,x))} \by{D3}{}
+\have {15} {S_1(x)} \ie{13,14}
+\close
+\open
+\hypo {16} {\exists z (z \neq x \land I_2(x,z))}
+\open
+\hypo {17} {z \neq x \land I_2(x,z)}
+\have {18} {I_2(x,z)} \ae{17}
+\have {19} {\forall a \forall b (I_2(a,b) \rightarrow C_2(a,b))} \by{A8}{}
+\have {20} {I_2(x,z) \rightarrow C_2(x,z)} \Ae{19}
+\have {21} {C_2(x,z)} \ie{18,20}
+\have {22} {z \neq x} \ae{17}
+\have {23} {z \neq x \land C_2(x,z)} \ai{22,21}
+\have {24} {\exists y (y \neq x \land C_2(x,y))} \Ei{23}
+\have {25} {(\neg \exists y (y \neq x \land C_2(x,y))) \leftrightarrow C_2(x,x)} \by{A2}{}
+\have {26} {C_2(x,x) \rightarrow \neg \exists y (y \neq x \land C_2(x,y))} \ae{25}
+\have {27} {\neg \exists y (y \neq x \land C_2(x,y))} \ie{9,26}
+\have {28} {\exists y (y \neq x \land C_2(x,y)) \land \neg \exists y (y \neq x \land C_2(x,y))} \ai{24,27}
+\have {29} {\bot} \be{28}
+\close
+\have {30} {\bot} \Ee{16,17-29}
+\have {31} {\neg \exists z (z \neq x \land I_2(x,z))} \ni{16-30}
+\close
+\have {32} {S_1(x)} \oe{11,12-15,16-31}
+\close
+\have {33} {K_2(x,x) \rightarrow S_1(x)} \ii{6-32}
+\have {34} {S_1(x) \leftrightarrow K_2(x,x)} \ii{5,33}
+\have {35} {\forall x (S_1(x) \leftrightarrow K_2(x,x))} \Ai{34}
+\end{nd}$
+
+\subsection{Proposition 4 (P4)}
+
+\begin{center}
+Deux ou plusieurs choses distinctes se distinguent entre elles ou bien par la diversité des attributs des substances, ou bien par la diversité des affections des substances.
+\end{center}
+
+\begin{center}
+$\forall x \forall y (x \neq y \rightarrow \exists z \exists z' ((A_2(z,x) \land A_2(z',y) \land z \neq z') \lor (A_2(z,x) \land z = x \land M_1(y)) \lor (A_2(z',y) \land z' = y \land M_1(x)) \lor (M_1(x) \land M_1(y))))$
+\end{center}
+
+\resizebox{\textwidth}{!}{
+$\begin{nd}
+\open
+\hypo {1} {x \neq y}
+\have {2} {\forall a ((S_1(a) \land \neg M_1(a)) \lor (\neg S_1(a) \land M_1(a)))} \by{DPI}{}
+\have {3} {(S_1(x) \land \neg M_1(x)) \lor (\neg S_1(x) \land M_1(x))} \Ae{2}
+\open
+\hypo {4} {S_1(x) \land \neg M_1(x)}
+\have {5} {S_1(x)} \ae{4}
+\have {6} {(S_1(y) \land \neg M_1(y)) \lor (\neg S_1(y) \land M_1(y))} \Ae{2}
+\open
+\hypo {7} {S_1(y) \land \neg M_1(y)}
+\have {8} {S_1(y)} \ae{7}
+\have {9} {\forall a (S_1(a) \rightarrow A_2(a,a))} \by{DPII}{}
+\have {10} {S_1(x) \rightarrow A_2(x,x)} \Ae{9}
+\have {11} {A_2(x,x)} \ie{5,10}
+\have {12} {S_1(y) \rightarrow A_2(y,y)} \Ae{9}
+\have {13} {A_2(y,y)} \ie{8,12}
+\have {14} {A_2(x,x) \land A_2(y,y) \land x \neq y} \ai{11,13,1}
+\have {15} {\exists z \exists z' (A_2(z,x) \land A_2(z',y) \land z \neq z')} \Ei{14}
+\have {16} {\exists z \exists z' ((A_2(z,x) \land A_2(z',y) \land z \neq z') \lor (A_2(z,x) \land z = x \land M_1(y)) \lor (A_2(z',y) \land z' = y \land M_1(x)) \lor (M_1(x) \land M_1(y)))} \oi{15}
+\close
+\open
+\hypo {17} {\neg S_1(y) \land M_1(y)}
+\have {18} {M_1(y)} \ae{17}
+\have {19} {A_2(x,x)} \ie{5,10}
+\have {20} {A_2(x,x) \land x = x \land M_1(y)} \ai{19,=,18}
+\have {21} {\exists z \exists z' (A_2(z,x) \land z = x \land M_1(y))} \Ei{20}
+\have {22} {\exists z \exists z' ((A_2(z,x) \land A_2(z',y) \land z \neq z') \lor (A_2(z,x) \land z = x \land M_1(y)) \lor (A_2(z',y) \land z' = y \land M_1(x)) \lor (M_1(x) \land M_1(y)))} \oi{21}
+\close
+\have {23} {\exists z \exists z' ((A_2(z,x) \land A_2(z',y) \land z \neq z') \lor (A_2(z,x) \land z = x \land M_1(y)) \lor (A_2(z',y) \land z' = y \land M_1(x)) \lor (M_1(x) \land M_1(y)))} \oe{6,7-16,17-22}
+\close
+\open
+\hypo {24} {\neg S_1(x) \land M_1(x)}
+\have {25} {M_1(x)} \ae{24}
+\have {26} {(S_1(y) \land \neg M_1(y)) \lor (\neg S_1(y) \land M_1(y))} \Ae{2}
+\open
+\hypo {27} {S_1(y) \land \neg M_1(y)}
+\have {28} {S_1(y)} \ae{27}
+\have {29} {S_1(y) \rightarrow A_2(y,y)} \Ae{9}
+\have {30} {A_2(y,y)} \ie{28,29}
+\have {31} {A_2(y,y) \land y = y \land M_1(x)} \ai{30,=,25}
+\have {32} {\exists z \exists z' (A_2(z',y) \land z' = y \land M_1(x))} \Ei{31}
+\have {33} {\exists z \exists z' ((A_2(z,x) \land A_2(z',y) \land z \neq z') \lor (A_2(z,x) \land z = x \land M_1(y)) \lor (A_2(z',y) \land z' = y \land M_1(x)) \lor (M_1(x) \land M_1(y)))} \oi{32}
+\close
+\open
+\hypo {34} {\neg S_1(y) \land M_1(y)}
+\have {35} {M_1(y)} \ae{34}
+\have {36} {M_1(x) \land M_1(y)} \ai{25,35}
+\have {37} {\exists z \exists z' (M_1(x) \land M_1(y))} \Ei{36}
+\have {38} {\exists z \exists z' ((A_2(z,x) \land A_2(z',y) \land z \neq z') \lor (A_2(z,x) \land z = x \land M_1(y)) \lor (A_2(z',y) \land z' = y \land M_1(x)) \lor (M_1(x) \land M_1(y)))} \oi{37}
+\close
+\have {39} {\exists z \exists z' ((A_2(z,x) \land A_2(z',y) \land z \neq z') \lor (A_2(z,x) \land z = x \land M_1(y)) \lor (A_2(z',y) \land z' = y \land M_1(x)) \lor (M_1(x) \land M_1(y)))} \oe{26,27-33,34-38}
+\close
+\have {40} {\exists z \exists z' ((A_2(z,x) \land A_2(z',y) \land z \neq z') \lor (A_2(z,x) \land z = x \land M_1(y)) \lor (A_2(z',y) \land z' = y \land M_1(x)) \lor (M_1(x) \land M_1(y)))} \oe{3,4-23,24-39}
+\close
+\have {41} {x \neq y \rightarrow \exists z \exists z' ((A_2(z,x) \land A_2(z',y) \land z \neq z') \lor (A_2(z,x) \land z = x \land M_1(y)) \lor (A_2(z',y) \land z' = y \land M_1(x)) \lor (M_1(x) \land M_1(y)))} \ii{1-40}
+\have {42} {\forall y (x \neq y \rightarrow \exists z \exists z' ((A_2(z,x) \land A_2(z',y) \land z \neq z') \lor (A_2(z,x) \land z = x \land M_1(y)) \lor (A_2(z',y) \land z' = y \land M_1(x)) \lor (M_1(x) \land M_1(y))))} \Ai{41}
+\have {43} {\forall x \forall y (x \neq y \rightarrow \exists z \exists z' ((A_2(z,x) \land A_2(z',y) \land z \neq z') \lor (A_2(z,x) \land z = x \land M_1(y)) \lor (A_2(z',y) \land z' = y \land M_1(x)) \lor (M_1(x) \land M_1(y))))} \Ai{42}
+\end{nd}$
+}
+
+\clearpage
+
+\subsection{Proposition 5 (P5)}
+
+\begin{center}
+Il ne peut y avoir dans la nature deux ou plusieurs substances de même nature ou attribut.
+\end{center}
+
+\begin{center}
+$\forall x \forall y (S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg \exists z (A_2(z,x) \land A_2(z,y)))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {S_1(x) \land S_1(y) \land x \neq y}
+\have {2} {S_1(x)} \ae{1}
+\have {3} {S_1(y)} \ae{1}
+\have {4} {x \neq y} \ae{1}
+\open
+\hypo {5} {\exists z (A_2(z,x) \land A_2(z,y))}
+\open
+\hypo {6} {A_2(z,x) \land A_2(z,y)}
+\have {7} {A_2(z,x)} \ae{6}
+\have {8} {A_2(z,y)} \ae{6}
+\have {9} {\forall a \forall b (A_2(a,b) \land S_1(b) \rightarrow a = b)} \by{DP7}{}
+\have {10} {A_2(z,x) \land S_1(x) \rightarrow z = x} \Ae{9}
+\have {11} {A_2(z,x) \land S_1(x)} \ai{7,2}
+\have {12} {z = x} \ie{11,10}
+\have {13} {A_2(z,y) \land S_1(y) \rightarrow z = y} \Ae{9}
+\have {14} {A_2(z,y) \land S_1(y)} \ai{8,3}
+\have {15} {z = y} \ie{14,13}
+\have {16} {z = x \land z = y} \ai{12,15}
+\have {17} {x = z} \by{12}{}
+\have {18} {x = y} \by{17,15}{}
+\have {19} {x \neq y} \r{4}
+\have {20} {x = y \land x \neq y} \ai{18,19}
+\have {21} {\bot} \be{20}
+\close
+\have {22} {\bot} \Ee{5,6-21}
+\close
+\have {23} {\neg \exists z (A_2(z,x) \land A_2(z,y))} \ni{5-22}
+\close
+\have {24} {S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg \exists z (A_2(z,x) \land A_2(z,y))} \ii{1-23}
+\have {25} {\forall y (S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg \exists z (A_2(z,x) \land A_2(z,y)))} \Ai{24}
+\have {26} {\forall x \forall y (S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg \exists z (A_2(z,x) \land A_2(z,y)))} \Ai{25}
+\end{nd}$
+
+\clearpage
+
+\subsection{Proposition 6 (P6)}
+
+\begin{center}
+Une substance ne peut pas être produite par une autre substance.
+\end{center}
+
+\begin{center}
+$\forall x \forall y (S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg(K_2(x,y) \land \neg K_2(y,x)))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {S_1(x) \land S_1(y) \land x \neq y}
+\have {2} {S_1(x)} \ae{1}
+\have {3} {S_1(y)} \ae{1}
+\have {4} {x \neq y} \ae{1}
+\have {5} {\forall a \forall b (S_1(a) \land S_1(b) \land a \neq b \rightarrow \neg \exists z (C_3(z,a,b)))} \by{P2}{}
+\have {6} {S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg \exists z (C_3(z,x,y))} \Ae{5}
+\have {7} {\neg \exists z (C_3(z,x,y))} \ie{1,6}
+\have {8} {\forall a \forall b (\neg \exists z (C_3(z,a,b)) \rightarrow \neg K_2(a,b) \land \neg K_2(b,a))} \by{P3}{}
+\have {9} {\neg \exists z (C_3(z,x,y)) \rightarrow \neg K_2(x,y) \land \neg K_2(y,x)} \Ae{8}
+\have {10} {\neg K_2(x,y) \land \neg K_2(y,x)} \ie{7,9}
+\have {11} {\neg K_2(x,y)} \ae{10}
+\open
+\hypo {12} {K_2(x,y) \land \neg K_2(y,x)}
+\have {13} {K_2(x,y)} \ae{12}
+\have {14} {\neg K_2(x,y)} \r{11}
+\have {15} {K_2(x,y) \land \neg K_2(x,y)} \ai{13,14}
+\have {16} {\bot} \be{15}
+\close
+\have {17} {\neg(K_2(x,y) \land \neg K_2(y,x))} \ni{12-16}
+\close
+\have {18} {S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg(K_2(x,y) \land \neg K_2(y,x))} \ii{1-17}
+\have {19} {\forall y (S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg(K_2(x,y) \land \neg K_2(y,x)))} \Ai{18}
+\have {20} {\forall x \forall y (S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg(K_2(x,y) \land \neg K_2(y,x)))} \Ai{19}
+\end{nd}$
+
+\clearpage
+
+\subsubsection{Corollaire de la Proposition 6 (P6c)}
+
+\begin{center}
+Il suit de là qu’une substance ne peut pas être produite par autre chose.
+\end{center}
+
+\begin{center}
+$\forall x (S_1(x) \rightarrow \neg(\exists y (y \neq x \land K_2(y,x))))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {S_1(x)}
+\have {2} {S_1(x) \leftrightarrow (I_2(x,x) \land C_2(x,x))} \by{D3}{}
+\have {3} {I_2(x,x) \land C_2(x,x)} \ie{1,2}
+\have {4} {C_2(x,x)} \ae{3}
+\have {5} {(\neg \exists z (z \neq x \land C_2(x,z))) \leftrightarrow C_2(x,x)} \by{A2}{}
+\have {6} {C_2(x,x) \rightarrow \neg \exists z (z \neq x \land C_2(x,z))} \ae{5}
+\have {7} {\neg \exists z (z \neq x \land C_2(x,z))} \ie{4,6}
+\open
+\hypo {8} {\exists y (y \neq x \land K_2(y,x))}
+\open
+\hypo {9} {y \neq x \land K_2(y,x)}
+\have {10} {y \neq x} \ae{9}
+\have {11} {K_2(y,x)} \ae{9}
+\have {12} {\forall a \forall b (K_2(a,b) \leftrightarrow C_2(b,a))} \by{A4}{}
+\have {13} {K_2(y,x) \leftrightarrow C_2(x,y)} \Ae{12}
+\have {14} {C_2(x,y)} \ie{11,13}
+\have {15} {y \neq x \land C_2(x,y)} \ai{10,14}
+\have {16} {\exists z (z \neq x \land C_2(x,z))} \Ei{15}
+\have {17} {\neg \exists z (z \neq x \land C_2(x,z))} \r{7}
+\have {18} {\exists z (z \neq x \land C_2(x,z)) \land \neg \exists z (z \neq x \land C_2(x,z))} \ai{16,17}
+\have {19} {\bot} \be{18}
+\close
+\have {20} {\bot} \Ee{8,9-19}
+\close
+\have {21} {\neg \exists y (y \neq x \land K_2(y,x))} \ni{8-20}
+\close
+\have {22} {S_1(x) \rightarrow \neg(\exists y (y \neq x \land K_2(y,x)))} \ii{1-21}
+\have {23} {\forall x (S_1(x) \rightarrow \neg(\exists y (y \neq x \land K_2(y,x))))} \Ai{22}
+\end{nd}$
+
+\clearpage
+
+\subsection{Proposition 7 (P7)}
+
+\begin{center}
+Il appartient à la nature d’une substance d’exister.
+\end{center}
+
+\begin{center}
+$\forall x (S_1(x) \rightarrow L(\exists y (y = x)))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {S_1(x)}
+\have {2} {S_1(x) \leftrightarrow (I_2(x,x) \land C_2(x,x))} \by{D3}{}
+\have {3} {I_2(x,x) \land C_2(x,x)} \ie{1,2}
+\have {4} {C_2(x,x)} \ae{3}
+\have {5} {\forall a \forall b (K_2(a,b) \leftrightarrow C_2(b,a))} \by{A4}{}
+\have {6} {K_2(x,x) \leftrightarrow C_2(x,x)} \Ae{5}
+\have {7} {K_2(x,x)} \ie{4,6}
+\have {8} {\forall a (S_1(a) \rightarrow \neg(\exists b (b \neq a \land K_2(b,a))))} \by{P6c}{}
+\have {9} {S_1(x) \rightarrow \neg(\exists y (y \neq x \land K_2(y,x)))} \Ae{8}
+\have {10} {\neg(\exists y (y \neq x \land K_2(y,x)))} \ie{1,9}
+\have {11} {K_2(x,x) \land \neg \exists y (y \neq x \land K_2(y,x))} \ai{7,10}
+\have {12} {K_2(x,x) \land \neg \exists y (y \neq x \land K_2(y,x)) \leftrightarrow L(\exists y (y = x))} \by{D1}{}
+\have {13} {L(\exists y (y = x))} \ie{11,12}
+\close
+\have {14} {S_1(x) \rightarrow L(\exists y (y = x))} \ii{1-13}
+\have {15} {\forall x (S_1(x) \rightarrow L(\exists y (y = x)))} \Ai{14}
+\end{nd}$
+
+\clearpage
+
+\subsection{Proposition 8 (P8)}
+
+\begin{center}
+Toute substance est nécessairement infinie.
+\end{center}
+
+\begin{center}
+$\forall x (S_1(x) \rightarrow \neg F_1(x))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {S_1(x)}
+\open
+\hypo {2} {F_1(x)}
+\have {3} {F_1(x) \leftrightarrow \exists y (y \neq x \land L_2(y,x) \land \forall z (A_2(z,x) \leftrightarrow A_2(z,y)))} \by{D2}{}
+\have {4} {\exists y (y \neq x \land L_2(y,x) \land \forall z (A_2(z,x) \leftrightarrow A_2(z,y)))} \ie{2,3}
+\open
+\hypo {5} {y \neq x \land L_2(y,x) \land \forall z (A_2(z,x) \leftrightarrow A_2(z,y))}
+\have {6} {y \neq x} \ae{5}
+\have {7} {L_2(y,x)} \ae{5}
+\have {8} {\forall z (A_2(z,x) \leftrightarrow A_2(z,y))} \ae{5}
+\have {9} {\forall a \forall b (S_1(a) \land L_2(b,a) \rightarrow S_1(b))} \by{A11}{}
+\have {10} {S_1(x) \land L_2(y,x) \rightarrow S_1(y)} \Ae{9}
+\have {11} {S_1(x) \land L_2(y,x)} \ai{1,7}
+\have {12} {S_1(y)} \ie{11,10}
+\have {13} {\forall a (\exists b (A_2(b,a)))} \by{A9}{}
+\have {14} {\exists b (A_2(b,x))} \Ae{13}
+\open
+\hypo {15} {A_2(z,x)}
+\have {16} {A_2(z,x) \leftrightarrow A_2(z,y)} \Ae{8}
+\have {17} {A_2(z,y)} \ie{15,16}
+\have {18} {A_2(z,x) \land A_2(z,y)} \ai{15,17}
+\have {19} {\exists z (A_2(z,x) \land A_2(z,y))} \Ei{18}
+\have {20} {\forall a \forall b (S_1(a) \land S_1(b) \land a \neq b \rightarrow \neg \exists z (A_2(z,a) \land A_2(z,b)))} \by{P5}{}
+\have {21} {S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg \exists z (A_2(z,x) \land A_2(z,y))} \Ae{20}
+\have {22} {S_1(x) \land S_1(y) \land x \neq y} \ai{1,12,6}
+\have {23} {\neg \exists z (A_2(z,x) \land A_2(z,y))} \ie{22,21}
+\have {24} {\exists z (A_2(z,x) \land A_2(z,y)) \land \neg \exists z (A_2(z,x) \land A_2(z,y))} \ai{19,23}
+\have {25} {\bot} \be{24}
+\close
+\have {26} {\bot} \Ee{14,15-25}
+\close
+\have {27} {\bot} \Ee{4,5-26}
+\close
+\have {28} {\neg F_1(x)} \ni{2-27}
+\close
+\have {29} {S_1(x) \rightarrow \neg F_1(x)} \ii{1-28}
+\have {30} {\forall x (S_1(x) \rightarrow \neg F_1(x))} \Ai{29}
+\end{nd}$
+
+\clearpage
+
+\subsection{Proposition 9 (P9)}
+
+\begin{center}
+À proportion de la réalité ou de l’être que possède chaque chose, un plus grand nombre d’attributs lui appartiennent.
+\end{center}
+
+\begin{center}
+$\forall x \forall y ((S_1(x) \land S_1(y)) \rightarrow (R_2(x,y) \leftrightarrow V_2(x,y)))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {S_1(x) \land S_1(y)}
+\have {2} {\forall a \forall b ((S_1(a) \land S_1(b)) \rightarrow (R_2(a,b) \leftrightarrow V_2(a,b)))} \by{A18}{}
+\have {3} {(S_1(x) \land S_1(y)) \rightarrow (R_2(x,y) \leftrightarrow V_2(x,y))} \Ae{2}
+\have {4} {R_2(x,y) \leftrightarrow V_2(x,y)} \ie{1,3}
+\close
+\have {5} {(S_1(x) \land S_1(y)) \rightarrow (R_2(x,y) \leftrightarrow V_2(x,y))} \ii{1-4}
+\have {6} {\forall y ((S_1(x) \land S_1(y)) \rightarrow (R_2(x,y) \leftrightarrow V_2(x,y)))} \Ai{5}
+\have {7} {\forall x \forall y ((S_1(x) \land S_1(y)) \rightarrow (R_2(x,y) \leftrightarrow V_2(x,y)))} \Ai{6}
+\end{nd}$
+
+\clearpage
+
+\subsection{Proposition 10 (P10)}
+
+\begin{center}
+Chacun des attributs d’une même substance doit être conçu par soi.
+\end{center}
+
+\begin{center}
+$\forall x (A_1(x) \rightarrow C_2(x,x))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {A_1(x)}
+\have {2} {A_1(x) \leftrightarrow \exists y (S_1(y) \land I_2(x,y) \land C_2(x,y) \land I_2(y,x) \land C_2(y,x))} \by{D4a}{}
+\have {3} {\exists y (S_1(y) \land I_2(x,y) \land C_2(x,y) \land I_2(y,x) \land C_2(y,x))} \ie{1,2}
+\open
+\hypo {4} {S_1(y) \land I_2(x,y) \land C_2(x,y) \land I_2(y,x) \land C_2(y,x)}
+\have {5} {S_1(y)} \ae{4}
+\have {6} {C_2(y,x)} \ae{4}
+\have {7} {S_1(y) \leftrightarrow (I_2(y,y) \land C_2(y,y))} \by{D3}{}
+\have {8} {I_2(y,y) \land C_2(y,y)} \ie{5,7}
+\have {9} {C_2(y,y)} \ae{8}
+\have {10} {(\neg \exists z (z \neq y \land C_2(y,z))) \leftrightarrow C_2(y,y)} \by{A2}{}
+\have {11} {C_2(y,y) \rightarrow \neg \exists z (z \neq y \land C_2(y,z))} \ae{10}
+\have {12} {\neg \exists z (z \neq y \land C_2(y,z))} \ie{9,11}
+\open
+\hypo {13} {x \neq y}
+\have {14} {x \neq y \land C_2(y,x)} \ai{13,6}
+\have {15} {\exists z (z \neq y \land C_2(y,z))} \Ei{14}
+\have {16} {\neg \exists z (z \neq y \land C_2(y,z))} \r{12}
+\have {17} {\exists z (z \neq y \land C_2(y,z)) \land \neg \exists z (z \neq y \land C_2(y,z))} \ai{15,16}
+\have {18} {\bot} \be{17}
+\close
+\have {19} {\neg (x \neq y)} \ni{13-18}
+\have {20} {x = y} \ne{19}
+\have {21} {C_2(y,y)} \r{9}
+\have {22} {C_2(x,x)} \by{20,21}{}
+\close
+\have {23} {C_2(x,x)} \Ee{3,4-22}
+\close
+\have {24} {A_1(x) \rightarrow C_2(x,x)} \ii{1-23}
+\have {25} {\forall x (A_1(x) \rightarrow C_2(x,x))} \Ai{24}
+\end{nd}$
+
+\clearpage
+
+\subsection{Proposition 11 (P11)}
+
+\begin{center}
+Dieu, c’est-à-dire une substance constituée par une infinité d’attributs dont chacun exprime une essence éternelle et infinie, existe nécessairement.
+\end{center}
+
+\begin{center}
+$L(\exists x (G_1(x)))$
+\end{center}
+
+$\begin{nd}
+\have {1} {M(\exists x (G_1(x)))} \by{A13}{}
+\open
+\hypo {2} {\exists x (G_1(x))}
+\open
+\hypo {3} {G_1(g)}
+\have {4} {G_1(x) \leftrightarrow (S_1(x) \land \forall y (A_1(y) \rightarrow A_2(y,x)))} \by{D6}{}
+\have {5} {S_1(g) \land \forall y (A_1(y) \rightarrow A_2(y,g))} \ie{3,4}
+\have {6} {S_1(g)} \ae{5}
+\have {7} {\forall x (S_1(x) \rightarrow L(\exists y (y = x)))} \by{P7}{}
+\have {8} {S_1(g) \rightarrow L(\exists y (y = g))} \Ae{7}
+\have {9} {L(\exists y (y = g))} \ie{6,8}
+\open
+\hypo {10} {\exists y (y = g)}
+\open
+\hypo {11} {y = g}
+\have {12} {G_1(g)} \r{3}
+\have {13} {G_1(y)} \by{11,12}{}
+\have {14} {\exists x (G_1(x))} \Ei{13}
+\close
+\have {15} {\exists x (G_1(x))} \Ee{10,11-14}
+\close
+\have {16} {(\exists y (y = g)) \rightarrow (\exists x (G_1(x)))} \ii{10-15}
+\have {17} {L((\exists y (y = g)) \rightarrow (\exists x (G_1(x))))} \by{R5}{16}
+\have {18} {L(\exists y (y = g)) \rightarrow L(\exists x (G_1(x)))} \by{R3}{17}
+\have {19} {L(\exists x (G_1(x)))} \ie{9,18}
+\close
+\have {20} {L(\exists x (G_1(x)))} \Ee{2,3-19}
+\close
+\have {21} {(\exists x (G_1(x))) \rightarrow L(\exists x (G_1(x)))} \ii{2-20}
+\have {22} {L((\exists x (G_1(x))) \rightarrow L(\exists x (G_1(x))))} \by{R5}{21}
+\have {23} {M(\exists x (G_1(x))) \land L((\exists x (G_1(x))) \rightarrow L(\exists x (G_1(x))))} \ai{1,22}
+\have {24} {L(\exists x (G_1(x)))} \by{S5}{23}
+\end{nd}$
+
+\clearpage
+
+\subsection{Proposition 12 (P12)}
+
+\begin{center}
+De nul attribut d’une substance il ne peut être formé un concept vrai d’où il suivrait que cette substance pût être divisée.
+\end{center}
+
+\begin{center}
+$\forall x (S_1(x) \rightarrow \neg \exists y \exists z (D_3(x,y,z)))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {S_1(x)}
+\open
+\hypo {2} {\exists y \exists z (D_3(x,y,z))}
+\open
+\hypo {3} {D_3(x,y,z)}
+\have {4} {\forall a \forall b \forall c (D_3(a,b,c) \rightarrow M(\neg \exists w (w = a)))} \by{A10}{}
+\have {5} {D_3(x,y,z) \rightarrow M(\neg \exists w (w = x))} \Ae{4}
+\have {6} {M(\neg \exists w (w = x))} \ie{3,5}
+\have {7} {\forall a (S_1(a) \rightarrow L(\exists w (w = a)))} \by{P7}{}
+\have {8} {S_1(x) \rightarrow L(\exists w (w = x))} \Ae{7}
+\have {9} {L(\exists w (w = x))} \ie{1,8}
+\have {10} {\forall a (M(\neg \exists w (w = a)) \leftrightarrow \neg L(\exists w (w = a)))} \by{A7}{}
+\have {11} {M(\neg \exists w (w = x)) \leftrightarrow \neg L(\exists w (w = x))} \Ae{10}
+\have {12} {M(\neg \exists w (w = x)) \rightarrow \neg L(\exists w (w = x))} \ae{11}
+\have {13} {\neg L(\exists w (w = x))} \ie{6,12}
+\have {14} {L(\exists w (w = x)) \land \neg L(\exists w (w = x))} \ai{9,13}
+\have {15} {\bot} \be{14}
+\close
+\have {16} {\bot} \Ee{2,3-15}
+\close
+\have {17} {\neg \exists y \exists z (D_3(x,y,z))} \ni{2-16}
+\close
+\have {18} {S_1(x) \rightarrow \neg \exists y \exists z (D_3(x,y,z))} \ii{1-17}
+\have {19} {\forall x (S_1(x) \rightarrow \neg \exists y \exists z (D_3(x,y,z)))} \Ai{18}
+\end{nd}$
+
+\subsection{Proposition 13 (P13)}
+
+\begin{center}
+Une substance absolument infinie est indivisible.
+\end{center}
+
+\begin{center}
+$\forall x (S_1(x) \land (\forall w (A_1(w) \rightarrow A_2(w,x))) \rightarrow \neg \exists y \exists z (D_3(x,y,z)))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {S_1(x) \land (\forall w (A_1(w) \rightarrow A_2(w,x)))}
+\have {2} {S_1(x)} \ae{1}
+\have {3} {\forall a (S_1(a) \rightarrow \neg \exists y \exists z (D_3(a,y,z)))} \by{P12}{}
+\have {4} {S_1(x) \rightarrow \neg \exists y \exists z (D_3(x,y,z))} \Ae{3}
+\have {5} {\neg \exists y \exists z (D_3(x,y,z))} \ie{2,4}
+\close
+\have {6} {S_1(x) \land (\forall w (A_1(w) \rightarrow A_2(w,x))) \rightarrow \neg \exists y \exists z (D_3(x,y,z))} \ii{1-5}
+\have {7} {\forall x (S_1(x) \land (\forall w (A_1(w) \rightarrow A_2(w,x))) \rightarrow \neg \exists y \exists z (D_3(x,y,z)))} \Ai{6}
+\end{nd}$
+
+\clearpage
+
+\subsection{Proposition 14 (P14)}
+
+\begin{center}
+Nulle substance en dehors de Dieu ne peut être donnée ni conçue.
+\end{center}
+
+\begin{center}
+$\exists x (G_1(x) \land \forall y (S_1(y) \rightarrow y = x))$
+\end{center}
+
+$\begin{nd}
+\have {1} {L(\exists x (G_1(x)))} \by{P11}{}
+\have {2} {L(p) \rightarrow p} \by{R2}{}
+\have {3} {\exists x (G_1(x))} \ie{1,2}
+\open
+\hypo {4} {G_1(g)}
+\have {5} {G_1(x) \leftrightarrow (S_1(x) \land \forall y (A_1(y) \rightarrow A_2(y,x)))} \by{D6}{}
+\have {6} {S_1(g) \land \forall y (A_1(y) \rightarrow A_2(y,g))} \ie{4,5}
+\have {7} {S_1(g)} \ae{6}
+\have {8} {\forall y (A_1(y) \rightarrow A_2(y,g))} \ae{6}
+\open
+\hypo {9} {S_1(s)}
+\have {10} {\forall x (\exists y (A_2(y,x)))} \by{A9}{}
+\have {11} {\exists y (A_2(y,s))} \Ae{10}
+\open
+\hypo {12} {A_2(a,s)}
+\have {13} {A_2(a,s) \leftrightarrow (A_1(a) \land C_2(s,a))} \by{D4b}{}
+\have {14} {A_1(a) \land C_2(s,a)} \ie{12,13}
+\have {15} {A_1(a)} \ae{14}
+\have {16} {A_1(a) \rightarrow A_2(a,g)} \Ae{8}
+\have {17} {A_2(a,g)} \ie{15,16}
+\have {18} {A_2(a,g) \land A_2(a,s)} \ai{17,12}
+\have {19} {\exists z (A_2(z,g) \land A_2(z,s))} \Ei{18}
+\open
+\hypo {20} {g \neq s}
+\have {21} {S_1(g) \land S_1(s) \land g \neq s} \ai{7,9,20}
+\have {22} {\forall x \forall y (S_1(x) \land S_1(y) \land x \neq y \rightarrow \neg \exists z (A_2(z,x) \land A_2(z,y)))} \by{P5}{}
+\have {23} {S_1(g) \land S_1(s) \land g \neq s \rightarrow \neg \exists z (A_2(z,g) \land A_2(z,s))} \Ae{22}
+\have {24} {\neg \exists z (A_2(z,g) \land A_2(z,s))} \ie{21,23}
+\have {25} {\exists z (A_2(z,g) \land A_2(z,s))} \r{19}
+\have {26} {\neg \exists z (A_2(z,g) \land A_2(z,s)) \land \exists z (A_2(z,g) \land A_2(z,s))} \ai{24,25}
+\have {27} {\bot} \be{26}
+\close
+\have {28} {\neg (g \neq s)} \ni{20-27}
+\have {29} {g = s} \ne{28}
+\close
+\have {30} {g = s} \Ee{11,12-29}
+\close
+\have {31} {S_1(s) \rightarrow g = s} \ii{9-30}
+\have {32} {\forall y (S_1(y) \rightarrow y = g)} \Ai{31}
+\have {33} {G_1(g) \land \forall y (S_1(y) \rightarrow y = g)} \ai{4,32}
+\have {34} {\exists x (G_1(x) \land \forall y (S_1(y) \rightarrow y = x))} \Ei{33}
+\close
+\have {35} {\exists x (G_1(x) \land \forall y (S_1(y) \rightarrow y = x))} \Ee{3,4-34}
+\end{nd}$
+
+\subsubsection{Proposition 14 alternative (P14-A)}
+
+\begin{center}
+Corollaire ou version alternative de P14: Dieu est unique.
+\end{center}
+
+\begin{center}
+$\exists x \forall y (G_1(y) \leftrightarrow y = x)$
+\end{center}
+
+$\begin{nd}
+\have {1} {\exists x (G_1(x) \land \forall y (S_1(y) \rightarrow y = x))} \by{P14}{}
+\open
+\hypo {2} {G_1(g) \land \forall y (S_1(y) \rightarrow y = g)}
+\have {3} {G_1(g)} \ae{2}
+\have {4} {\forall y (S_1(y) \rightarrow y = g)} \ae{2}
+\have {5} {G_1(x) \leftrightarrow (S_1(x) \land \forall z (A_1(z) \rightarrow A_2(z,x)))} \by{D6}{}
+\open
+\hypo {6} {G_1(y)}
+\have {7} {S_1(y) \land \forall z (A_1(z) \rightarrow A_2(z,y))} \ie{6,5}
+\have {8} {S_1(y)} \ae{7}
+\have {9} {S_1(y) \rightarrow y = g} \Ae{4}
+\have {10} {y = g} \ie{8,9}
+\close
+\have {11} {G_1(y) \rightarrow y = g} \ii{6-10}
+\open
+\hypo {12} {y = g}
+\have {13} {G_1(g)} \r{3}
+\have {14} {G_1(y)} \by{12,13}{}
+\close
+\have {15} {y = g \rightarrow G_1(y)} \ii{12-14}
+\have {16} {G_1(y) \leftrightarrow y = g} \ii{11,15}
+\have {17} {\forall y (G_1(y) \leftrightarrow y = g)} \Ai{16}
+\have {18} {\exists x \forall y (G_1(y) \leftrightarrow y = x)} \Ei{17}
+\close
+\have {19} {\exists x \forall y (G_1(y) \leftrightarrow y = x)} \Ee{1,2-18}
+\end{nd}$
+
+\clearpage
+
+\subsection{Proposition 15 (P15)}
+
+\begin{center}
+Tout ce qui est, est en Dieu et rien ne peut sans Dieu être ni être conçu.
+\end{center}
+
+\begin{center}
+$\forall x \exists g (G_1(g) \land I_2(x,g) \land C_2(x,g))$
+\end{center}
+
+\resizebox{12cm}{!}{
+$\begin{nd}
+\have {1} {\exists g (G_1(g) \land \forall y (S_1(y) \rightarrow y = g))} \by{P14}{}
+\open
+\hypo {2} {G_1(g) \land \forall y (S_1(y) \rightarrow y = g)}
+\have {3} {G_1(g)} \ae{2}
+\have {4} {\forall y (S_1(y) \rightarrow y = g)} \ae{2}
+\have {5} {\forall x (S_1(x) \lor M_1(x))} \by{DP5}{}
+\have {6} {S_1(x) \lor M_1(x)} \Ae{5}
+\open
+\hypo {7} {S_1(x)}
+\have {8} {S_1(x) \rightarrow x = g} \Ae{4}
+\have {9} {x = g} \ie{7,8}
+\have {10} {S_1(x) \leftrightarrow (I_2(x,x) \land C_2(x,x))} \by{D3}{}
+\have {11} {I_2(x,x) \land C_2(x,x)} \ie{7,10}
+\have {12} {I_2(x,x)} \ae{11}
+\have {13} {C_2(x,x)} \ae{11}
+\have {14} {I_2(x,g)} \by{9,12}{}
+\have {15} {C_2(x,g)} \by{9,13}{}
+\have {16} {I_2(x,g) \land C_2(x,g)} \ai{14,15}
+\have {17} {G_1(g) \land I_2(x,g) \land C_2(x,g)} \ai{3,16}
+\have {18} {\exists g (G_1(g) \land I_2(x,g) \land C_2(x,g))} \Ei{17}
+\close
+\open
+\hypo {19} {M_1(x)}
+\have {20} {M_1(x) \leftrightarrow \exists y (S_1(y) \land M_2(x,y))} \by{D5b}{}
+\have {21} {\exists y (S_1(y) \land M_2(x,y))} \ie{19,20}
+\open
+\hypo {22} {S_1(y) \land M_2(x,y)}
+\have {23} {S_1(y)} \ae{22}
+\have {24} {M_2(x,y)} \ae{22}
+\have {25} {S_1(y) \rightarrow y = g} \Ae{4}
+\have {26} {y = g} \ie{23,25}
+\have {27} {M_2(x,g)} \by{24,26}{}
+\have {28} {M_2(x,y) \leftrightarrow (x \neq y \land I_2(x,y) \land C_2(x,y))} \by{D5a}{}
+\have {29} {x \neq g \land I_2(x,g) \land C_2(x,g)} \ie{27,28}
+\have {30} {I_2(x,g) \land C_2(x,g)} \ae{29}
+\have {31} {G_1(g) \land I_2(x,g) \land C_2(x,g)} \ai{3,30}
+\have {32} {\exists g (G_1(g) \land I_2(x,g) \land C_2(x,g))} \Ei{31}
+\close
+\have {33} {\exists g (G_1(g) \land I_2(x,g) \land C_2(x,g))} \Ee{21,22-32}
+\close
+\have {34} {\exists g (G_1(g) \land I_2(x,g) \land C_2(x,g))} \oe{6,7-18,19-33}
+\close
+\have {35} {\exists g (G_1(g) \land I_2(x,g) \land C_2(x,g))} \Ee{1,2-34}
+\have {36} {\forall x \exists g (G_1(g) \land I_2(x,g) \land C_2(x,g))} \Ai{35}
+\end{nd}$
+}
+
+\clearpage
+
+\subsection{Proposition 16 (P16)}
+
+\begin{center}
+De la nécessité de la nature divine doivent suivre en une infinité de modes une infinité de choses, c’est-à-dire tout ce qui peut tomber sous un entendement infini. (Dieu est cause de toute chose).
+\end{center}
+
+\begin{center}
+$\forall x \exists g (G_1(g) \land K_2(g,x))$
+\end{center}
+
+$\begin{nd}
+\have {1} {\forall x \exists g (G_1(g) \land I_2(x,g) \land C_2(x,g))} \by{P15}{}
+\have {2} {\exists g (G_1(g) \land I_2(x,g) \land C_2(x,g))} \Ae{1}
+\open
+\hypo {3} {G_1(g) \land I_2(x,g) \land C_2(x,g)}
+\have {4} {G_1(g)} \ae{3}
+\have {5} {C_2(x,g)} \ae{3}
+\have {6} {\forall a \forall b (K_2(a,b) \leftrightarrow C_2(b,a))} \by{A4}{}
+\have {7} {K_2(g,x) \leftrightarrow C_2(x,g)} \Ae{6}
+\have {8} {K_2(g,x)} \ie{5,7}
+\have {9} {G_1(g) \land K_2(g,x)} \ai{4,8}
+\have {10} {\exists g (G_1(g) \land K_2(g,x))} \Ei{9}
+\close
+\have {11} {\exists g (G_1(g) \land K_2(g,x))} \Ee{2,3-10}
+\have {12} {\forall x \exists g (G_1(g) \land K_2(g,x))} \Ai{11}
+\end{nd}$
+
+\clearpage
+
+\subsection{Proposition 17 (P17)}
+
+\begin{center}
+Dieu agit par les seules lois de sa nature et sans subir aucune contrainte.
+\end{center}
+
+\begin{center}
+$\exists g (G_1(g) \land \neg(\exists x (\neg I_2(x,g) \land K_2(x,g))) \land \forall x (K_2(g,x)))$
+\end{center}
+
+\resizebox{10cm}{!}{
+$\begin{nd}
+\have {1} {\exists x (G_1(x) \land \forall y (S_1(y) \rightarrow y = x))} \by{P14}{}
+\open
+\hypo {2} {G_1(g) \land \forall y (S_1(y) \rightarrow y = g)}
+\have {3} {G_1(g)} \ae{2}
+\have {4} {\forall y (S_1(y) \rightarrow y = g)} \ae{2}
+\have {5} {G_1(g) \leftrightarrow (S_1(g) \land \forall y (A_1(y) \rightarrow A_2(y,g)))} \by{D6}{}
+\have {6} {S_1(g) \land \forall y (A_1(y) \rightarrow A_2(y,g))} \ie{3,5}
+\have {7} {S_1(g)} \ae{6}
+\open
+\hypo {8} {\exists x (\neg I_2(x,g) \land K_2(x,g))}
+\open
+\hypo {9} {\neg I_2(e,g) \land K_2(e,g)}
+\have {10} {\neg I_2(e,g)} \ae{9}
+\have {11} {K_2(e,g)} \ae{9}
+\have {12} {\forall x (S_1(x) \rightarrow \neg(\exists y (y \neq x \land K_2(y,x))))} \by{P6c}{}
+\have {13} {S_1(g) \rightarrow \neg(\exists y (y \neq g \land K_2(y,g)))} \Ae{12}
+\have {14} {\neg(\exists y (y \neq g \land K_2(y,g)))} \ie{7,13}
+\have {15} {\neg (e \neq g \land K_2(e,g))} \Ae{14}
+\have {16} {e = g \lor \neg K_2(e,g)} \by{De Morgan}{15}
+\open
+\hypo {17} {e = g}
+\have {18} {S_1(g) \leftrightarrow (I_2(g,g) \land C_2(g,g))} \by{D3}{}
+\have {19} {I_2(g,g) \land C_2(g,g)} \ie{7,18}
+\have {20} {I_2(g,g)} \ae{19}
+\have {21} {I_2(e,g)} \by{17,20}{}
+\have {22} {\neg I_2(e,g)} \r{10}
+\have {23} {I_2(e,g) \land \neg I_2(e,g)} \ai{21,22}
+\have {24} {\bot} \be{23}
+\close
+\open
+\hypo {25} {\neg K_2(e,g)}
+\have {26} {K_2(e,g)} \r{11}
+\have {27} {K_2(e,g) \land \neg K_2(e,g)} \ai{26,25}
+\have {28} {\bot} \be{27}
+\close
+\have {29} {\bot} \oe{16,17-24,25-28}
+\close
+\have {30} {\bot} \Ee{8,9-29}
+\close
+\have {31} {\neg \exists x (\neg I_2(x,g) \land K_2(x,g))} \ni{8-30}
+\have {32} {\forall x \exists h (G_1(h) \land K_2(h,x))} \by{P16}{}
+\have {33} {\exists h (G_1(h) \land K_2(h,x))} \Ae{32}
+\open
+\hypo {34} {G_1(h) \land K_2(h,x)}
+\have {35} {G_1(h)} \ae{34}
+\have {36} {\exists z \forall y (G_1(y) \leftrightarrow y = z)} \by{P14-A}{}
+\open
+\hypo {37} {\forall y (G_1(y) \leftrightarrow y = z)}
+\have {38} {G_1(g) \leftrightarrow g = z} \Ae{37}
+\have {39} {G_1(h) \leftrightarrow h = z} \Ae{37}
+\have {40} {g = z} \ie{3,38}
+\have {41} {h = z} \ie{35,39}
+\have {42} {h = g} \by{40,41}{}
+\have {43} {K_2(h,x)} \ae{34}
+\have {44} {K_2(g,x)} \by{42,43}{}
+\close
+\have {45} {K_2(g,x)} \Ee{36,37-44}
+\close
+\have {46} {K_2(g,x)} \Ee{33,34-45}
+\have {47} {\forall x (K_2(g,x))} \Ai{46}
+\have {48} {G_1(g) \land \neg(\exists x (\neg I_2(x,g) \land K_2(x,g))) \land \forall x (K_2(g,x))} \ai{3,31,47}
+\have {49} {\exists g (G_1(g) \land \neg(\exists x (\neg I_2(x,g) \land K_2(x,g))) \land \forall x (K_2(g,x)))} \Ei{48}
+\close
+\have {50} {\exists g (G_1(g) \land \neg(\exists x (\neg I_2(x,g) \land K_2(x,g))) \land \forall x (K_2(g,x)))} \Ee{1,2-49}
+\end{nd}$
+}
+\clearpage
+
+
+\subsubsection{Corollaire 2 de la Proposition 17 (P17c2)}
+
+\begin{center}
+Il suit : 2° que Dieu seul est cause libre.
+\end{center}
+
+\begin{center}
+$\exists g (G_1(g) \land B_1(g) \land \forall x (B_1(x) \rightarrow x = g))$
+\end{center}
+
+\resizebox{9cm}{!}{
+$\begin{nd}
+\have {1} {\exists g (G_1(g) \land \neg(\exists x (\neg I_2(x,g) \land K_2(x,g))) \land \forall x (K_2(g,x)))} \by{P17}{}
+\open
+\hypo {2} {G_1(g) \land \neg(\exists x (\neg I_2(x,g) \land K_2(x,g))) \land \forall x (K_2(g,x))}
+\have {3} {G_1(g)} \ae{2}
+\have {4} {\neg(\exists x (\neg I_2(x,g) \land K_2(x,g)))} \ae{2}
+\have {5} {G_1(g) \leftrightarrow (S_1(g) \land \forall y (A_1(y) \rightarrow A_2(y,g)))} \by{D6}{}
+\have {6} {S_1(g) \land \forall y (A_1(y) \rightarrow A_2(y,g))} \ie{3,5}
+\have {7} {S_1(g)} \ae{6}
+\have {8} {\forall x (S_1(x) \leftrightarrow K_2(x,x))} \by{DPIII}{}
+\have {9} {S_1(g) \leftrightarrow K_2(g,g)} \Ae{8}
+\have {10} {K_2(g,g)} \ie{7,9}
+\have {11} {\forall x (S_1(x) \rightarrow \neg(\exists y (y \neq x \land K_2(y,x))))} \by{P6c}{}
+\have {12} {S_1(g) \rightarrow \neg(\exists y (y \neq g \land K_2(y,g)))} \Ae{11}
+\have {13} {\neg(\exists y (y \neq g \land K_2(y,g)))} \ie{7,12}
+\have {14} {K_2(g,g) \land \neg \exists y (y \neq g \land K_2(y,g))} \ai{10,13}
+\have {15} {B_1(x) \leftrightarrow (K_2(x,x) \land \neg \exists y (y \neq x \land K_2(y,x)))} \by{D7a}{}
+\have {16} {K_2(g,g) \land \neg \exists y (y \neq g \land K_2(y,g)) \leftrightarrow B_1(g)} \Ae{15}
+\have {17} {B_1(g)} \ie{14,16}
+\open
+\hypo {18} {B_1(x)}
+\have {19} {B_1(x) \leftrightarrow (K_2(x,x) \land \neg \exists y (y \neq x \land K_2(y,x)))} \by{D7a}{}
+\have {20} {K_2(x,x) \land \neg \exists y (y \neq x \land K_2(y,x))} \ie{18,19}
+\have {21} {K_2(x,x)} \ae{20}
+\have {22} {\forall z (S_1(z) \leftrightarrow K_2(z,z))} \by{DPIII}{}
+\have {23} {K_2(x,x) \leftrightarrow S_1(x)} \Ae{22}
+\have {24} {S_1(x)} \ie{21,23}
+\have {25} {\exists z (G_1(z) \land \forall y (S_1(y) \rightarrow y = z))} \by{P14}{}
+\open
+\hypo {26} {G_1(h) \land \forall y (S_1(y) \rightarrow y = h)}
+\have {27} {\forall y (S_1(y) \rightarrow y = h)} \ae{26}
+\have {28} {S_1(x) \rightarrow x = h} \Ae{27}
+\have {29} {x = h} \ie{24,28}
+\have {30} {G_1(h)} \ae{26}
+\have {31} {\exists z \forall y (G_1(y) \leftrightarrow y = z)} \by{P14-A}{}
+\open
+\hypo {32} {\forall y (G_1(y) \leftrightarrow y = z)}
+\have {33} {G_1(g) \leftrightarrow g = z} \Ae{32}
+\have {34} {G_1(h) \leftrightarrow h = z} \Ae{32}
+\have {35} {g = z} \ie{3,33}
+\have {36} {h = z} \ie{30,34}
+\have {37} {h = g} \by{35,36}{}
+\have {38} {x = h} \r{29}
+\have {39} {x = g} \by{38,37}{}
+\close
+\have {40} {x = g} \Ee{31,32-39}
+\close
+\have {41} {x = g} \Ee{25,26-40}
+\close
+\have {42} {B_1(x) \rightarrow x = g} \ii{18-41}
+\have {43} {\forall x (B_1(x) \rightarrow x = g)} \Ai{42}
+\have {44} {G_1(g) \land B_1(g) \land \forall x (B_1(x) \rightarrow x = g)} \ai{3,17,43}
+\have {45} {\exists g (G_1(g) \land B_1(g) \land \forall x (B_1(x) \rightarrow x = g))} \Ei{44}
+\close
+\have {46} {\exists g (G_1(g) \land B_1(g) \land \forall x (B_1(x) \rightarrow x = g))} \Ee{1,2-45}
+\end{nd}$
+}
+
+\clearpage
+
+\subsection{Proposition 18 (P18)}
+
+\begin{center}
+Dieu est cause immanente mais non transitive de toutes choses.
+\end{center}
+
+\begin{center}
+$\exists g (G_1(g) \land \forall x (I_2(x,g) \leftrightarrow K_2(g,x)))$
+\end{center}
+
+$\begin{nd}
+\have {1} {\exists x (G_1(x) \land \forall y (S_1(y) \rightarrow y = x))} \by{P14}{}
+\open
+\hypo {2} {G_1(g) \land \forall y (S_1(y) \rightarrow y = g)}
+\have {3} {G_1(g)} \ae{2}
+\have {4} {\forall x \exists h (G_1(h) \land I_2(x,h) \land C_2(x,h))} \by{P15}{}
+\have {5} {\forall x \exists h (G_1(h) \land K_2(h,x))} \by{P16}{}
+\open
+\hypo {6} {I_2(x,g)}
+\have {7} {\forall a \forall b (I_2(a,b) \rightarrow C_2(a,b))} \by{A8}{}
+\have {8} {I_2(x,g) \rightarrow C_2(x,g)} \Ae{7}
+\have {9} {C_2(x,g)} \ie{6,8}
+\have {10} {\forall a \forall b (K_2(a,b) \leftrightarrow C_2(b,a))} \by{A4}{}
+\have {11} {K_2(g,x) \leftrightarrow C_2(x,g)} \Ae{10}
+\have {12} {K_2(g,x)} \ie{9,11}
+\close
+\have {13} {I_2(x,g) \rightarrow K_2(g,x)} \ii{6-12}
+\open
+\hypo {14} {K_2(g,x)}
+\have {15} {\exists h (G_1(h) \land I_2(x,h) \land C_2(x,h))} \Ae{4}
+\open
+\hypo {16} {G_1(h) \land I_2(x,h) \land C_2(x,h)}
+\have {17} {G_1(h)} \ae{16}
+\have {18} {I_2(x,h)} \ae{16}
+\have {19} {\exists z \forall y (G_1(y) \leftrightarrow y = z)} \by{P14-A}{}
+\open
+\hypo {20} {\forall y (G_1(y) \leftrightarrow y = z)}
+\have {21} {G_1(g) \leftrightarrow g = z} \Ae{20}
+\have {22} {G_1(h) \leftrightarrow h = z} \Ae{20}
+\have {23} {g = z} \ie{3,21}
+\have {24} {h = z} \ie{17,22}
+\have {25} {h = g} \by{23,24}{}
+\have {26} {I_2(x,h)} \r{18}
+\have {27} {I_2(x,g)} \by{25,26}{}
+\close
+\have {28} {I_2(x,g)} \Ee{19,20-27}
+\close
+\have {29} {I_2(x,g)} \Ee{15,16-28}
+\close
+\have {30} {K_2(g,x) \rightarrow I_2(x,g)} \ii{14-29}
+\have {31} {I_2(x,g) \leftrightarrow K_2(g,x)} \ii{13,30}
+\have {32} {\forall x (I_2(x,g) \leftrightarrow K_2(g,x))} \Ai{31}
+\have {33} {G_1(g) \land \forall x (I_2(x,g) \leftrightarrow K_2(g,x))} \ai{3,32}
+\have {34} {\exists g (G_1(g) \land \forall x (I_2(x,g) \leftrightarrow K_2(g,x)))} \Ei{33}
+\close
+\have {35} {\exists g (G_1(g) \land \forall x (I_2(x,g) \leftrightarrow K_2(g,x)))} \Ee{1,2-34}
+\end{nd}$
+
+\clearpage
+
+\subsection{Proposition 19 (P19)}
+
+\begin{center}
+Dieu est éternel, autrement dit tous les attributs de Dieu sont éternels.
+\end{center}
+
+\begin{center}
+$\exists g (G_1(g) \land E_1(g) \land \forall x (A_2(x,g) \rightarrow E_1(x)))$
+\end{center}
+
+$\begin{nd}
+\have {1} {\exists x (G_1(x) \land \forall y (S_1(y) \rightarrow y = x))} \by{P14}{}
+\open
+\hypo {2} {G_1(g) \land \forall y (S_1(y) \rightarrow y = g)}
+\have {3} {G_1(g)} \ae{2}
+\have {4} {G_1(g) \leftrightarrow (S_1(g) \land \forall y (A_1(y) \rightarrow A_2(y,g)))} \by{D6}{}
+\have {5} {S_1(g) \land \forall y (A_1(y) \rightarrow A_2(y,g))} \ie{3,4}
+\have {6} {S_1(g)} \ae{5}
+\have {7} {\forall x (S_1(x) \rightarrow L(\exists y (y = x)))} \by{P7}{}
+\have {8} {S_1(g) \rightarrow L(\exists y (y = g))} \Ae{7}
+\have {9} {L(\exists y (y = g))} \ie{6,8}
+\have {10} {E_1(x) \leftrightarrow L(\exists v (v = x))} \by{D8}{}
+\have {11} {L(\exists y (y = g)) \leftrightarrow E_1(g)} \Ae{10}
+\have {12} {E_1(g)} \ie{9,11}
+\open
+\hypo {13} {A_2(x,g)}
+\have {14} {A_2(x,y) \leftrightarrow (A_1(x) \land C_2(y,x))} \by{D4b}{}
+\have {15} {A_1(x) \land C_2(g,x)} \ie{13,14}
+\have {16} {A_1(x)} \ae{15}
+\have {17} {\forall z (A_1(z) \rightarrow C_2(z,z))} \by{P10}{}
+\have {18} {A_1(x) \rightarrow C_2(x,x)} \Ae{17}
+\have {19} {C_2(x,x)} \ie{16,18}
+\have {20} {\forall a \forall b (A_2(a,b) \land S_1(b) \rightarrow a = b)} \by{DP7}{}
+\have {21} {A_2(x,g) \land S_1(g) \rightarrow x = g} \Ae{20}
+\have {22} {A_2(x,g) \land S_1(g)} \ai{13,6}
+\have {23} {x = g} \ie{22,21}
+\have {24} {E_1(g)} \r{12}
+\have {25} {E_1(x)} \by{23,24}{}
+\close
+\have {26} {A_2(x,g) \rightarrow E_1(x)} \ii{13-25}
+\have {27} {\forall x (A_2(x,g) \rightarrow E_1(x))} \Ai{26}
+\have {28} {G_1(g) \land E_1(g) \land \forall x (A_2(x,g) \rightarrow E_1(x))} \ai{3,12,27}
+\have {29} {\exists g (G_1(g) \land E_1(g) \land \forall x (A_2(x,g) \rightarrow E_1(x)))} \Ei{28}
+\close
+\have {30} {\exists g (G_1(g) \land E_1(g) \land \forall x (A_2(x,g) \rightarrow E_1(x)))} \Ee{1,2-29}
+\end{nd}$
+
+\clearpage
+
+\subsection{Proposition 20 (P20)}
+
+\begin{center}
+L’existence de Dieu et son essence sont une seule et même chose.
+\end{center}
+
+\begin{center}
+$\exists g (G_1(g) \land \forall x (A_2(x,g) \rightarrow x = g))$
+\end{center}
+
+$\begin{nd}
+\have {1} {\exists x (G_1(x) \land \forall y (S_1(y) \rightarrow y = x))} \by{P14}{}
+\open
+\hypo {2} {G_1(g) \land \forall y (S_1(y) \rightarrow y = g)}
+\have {3} {G_1(g)} \ae{2}
+\have {4} {G_1(g) \leftrightarrow (S_1(g) \land \forall y (A_1(y) \rightarrow A_2(y,g)))} \by{D6}{}
+\have {5} {S_1(g) \land \forall y (A_1(y) \rightarrow A_2(y,g))} \ie{3,4}
+\have {6} {S_1(g)} \ae{5}
+\open
+\hypo {7} {A_2(x,g)}
+\have {8} {\forall a \forall b (A_2(a,b) \land S_1(b) \rightarrow a = b)} \by{DP7}{}
+\have {9} {A_2(x,g) \land S_1(g) \rightarrow x = g} \Ae{8}
+\have {10} {A_2(x,g) \land S_1(g)} \ai{7,6}
+\have {11} {x = g} \ie{10,9}
+\close
+\have {12} {A_2(x,g) \rightarrow x = g} \ii{7-11}
+\have {13} {\forall x (A_2(x,g) \rightarrow x = g)} \Ai{12}
+\have {14} {G_1(g) \land \forall x (A_2(x,g) \rightarrow x = g)} \ai{3,13}
+\have {15} {\exists g (G_1(g) \land \forall x (A_2(x,g) \rightarrow x = g))} \Ei{14}
+\close
+\have {16} {\exists g (G_1(g) \land \forall x (A_2(x,g) \rightarrow x = g))} \Ee{1,2-15}
+\end{nd}$
+
+\clearpage
+
+\subsection{Proposition 21 (P21)}
+
+\begin{center}
+Tout ce qui suit de la nature d’un attribut de Dieu prise absolument, a toujours dû exister et est infini, autrement dit est infini et éternel par la vertu de cet attribut.
+\end{center}
+
+\begin{center}
+$\forall x ((\exists g \exists y (G_1(g) \land A_2(y,g) \land x \neq g \land K_2(y,x) \land \neg(\exists z (z \neq y \land K_2(z,x))))) \rightarrow (N(\exists v (v = x)) \land \neg F_1(x)))$
+\end{center}
+
+\resizebox{14cm}{!}{
+$\begin{nd}
+\open
+\hypo {1} {\exists g \exists y (G_1(g) \land A_2(y,g) \land x \neq g \land K_2(y,x) \land \neg(\exists z (z \neq y \land K_2(z,x))))}
+\open
+\hypo {2} {G_1(g) \land A_2(y,g) \land x \neq g \land K_2(y,x) \land \neg(\exists z (z \neq y \land K_2(z,x)))}
+\have {3} {G_1(g)} \ae{2}
+\have {4} {A_2(y,g)} \ae{2}
+\have {5} {K_2(y,x)} \ae{2}
+\have {6} {G_1(g) \leftrightarrow (S_1(g) \land \forall w (A_1(w) \rightarrow A_2(w,g)))} \by{D6}{}
+\have {7} {S_1(g) \land \forall w (A_1(w) \rightarrow A_2(w,g))} \ie{3,6}
+\have {8} {S_1(g)} \ae{7}
+\have {9} {\forall a \forall b (A_2(a,b) \land S_1(b) \rightarrow a = b)} \by{DP7}{}
+\have {10} {A_2(y,g) \land S_1(g) \rightarrow y = g} \Ae{9}
+\have {11} {A_2(y,g) \land S_1(g)} \ai{4,8}
+\have {12} {y = g} \ie{11,10}
+\have {13} {K_2(g,x)} \by{12,5}{}
+\have {14} {\exists g (G_1(g) \land E_1(g) \land \forall z (A_2(z,g) \rightarrow E_1(z)))} \by{P19}{}
+\open
+\hypo {15} {G_1(h) \land E_1(h) \land \forall z (A_2(z,h) \rightarrow E_1(z))}
+\have {16} {G_1(h)} \ae{15}
+\have {17} {E_1(h)} \ae{15}
+\have {18} {\exists z \forall y (G_1(y) \leftrightarrow y = z)} \by{P14-A}{}
+\open
+\hypo {19} {\forall y (G_1(y) \leftrightarrow y = z)}
+\have {20} {G_1(g) \leftrightarrow g = z} \Ae{19}
+\have {21} {G_1(h) \leftrightarrow h = z} \Ae{19}
+\have {22} {g = z} \ie{3,20}
+\have {23} {h = z} \ie{16,21}
+\have {24} {g = h} \by{22,23}{}
+\have {25} {E_1(h)} \r{17}
+\have {26} {E_1(g)} \by{24,25}{}
+\close
+\have {27} {E_1(g)} \Ee{18,19-26}
+\close
+\have {28} {E_1(g)} \Ee{14,15-27}
+\have {29} {E_1(x) \leftrightarrow L(\exists v (v = x))} \by{D8}{}
+\have {30} {E_1(g) \leftrightarrow L(\exists v (v = g))} \Ae{29}
+\have {31} {L(\exists v (v = g))} \ie{28,30}
+\have {32} {\forall p (L(p) \rightarrow N(p))} \by{R1}{}
+\have {33} {L(\exists v (v = g)) \rightarrow N(\exists v (v = g))} \Ae{32}
+\have {34} {N(\exists v (v = g))} \ie{31,33}
+\have {35} {\forall a \forall b (K_2(a,b) \rightarrow N((\exists v (v = a)) \leftrightarrow \exists v (v = b)))} \by{A3}{}
+\have {36} {K_2(g,x) \rightarrow N((\exists v (v = g)) \leftrightarrow \exists v (v = x))} \Ae{35}
+\have {37} {N((\exists v (v = g)) \leftrightarrow \exists v (v = x))} \ie{13,36}
+\have {38} {N((\exists v (v = g)) \rightarrow (\exists v (v = x)))} \by{R7}{37}
+\have {39} {\forall p \forall q (N(p \rightarrow q) \rightarrow (N(p) \rightarrow N(q)))} \by{R6}{}
+\have {40} {N((\exists v (v = g)) \rightarrow (\exists v (v = x))) \rightarrow (N(\exists v (v = g)) \rightarrow N(\exists v (v = x)))} \Ae{39}
+\have {41} {N(\exists v (v = g)) \rightarrow N(\exists v (v = x))} \ie{38,40}
+\have {42} {N(\exists v (v = x))} \ie{34,41}
+\have {43} {\forall a (N(\exists y (y = a)) \leftrightarrow \neg F_1(a))} \by{A14}{}
+\have {44} {N(\exists y (y = x)) \leftrightarrow \neg F_1(x)} \Ae{43}
+\have {45} {N(\exists y (y = x)) \rightarrow \neg F_1(x)} \ae{44}
+\have {46} {\neg F_1(x)} \ie{42,45}
+\have {47} {N(\exists v (v = x)) \land \neg F_1(x)} \ai{42,46}
+\close
+\have {48} {N(\exists v (v = x)) \land \neg F_1(x)} \Ee{1,2-47}
+\close
+\have {49} {(\exists g \exists y (G_1(g) \land A_2(y,g) \land x \neq g \land K_2(y,x) \land \neg(\exists z (z \neq y \land K_2(z,x))))) \rightarrow (N(\exists v (v = x)) \land \neg F_1(x))} \ii{1-48}
+\have {50} {\forall x ((\exists g \exists y (G_1(g) \land A_2(y,g) \land x \neq g \land K_2(y,x) \land \neg(\exists z (z \neq y \land K_2(z,x))))) \rightarrow (N(\exists v (v = x)) \land \neg F_1(x)))} \Ai{49}
+\end{nd}$
+}
+
+\clearpage
+
+\subsection{Proposition 22 (P22)}
+
+\begin{center}
+Tout ce qui suit d’un attribut de Dieu, en tant qu’il est affecté d’une modification qui par la vertu de cet attribut existe nécessairement et est infinie, doit aussi exister nécessairement et être infini.
+\end{center}
+
+\begin{center}
+$\forall x ((\exists g \exists y \exists y' (G_1(g) \land A_2(y,g) \land M_1(y') \land \neg F_1(y') \land N(\exists v (v = y')) \land K_2(y,x) \land K_2(y',x) \land \neg(\exists z (z \neq y \land z \neq y' \land K_2(z,x))))) \rightarrow (N(\exists v (v = x)) \land \neg F_1(x)))$
+\end{center}
+
+\resizebox{19cm}{!}{
+$\begin{nd}
+\open
+\hypo {1} {\exists g \exists y \exists y' (G_1(g) \land A_2(y,g) \land M_1(y') \land \neg F_1(y') \land N(\exists v (v = y')) \land K_2(y,x) \land K_2(y',x) \land \neg(\exists z (z \neq y \land z \neq y' \land K_2(z,x))))}
+\open
+\hypo {2} {G_1(g) \land A_2(y,g) \land M_1(y') \land \neg F_1(y') \land N(\exists v (v = y')) \land K_2(y,x) \land K_2(y',x) \land \neg(\exists z (z \neq y \land z \neq y' \land K_2(z,x)))}
+\have {3} {G_1(g)} \ae{2}
+\have {4} {A_2(y,g)} \ae{2}
+\have {5} {M_1(y')} \ae{2}
+\have {6} {\neg F_1(y')} \ae{2}
+\have {7} {N(\exists v (v = y'))} \ae{2}
+\have {8} {K_2(y,x)} \ae{2}
+\have {9} {K_2(y',x)} \ae{2}
+\have {10} {G_1(g) \leftrightarrow (S_1(g) \land \forall w (A_1(w) \rightarrow A_2(w,g)))} \by{D6}{}
+\have {11} {S_1(g) \land \forall w (A_1(w) \rightarrow A_2(w,g))} \ie{3,10}
+\have {12} {S_1(g)} \ae{11}
+\have {13} {\forall a \forall b (A_2(a,b) \land S_1(b) \rightarrow a = b)} \by{DP7}{}
+\have {14} {A_2(y,g) \land S_1(g) \rightarrow y = g} \Ae{13}
+\have {15} {A_2(y,g) \land S_1(g)} \ai{4,12}
+\have {16} {y = g} \ie{15,14}
+\have {17} {K_2(g,x)} \by{16,8}{}
+\have {18} {\forall a \forall b (K_2(a,b) \rightarrow N((\exists v (v = a)) \leftrightarrow \exists v (v = b)))} \by{A3}{}
+\have {19} {K_2(y',x) \rightarrow N((\exists v (v = y')) \leftrightarrow \exists v (v = x))} \Ae{18}
+\have {20} {N((\exists v (v = y')) \leftrightarrow \exists v (v = x))} \ie{9,19}
+\have {21} {N((\exists v (v = y')) \rightarrow (\exists v (v = x)))} \by{R7}{20}
+\have {22} {\forall p \forall q (N(p \rightarrow q) \rightarrow (N(p) \rightarrow N(q)))} \by{R6}{}
+\have {23} {N((\exists v (v = y')) \rightarrow (\exists v (v = x))) \rightarrow (N(\exists v (v = y')) \rightarrow N(\exists v (v = x)))} \Ae{22}
+\have {24} {N(\exists v (v = y')) \rightarrow N(\exists v (v = x))} \ie{21,23}
+\have {25} {N(\exists v (v = x))} \ie{7,24}
+\have {26} {\forall a (N(\exists y (y = a)) \leftrightarrow \neg F_1(a))} \by{A14}{}
+\have {27} {N(\exists y (y = x)) \leftrightarrow \neg F_1(x)} \Ae{26}
+\have {28} {N(\exists y (y = x)) \rightarrow \neg F_1(x)} \ae{27}
+\have {29} {\neg F_1(x)} \ie{25,28}
+\have {30} {N(\exists v (v = x)) \land \neg F_1(x)} \ai{25,29}
+\close
+\have {31} {N(\exists v (v = x)) \land \neg F_1(x)} \Ee{1,2-30}
+\close
+\have {32} {(\exists g \exists y \exists y' (G_1(g) \land A_2(y,g) \land M_1(y') \land \neg F_1(y') \land N(\exists v (v = y')) \land K_2(y,x) \land K_2(y',x) \land \neg(\exists z (z \neq y \land z \neq y' \land K_2(z,x))))) \rightarrow (N(\exists v (v = x)) \land \neg F_1(x))} \ii{1-31}
+\have {33} {\forall x ((\exists g \exists y \exists y' (G_1(g) \land A_2(y,g) \land M_1(y') \land \neg F_1(y') \land N(\exists v (v = y')) \land K_2(y,x) \land K_2(y',x) \land \neg(\exists z (z \neq y \land z \neq y' \land K_2(z,x))))) \rightarrow (N(\exists v (v = x)) \land \neg F_1(x)))} \Ai{32}
+\end{nd}$
+}
+
+\clearpage
+
+\subsection{Proposition 23 (P23)}
+
+\begin{center}
+Tout mode qui existe nécessairement et est infini, a dû suivre nécessairement ou bien de la nature d’un attribut de Dieu prise absolument, ou bien d’un attribut affecté d’une modification qui elle-même existe nécessairement et est infinie.
+\end{center}
+
+\begin{center}
+$\forall x (N(\exists v (v = x)) \rightarrow \exists g \exists y (G_1(g) \land A_2(y,g) \land N((\exists v (v = y)) \rightarrow (\exists v (v = x)))))$
+\end{center}
+
+\resizebox{13cm}{!}{
+$\begin{nd}
+\open
+\hypo {1} {N(\exists v (v = x))}
+\have {2} {\exists g (G_1(g) \land \forall y (S_1(y) \rightarrow y = g))} \by{P14}{}
+\open
+\hypo {3} {G_1(g) \land \forall y (S_1(y) \rightarrow y = g)}
+\have {4} {G_1(g)} \ae{3}
+\have {5} {\forall x (\exists y (A_2(y,x)))} \by{A9}{}
+\have {6} {\exists y (A_2(y,g))} \Ae{5}
+\open
+\hypo {7} {A_2(y,g)}
+\have {8} {G_1(g) \leftrightarrow (S_1(g) \land \forall w (A_1(w) \rightarrow A_2(w,g)))} \by{D6}{}
+\have {9} {S_1(g) \land \forall w (A_1(w) \rightarrow A_2(w,g))} \ie{4,8}
+\have {10} {S_1(g)} \ae{9}
+\have {11} {\forall a \forall b (A_2(a,b) \land S_1(b) \rightarrow a = b)} \by{DP7}{}
+\have {12} {A_2(y,g) \land S_1(g) \rightarrow y = g} \Ae{11}
+\have {13} {A_2(y,g) \land S_1(g)} \ai{7,10}
+\have {14} {y = g} \ie{13,12}
+\have {15} {\forall z \exists h (G_1(h) \land I_2(z,h) \land C_2(z,h))} \by{P15}{}
+\have {16} {\exists h (G_1(h) \land I_2(x,h) \land C_2(x,h))} \Ae{15}
+\open
+\hypo {17} {G_1(h) \land I_2(x,h) \land C_2(x,h)}
+\have {18} {G_1(h)} \ae{17}
+\have {19} {I_2(x,h)} \ae{17}
+\have {20} {C_2(x,h)} \ae{17}
+\have {21} {\exists z \forall y (G_1(y) \leftrightarrow y = z)} \by{P14-A}{}
+\open
+\hypo {22} {\forall y (G_1(y) \leftrightarrow y = z)}
+\have {23} {G_1(g) \leftrightarrow g = z} \Ae{22}
+\have {24} {G_1(h) \leftrightarrow h = z} \Ae{22}
+\have {25} {g = z} \ie{4,23}
+\have {26} {h = z} \ie{18,24}
+\have {27} {h = g} \by{25,26}{}
+\have {28} {C_2(x,h)} \r{20}
+\have {29} {C_2(x,g)} \by{27,28}{}
+\close
+\have {30} {C_2(x,g)} \Ee{21,22-29}
+\have {31} {\forall a \forall b (K_2(a,b) \leftrightarrow C_2(b,a))} \by{A4}{}
+\have {32} {K_2(g,x) \leftrightarrow C_2(x,g)} \Ae{31}
+\have {33} {K_2(g,x)} \ie{30,32}
+\have {34} {K_2(y,x)} \by{14,33}{}
+\have {35} {\forall a \forall b (K_2(a,b) \rightarrow N((\exists v (v = a)) \leftrightarrow \exists v (v = b)))} \by{A3}{}
+\have {36} {K_2(y,x) \rightarrow N((\exists v (v = y)) \leftrightarrow \exists v (v = x))} \Ae{35}
+\have {37} {N((\exists v (v = y)) \leftrightarrow \exists v (v = x))} \ie{34,36}
+\have {38} {N((\exists v (v = y)) \rightarrow (\exists v (v = x)))} \by{R7}{37}
+\have {39} {G_1(g) \land A_2(y,g) \land N((\exists v (v = y)) \rightarrow (\exists v (v = x)))} \ai{4,7,38}
+\have {40} {\exists g \exists y (G_1(g) \land A_2(y,g) \land N((\exists v (v = y)) \rightarrow (\exists v (v = x))))} \Ei{39}
+\close
+\have {41} {\exists g \exists y (G_1(g) \land A_2(y,g) \land N((\exists v (v = y)) \rightarrow (\exists v (v = x))))} \Ee{6,7-40}
+\close
+\have {42} {\exists g \exists y (G_1(g) \land A_2(y,g) \land N((\exists v (v = y)) \rightarrow (\exists v (v = x))))} \Ee{2,3-41}
+\close
+\have {43} {N(\exists v (v = x)) \rightarrow \exists g \exists y (G_1(g) \land A_2(y,g) \land N((\exists v (v = y)) \rightarrow (\exists v (v = x))))} \ii{1-42}
+\have {44} {\forall x (N(\exists v (v = x)) \rightarrow \exists g \exists y (G_1(g) \land A_2(y,g) \land N((\exists v (v = y)) \rightarrow (\exists v (v = x)))))} \Ai{43}
+\end{nd}$
+}
+
+\clearpage
+
+\subsection{Proposition 24 (P24)}
+
+\begin{center}
+L’essence des choses produites par Dieu n’enveloppe pas l’existence.
+\end{center}
+
+\begin{center}
+$\forall x ((\exists g (G_1(g) \land x \neq g \land K_2(g,x))) \rightarrow \neg L(\exists v (v = x)))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {\exists g (G_1(g) \land x \neq g \land K_2(g,x))}
+\open
+\hypo {2} {G_1(g) \land x \neq g \land K_2(g,x)}
+\have {3} {x \neq g} \ae{2}
+\have {4} {K_2(g,x)} \ae{2}
+\open
+\hypo {5} {L(\exists v (v = x))}
+\have {6} {K_2(x,x) \land \neg \exists y (y \neq x \land K_2(y,x)) \leftrightarrow L(\exists y (y = x))} \by{D1}{}
+\have {7} {L(\exists y (y = x)) \rightarrow K_2(x,x) \land \neg \exists y (y \neq x \land K_2(y,x))} \ae{6}
+\have {8} {K_2(x,x) \land \neg \exists y (y \neq x \land K_2(y,x))} \ie{5,7}
+\have {9} {\neg \exists y (y \neq x \land K_2(y,x))} \ae{8}
+\have {10} {g \neq x} \by{3}{}
+\have {11} {g \neq x \land K_2(g,x)} \ai{10,4}
+\have {12} {\exists y (y \neq x \land K_2(y,x))} \Ei{11}
+\have {13} {\neg \exists y (y \neq x \land K_2(y,x)) \land \exists y (y \neq x \land K_2(y,x))} \ai{9,12}
+\have {14} {\bot} \be{13}
+\close
+\have {15} {\neg L(\exists v (v = x))} \ni{5-14}
+\close
+\have {16} {\neg L(\exists v (v = x))} \Ee{1,2-15}
+\close
+\have {17} {(\exists g (G_1(g) \land x \neq g \land K_2(g,x))) \rightarrow \neg L(\exists v (v = x)))} \ii{1-16}
+\have {18} {\forall x ((\exists g (G_1(g) \land x \neq g \land K_2(g,x))) \rightarrow \neg L(\exists v (v = x))))} \Ai{17}
+\end{nd}$
+
+\subsection{Proposition 25 (P25)}
+
+\begin{center}
+Dieu n’est pas seulement cause efficiente de l’existence, mais aussi de l’essence des choses.
+\end{center}
+
+\begin{center}
+$\forall x \exists g (G_1(g) \land K_2(g,x))$
+\end{center}
+
+$\begin{nd}
+\have {1} {\forall x \exists g (G_1(g) \land I_2(x,g) \land C_2(x,g))} \by{P15}{}
+\have {2} {\exists g (G_1(g) \land I_2(x,g) \land C_2(x,g))} \Ae{1}
+\open
+\hypo {3} {G_1(g) \land I_2(x,g) \land C_2(x,g)}
+\have {4} {G_1(g)} \ae{3}
+\have {5} {C_2(x,g)} \ae{3}
+\have {6} {\forall a \forall b (K_2(a,b) \leftrightarrow C_2(b,a))} \by{A4}{}
+\have {7} {K_2(g,x) \leftrightarrow C_2(x,g)} \Ae{6}
+\have {8} {K_2(g,x)} \ie{5,7}
+\have {9} {G_1(g) \land K_2(g,x)} \ai{4,8}
+\have {10} {\exists g (G_1(g) \land K_2(g,x))} \Ei{9}
+\close
+\have {11} {\exists g (G_1(g) \land K_2(g,x))} \Ee{2,3-10}
+\have {12} {\forall x \exists g (G_1(g) \land K_2(g,x))} \Ai{11}
+\end{nd}$
+
+\clearpage
+
+\subsection{Proposition 26 (P26)}
+
+\begin{center}
+Une chose qui est déterminée à produire quelque effet a été nécessairement déterminée par Dieu ; et celle qui n’a pas été déterminée par Dieu ne peut se déterminer elle-même à produire un effet.
+\end{center}
+
+\begin{center}
+$\forall x \forall y ((\exists z \exists z' (M_2(y,z) \land M_2(z',z) \land K_2(x,y))) \rightarrow \exists g (G_1(g) \land K_2(g,y)))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {\exists z \exists z' (M_2(y,z) \land M_2(z',z) \land K_2(x,y))}
+\have {2} {\forall x \exists g (G_1(g) \land K_2(g,x))} \by{P16}{}
+\have {3} {\exists g (G_1(g) \land K_2(g,y))} \Ae{2}
+\close
+\have {4} {(\exists z \exists z' (M_2(y,z) \land M_2(z',z) \land K_2(x,y))) \rightarrow \exists g (G_1(g) \land K_2(g,y)))} \ii{1-3}
+\have {5} {\forall y ((\exists z \exists z' (M_2(y,z) \land M_2(z',z) \land K_2(x,y))) \rightarrow \exists g (G_1(g) \land K_2(g,y))))} \Ai{4}
+\have {6} {\forall x \forall y ((\exists z \exists z' (M_2(y,z) \land M_2(z',z) \land K_2(x,y))) \rightarrow \exists g (G_1(g) \land K_2(g,y))))} \Ai{5}
+\end{nd}$
+
+\clearpage
+
+\subsection{Proposition 27 (P27)}
+
+\begin{center}
+Une chose qui est déterminée par Dieu à produire quelque effet ne peut se rendre elle-même indéterminée.
+\end{center}
+
+\begin{center}
+$\forall x ((\exists g (G_1(g) \land K_2(g,x) \land \neg(\exists z (z \neq g \land K_2(z,x))))) \rightarrow N(\exists v (v = x)))$
+\end{center}
+
+\resizebox{16cm}{!}{
+$\begin{nd}
+\open
+\hypo {1} {\exists g (G_1(g) \land K_2(g,x) \land \neg(\exists z (z \neq g \land K_2(z,x))))}
+\open
+\hypo {2} {G_1(g) \land K_2(g,x) \land \neg(\exists z (z \neq g \land K_2(z,x)))}
+\have {3} {G_1(g)} \ae{2}
+\have {4} {K_2(g,x)} \ae{2}
+\have {5} {\exists z \forall y (G_1(y) \leftrightarrow y = z)} \by{P14-A}{}
+\open
+\hypo {6} {\forall y (G_1(y) \leftrightarrow y = h)}
+\have {7} {G_1(g) \leftrightarrow g = h} \Ae{6}
+\have {8} {g = h} \ie{3,7}
+\have {9} {\exists k (G_1(k) \land E_1(k) \land \forall z (A_2(z,k) \rightarrow E_1(z)))} \by{P19}{}
+\open
+\hypo {10} {G_1(k) \land E_1(k) \land \forall z (A_2(z,k) \rightarrow E_1(z))}
+\have {11} {G_1(k)} \ae{10}
+\have {12} {E_1(k)} \ae{10}
+\have {13} {G_1(k) \leftrightarrow k = h} \Ae{6}
+\have {14} {k = h} \ie{11,13}
+\have {15} {g = h} \r{8}
+\have {16} {g = k} \by{15,14}{}
+\have {17} {E_1(k)} \r{12}
+\have {18} {E_1(g)} \by{16,17}{}
+\have {19} {E_1(x) \leftrightarrow L(\exists v (v = x))} \by{D8}{}
+\have {20} {E_1(g) \leftrightarrow L(\exists v (v = g))} \Ae{19}
+\have {21} {L(\exists v (v = g))} \ie{18,20}
+\have {22} {\forall p (L(p) \rightarrow N(p))} \by{R1}{}
+\have {23} {L(\exists v (v = g)) \rightarrow N(\exists v (v = g))} \Ae{22}
+\have {24} {N(\exists v (v = g))} \ie{21,23}
+\have {25} {\forall a \forall b (K_2(a,b) \rightarrow N((\exists v (v = a)) \leftrightarrow \exists v (v = b)))} \by{A3}{}
+\have {26} {K_2(g,x) \rightarrow N((\exists v (v = g)) \leftrightarrow \exists v (v = x))} \Ae{25}
+\have {27} {N((\exists v (v = g)) \leftrightarrow \exists v (v = x))} \ie{4,26}
+\have {28} {N((\exists v (v = g)) \rightarrow (\exists v (v = x)))} \by{R7}{27}
+\have {29} {\forall p \forall q (N(p \rightarrow q) \rightarrow (N(p) \rightarrow N(q)))} \by{R6}{}
+\have {30} {N((\exists v (v = g)) \rightarrow (\exists v (v = x))) \rightarrow (N(\exists v (v = g)) \rightarrow N(\exists v (v = x)))} \Ae{29}
+\have {31} {N(\exists v (v = g)) \rightarrow N(\exists v (v = x))} \ie{28,30}
+\have {32} {N(\exists v (v = x))} \ie{24,31}
+\close
+\have {33} {N(\exists v (v = x))} \Ee{9,10-32}
+\close
+\have {34} {N(\exists v (v = x))} \Ee{5,6-33}
+\close
+\have {35} {N(\exists v (v = x))} \Ee{1,2-34}
+\close
+\have {36} {(\exists g (G_1(g) \land K_2(g,x) \land \neg(\exists z (z \neq g \land K_2(z,x))))) \rightarrow N(\exists v (v = x)))} \ii{1-35}
+\have {37} {\forall x ((\exists g (G_1(g) \land K_2(g,x) \land \neg(\exists z (z \neq g \land K_2(z,x))))) \rightarrow N(\exists v (v = x))))} \Ai{36}
+\end{nd}$
+}
+
+\clearpage
+
+\subsection{Proposition 28 (P28)}
+
+\begin{center}
+Une chose singulière quelconque, autrement dit toute chose qui est finie et a une existence déterminée, ne peut exister et être déterminée à produire quelque effet, si elle n’est déterminée à exister et à produire cet effet par une autre cause qui est elle-même finie et a une existence déterminée ; et à son tour cette cause ne peut non plus exister et être déterminée à produire quelque effet, si elle n’est déterminée à exister et à produire cet effet par une autre qui est aussi finie et a une existence déterminée, et ainsi à l’infini.
+\end{center}
+
+\begin{center}
+$\forall x ((F_1(x) \land \neg N(\exists v (v = x))) \rightarrow (\exists g (G_1(g) \land K_2(g,x) \land (\forall y (I_2(x,y) \rightarrow K_2(y,x))) \land (\exists z (z \neq x \land K_2(z,x) \land \neg N(\exists v (v = z)) \land F_1(z))))))$
+\end{center}
+
+\resizebox{18cm}{!}{
+$\begin{nd}
+\open
+\hypo {1} {F_1(x) \land \neg N(\exists v (v = x))}
+\have {2} {F_1(x)} \ae{1}
+\have {3} {\neg N(\exists v (v = x))} \ae{1}
+\have {4} {\forall z \exists g (G_1(g) \land K_2(g,z))} \by{P16}{}
+\have {5} {\exists g (G_1(g) \land K_2(g,x))} \Ae{4}
+\open
+\hypo {6} {G_1(g) \land K_2(g,x)}
+\have {7} {G_1(g)} \ae{6}
+\have {8} {K_2(g,x)} \ae{6}
+\open
+\hypo {9} {I_2(x,y)}
+\have {10} {\forall a \forall b (I_2(a,b) \rightarrow C_2(a,b))} \by{A8}{}
+\have {11} {I_2(x,y) \rightarrow C_2(x,y)} \Ae{10}
+\have {12} {C_2(x,y)} \ie{9,11}
+\have {13} {\forall a \forall b (K_2(a,b) \leftrightarrow C_2(b,a))} \by{A4}{}
+\have {14} {K_2(y,x) \leftrightarrow C_2(x,y)} \Ae{13}
+\have {15} {K_2(y,x)} \ie{12,14}
+\close
+\have {16} {I_2(x,y) \rightarrow K_2(y,x)} \ii{9-15}
+\have {17} {\forall y (I_2(x,y) \rightarrow K_2(y,x))} \Ai{16}
+\have {18} {\forall x (S_1(x) \lor M_1(x))} \by{DP5}{}
+\have {19} {S_1(x) \lor M_1(x)} \Ae{18}
+\open
+\hypo {20} {S_1(x)}
+\have {21} {\forall a (S_1(a) \rightarrow \neg F_1(a))} \by{P8}{}
+\have {22} {S_1(x) \rightarrow \neg F_1(x)} \Ae{21}
+\have {23} {\neg F_1(x)} \ie{20,22}
+\have {24} {F_1(x)} \r{2}
+\have {25} {F_1(x) \land \neg F_1(x)} \ai{24,23}
+\have {26} {\bot} \be{25}
+\close
+\have {27} {\neg S_1(x)} \ni{20-26}
+\have {28} {S_1(x) \lor M_1(x)} \r{19}
+\open
+\hypo {29} {\neg M_1(x)}
+\have {30} {\neg S_1(x) \land \neg M_1(x)} \ai{27,29}
+\have {31} {\neg(S_1(x) \lor M_1(x))} \by{De Morgan}{30}
+\have {32} {S_1(x) \lor M_1(x) \land \neg(S_1(x) \lor M_1(x))} \ai{28,31}
+\have {33} {\bot} \be{32}
+\close
+\have {34} {M_1(x)} \ni{29-33}
+\have {35} {F_1(x) \land \neg N(\exists v (v = x)) \land M_1(x)} \ai{2,3,34}
+\have {36} {\exists z (z \neq x \land K_2(z,x) \land \neg N(\exists v (v = z)) \land F_1(z))} \by{R10}{35}
+\have {37} {G_1(g) \land K_2(g,x) \land (\forall y (I_2(x,y) \rightarrow K_2(y,x))) \land (\exists z (z \neq x \land K_2(z,x) \land \neg N(\exists v (v = z)) \land F_1(z)))} \ai{7,8,17,36}
+\have {38} {\exists g (G_1(g) \land K_2(g,x) \land (\forall y (I_2(x,y) \rightarrow K_2(y,x))) \land (\exists z (z \neq x \land K_2(z,x) \land \neg N(\exists v (v = z)) \land F_1(z))))} \Ei{37}
+\close
+\have {39} {\exists g (G_1(g) \land K_2(g,x) \land (\forall y (I_2(x,y) \rightarrow K_2(y,x))) \land (\exists z (z \neq x \land K_2(z,x) \land \neg N(\exists v (v = z)) \land F_1(z))))} \Ee{5,6-38}
+\close
+\have {40} {(F_1(x) \land \neg N(\exists v (v = x))) \rightarrow (\exists g (G_1(g) \land K_2(g,x) \land (\forall y (I_2(x,y) \rightarrow K_2(y,x))) \land (\exists z (z \neq x \land K_2(z,x) \land \neg N(\exists v (v = z)) \land F_1(z)))))} \ii{1-39}
+\have {41} {\forall x ((F_1(x) \land \neg N(\exists v (v = x))) \rightarrow (\exists g (G_1(g) \land K_2(g,x) \land (\forall y (I_2(x,y) \rightarrow K_2(y,x))) \land (\exists z (z \neq x \land K_2(z,x) \land \neg N(\exists v (v = z)) \land F_1(z))))))} \Ai{40}
+\end{nd}$
+}
+
+\clearpage
+
+\subsection{Proposition 29 (P29)}
+
+\begin{center}
+Il n’est rien donné de contingent dans la nature, mais tout y est déterminé par la nécessité de la nature divine à exister et à produire quelque effet d’une certaine manière.
+\end{center}
+
+\begin{center}
+$\exists g (G_1(g) \land L(\exists x (x = g)) \land (\forall x (x \neq g \rightarrow N_1(x))))$
+\end{center}
+
+\resizebox{11cm}{!}{
+$\begin{nd}
+\have {1} {\exists z \forall y (G_1(y) \leftrightarrow y = z)} \by{P14-A}{}
+\open
+\hypo {2} {\forall y (G_1(y) \leftrightarrow y = g)}
+\have {3} {G_1(g) \leftrightarrow g = g} \Ae{2}
+\have {4} {g = g} \by{reflexivité}{}
+\have {5} {G_1(g)} \ie{4,3}
+\have {6} {L(\exists x (G_1(x)))} \by{P11}{}
+\open
+\hypo {7} {\exists x (G_1(x))}
+\open
+\hypo {8} {G_1(h)}
+\have {9} {G_1(h) \leftrightarrow h = g} \Ae{2}
+\have {10} {h = g} \ie{8,9}
+\have {11} {\exists x (x = g)} \Ei{10}
+\close
+\have {12} {\exists x (x = g)} \Ee{7,8-11}
+\close
+\have {13} {(\exists x (G_1(x))) \rightarrow (\exists x (x = g))} \ii{7-12}
+\have {14} {L((\exists x (G_1(x))) \rightarrow (\exists x (x = g)))} \by{R5}{13}
+\have {15} {L(\exists x (G_1(x))) \rightarrow L(\exists x (x = g))} \by{R3}{14}
+\have {16} {L(\exists x (x = g))} \ie{6,15}
+\open
+\hypo {17} {x \neq g}
+\have {18} {\forall z \exists h (G_1(h) \land K_2(h,z))} \by{P16}{}
+\have {19} {\exists h (G_1(h) \land K_2(h,x))} \Ae{18}
+\open
+\hypo {20} {G_1(h) \land K_2(h,x)}
+\have {21} {G_1(h)} \ae{20}
+\have {22} {K_2(h,x)} \ae{20}
+\have {23} {G_1(h) \leftrightarrow h = g} \Ae{2}
+\have {24} {h = g} \ie{21,23}
+\have {25} {K_2(g,x)} \by{24,22}{}
+\have {26} {x \neq g} \r{17}
+\have {27} {g \neq x} \by{symétrie}{26}
+\have {28} {g \neq x \land K_2(g,x)} \ai{27,25}
+\have {29} {\exists y (y \neq x \land K_2(y,x))} \Ei{28}
+\have {30} {N_1(x) \leftrightarrow \exists y (y \neq x \land K_2(y,x))} \by{D7b}{}
+\have {31} {N_1(x)} \ie{29,30}
+\close
+\have {32} {N_1(x)} \Ee{19,20-31}
+\close
+\have {33} {x \neq g \rightarrow N_1(x)} \ii{17-32}
+\have {34} {\forall x (x \neq g \rightarrow N_1(x))} \Ai{33}
+\have {35} {G_1(g) \land L(\exists x (x = g)) \land (\forall x (x \neq g \rightarrow N_1(x)))} \ai{5,16,34}
+\have {36} {\exists g (G_1(g) \land L(\exists x (x = g)) \land (\forall x (x \neq g \rightarrow N_1(x))))} \Ei{35}
+\close
+\have {37} {\exists g (G_1(g) \land L(\exists x (x = g)) \land (\forall x (x \neq g \rightarrow N_1(x))))} \Ee{1,2-36}
+\end{nd}$
+}
+
+\clearpage
+
+\subsection{Proposition 30 (P30)}
+
+\begin{center}
+Un entendement, actuellement fini ou actuellement infini, doit comprendre les attributs de Dieu et les affections de Dieu et rien autre chose.
+\end{center}
+
+\begin{center}
+$\forall x \forall y ((A_1(x) \land T_1(x) \land O_2(y,x)) \rightarrow (A_1(y) \lor M_1(y)))$
+\end{center}
+
+\resizebox{13cm}{!}{
+$\begin{nd}
+\open
+\hypo {1} {A_1(x) \land T_1(x) \land O_2(y,x)}
+\have {2} {A_1(x)} \ae{1}
+\have {3} {T_1(x)} \ae{1}
+\have {4} {O_2(y,x)} \ae{1}
+\have {5} {\forall a (S_1(a) \lor M_1(a))} \by{DP5}{}
+\have {6} {S_1(y) \lor M_1(y)} \Ae{5}
+\open
+\hypo {7} {S_1(y)}
+\have {8} {\forall a (\exists b (A_2(b,a)))} \by{A9}{}
+\have {9} {\exists b (A_2(b,y))} \Ae{8}
+\open
+\hypo {10} {A_2(z,y)}
+\have {11} {A_2(a,b) \leftrightarrow (A_1(a) \land C_2(b,a))} \by{D4b}{}
+\have {12} {A_2(z,y) \leftrightarrow (A_1(z) \land C_2(y,z))} \Ae{11}
+\have {13} {A_1(z) \land C_2(y,z)} \ie{10,12}
+\have {14} {C_2(y,z)} \ae{13}
+\have {15} {S_1(y) \leftrightarrow (I_2(y,y) \land C_2(y,y))} \by{D3}{}
+\have {16} {I_2(y,y) \land C_2(y,y)} \ie{7,15}
+\have {17} {C_2(y,y)} \ae{16}
+\have {18} {(\neg \exists w (w \neq y \land C_2(y,w))) \leftrightarrow C_2(y,y)} \by{A2}{}
+\have {19} {C_2(y,y) \rightarrow \neg \exists w (w \neq y \land C_2(y,w))} \ae{18}
+\have {20} {\neg \exists w (w \neq y \land C_2(y,w))} \ie{17,19}
+\open
+\hypo {21} {z \neq y}
+\have {22} {z \neq y \land C_2(y,z)} \ai{21,14}
+\have {23} {\exists w (w \neq y \land C_2(y,w))} \Ei{22}
+\have {24} {\neg \exists w (w \neq y \land C_2(y,w))} \r{20}
+\have {25} {\exists w (w \neq y \land C_2(y,w)) \land \neg \exists w (w \neq y \land C_2(y,w))} \ai{23,24}
+\have {26} {\bot} \be{25}
+\close
+\have {27} {\neg (z \neq y)} \ni{21-26}
+\have {28} {z = y} \ne{27}
+\have {29} {A_1(z)} \ae{13}
+\have {30} {A_1(y)} \by{28,29}{}
+\have {31} {A_1(y) \lor M_1(y)} \oi{30}
+\close
+\have {32} {A_1(y) \lor M_1(y)} \Ee{9,10-31}
+\close
+\open
+\hypo {33} {M_1(y)}
+\have {34} {A_1(y) \lor M_1(y)} \oi{33}
+\close
+\have {35} {A_1(y) \lor M_1(y)} \oe{6,7-32,33-34}
+\close
+\have {36} {(A_1(x) \land T_1(x) \land O_2(y,x)) \rightarrow (A_1(y) \lor M_1(y))} \ii{1-35}
+\have {37} {\forall y ((A_1(x) \land T_1(x) \land O_2(y,x)) \rightarrow (A_1(y) \lor M_1(y)))} \Ai{36}
+\have {38} {\forall x \forall y ((A_1(x) \land T_1(x) \land O_2(y,x)) \rightarrow (A_1(y) \lor M_1(y)))} \Ai{37}
+\end{nd}$
+}
+
+\clearpage
+
+\subsection{Proposition 31 (P31)}
+
+\begin{center}
+L’entendement en acte, qu’il soit fini ou infini, comme aussi la volonté, le désir, l’amour, etc., doivent être rapportés à la Nature Naturée et non à la Naturante.
+\end{center}
+
+Cela revient à dire que l'entendement, la volonté, le désir et l'amour sont des modes. 
+
+\subsubsection{Proposition 31a (P31a)}
+
+\begin{center}
+L'entendement est un mode.
+\end{center}
+
+\begin{center}
+$\forall x (U_1(x) \rightarrow M_1(x))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {U_1(x)}
+\have {2} {\forall a ((S_1(a) \land \neg M_1(a)) \lor (\neg S_1(a) \land M_1(a)))} \by{DPI}{}
+\have {3} {(S_1(x) \land \neg M_1(x)) \lor (\neg S_1(x) \land M_1(x))} \Ae{2}
+\open
+\hypo {4} {S_1(x) \land \neg M_1(x)}
+\have {5} {S_1(x)} \ae{4}
+\have {6} {\forall a (S_1(a) \rightarrow A_2(a,a))} \by{DPII}{}
+\have {7} {S_1(x) \rightarrow A_2(x,x)} \Ae{6}
+\have {8} {A_2(x,x)} \ie{5,7}
+\have {9} {A_2(a,b) \leftrightarrow (A_1(a) \land C_2(b,a))} \by{D4b}{}
+\have {10} {A_2(x,x) \leftrightarrow (A_1(x) \land C_2(x,x))} \Ae{9}
+\have {11} {A_1(x) \land C_2(x,x)} \ie{8,10}
+\have {12} {A_1(x)} \ae{11}
+\have {13} {\forall a (U_1(a) \rightarrow \neg A_1(a))} \by{A17a}{}
+\have {14} {U_1(x) \rightarrow \neg A_1(x)} \Ae{13}
+\have {15} {\neg A_1(x)} \ie{1,14}
+\have {16} {A_1(x) \land \neg A_1(x)} \ai{12,15}
+\have {17} {\bot} \be{16}
+\close
+\open
+\hypo {18} {\neg S_1(x) \land M_1(x)}
+\have {19} {M_1(x)} \ae{18}
+\close
+\have {20} {M_1(x)} \oe{3,4-17,18-19}
+\close
+\have {21} {U_1(x) \rightarrow M_1(x)} \ii{1-20}
+\have {22} {\forall x (U_1(x) \rightarrow M_1(x))} \Ai{21}
+\end{nd}$
+
+\clearpage
+
+\subsubsection{Proposition 31b (P31b)}
+
+\begin{center}
+La volonté est un mode.
+\end{center}
+
+\begin{center}
+$\forall x (W_1(x) \rightarrow M_1(x))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {W_1(x)}
+\have {2} {\forall a ((S_1(a) \land \neg M_1(a)) \lor (\neg S_1(a) \land M_1(a)))} \by{DPI}{}
+\have {3} {(S_1(x) \land \neg M_1(x)) \lor (\neg S_1(x) \land M_1(x))} \Ae{2}
+\open
+\hypo {4} {S_1(x) \land \neg M_1(x)}
+\have {5} {S_1(x)} \ae{4}
+\have {6} {\forall a (S_1(a) \rightarrow A_2(a,a))} \by{DPII}{}
+\have {7} {S_1(x) \rightarrow A_2(x,x)} \Ae{6}
+\have {8} {A_2(x,x)} \ie{5,7}
+\have {9} {A_2(a,b) \leftrightarrow (A_1(a) \land C_2(b,a))} \by{D4b}{}
+\have {10} {A_2(x,x) \leftrightarrow (A_1(x) \land C_2(x,x))} \Ae{9}
+\have {11} {A_1(x) \land C_2(x,x)} \ie{8,10}
+\have {12} {A_1(x)} \ae{11}
+\have {13} {\forall a (W_1(a) \rightarrow \neg A_1(a))} \by{A17b}{}
+\have {14} {W_1(x) \rightarrow \neg A_1(x)} \Ae{13}
+\have {15} {\neg A_1(x)} \ie{1,14}
+\have {16} {A_1(x) \land \neg A_1(x)} \ai{12,15}
+\have {17} {\bot} \be{16}
+\close
+\open
+\hypo {18} {\neg S_1(x) \land M_1(x)}
+\have {19} {M_1(x)} \ae{18}
+\close
+\have {20} {M_1(x)} \oe{3,4-17,18-19}
+\close
+\have {21} {W_1(x) \rightarrow M_1(x)} \ii{1-20}
+\have {22} {\forall x (W_1(x) \rightarrow M_1(x))} \Ai{21}
+\end{nd}$
+
+\clearpage
+
+\subsubsection{Proposition 31c (P31c)}
+
+\begin{center}
+Le désir est un mode.
+\end{center}
+
+\begin{center}
+$\forall x (D_1(x) \rightarrow M_1(x))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {D_1(x)}
+\have {2} {\forall a ((S_1(a) \land \neg M_1(a)) \lor (\neg S_1(a) \land M_1(a)))} \by{DPI}{}
+\have {3} {(S_1(x) \land \neg M_1(x)) \lor (\neg S_1(x) \land M_1(x))} \Ae{2}
+\open
+\hypo {4} {S_1(x) \land \neg M_1(x)}
+\have {5} {S_1(x)} \ae{4}
+\have {6} {\forall a (S_1(a) \rightarrow A_2(a,a))} \by{DPII}{}
+\have {7} {S_1(x) \rightarrow A_2(x,x)} \Ae{6}
+\have {8} {A_2(x,x)} \ie{5,7}
+\have {9} {A_2(a,b) \leftrightarrow (A_1(a) \land C_2(b,a))} \by{D4b}{}
+\have {10} {A_2(x,x) \leftrightarrow (A_1(x) \land C_2(x,x))} \Ae{9}
+\have {11} {A_1(x) \land C_2(x,x)} \ie{8,10}
+\have {12} {A_1(x)} \ae{11}
+\have {13} {\forall a (D_1(a) \rightarrow \neg A_1(a))} \by{A17c}{}
+\have {14} {D_1(x) \rightarrow \neg A_1(x)} \Ae{13}
+\have {15} {\neg A_1(x)} \ie{1,14}
+\have {16} {A_1(x) \land \neg A_1(x)} \ai{12,15}
+\have {17} {\bot} \be{16}
+\close
+\open
+\hypo {18} {\neg S_1(x) \land M_1(x)}
+\have {19} {M_1(x)} \ae{18}
+\close
+\have {20} {M_1(x)} \oe{3,4-17,18-19}
+\close
+\have {21} {D_1(x) \rightarrow M_1(x)} \ii{1-20}
+\have {22} {\forall x (D_1(x) \rightarrow M_1(x))} \Ai{21}
+\end{nd}$
+
+\clearpage
+
+\subsubsection{Proposition 31d (P31d)}
+
+\begin{center}
+L'amour est un mode.
+\end{center}
+
+\begin{center}
+$\forall x (J_1(x) \rightarrow M_1(x))$
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {J_1(x)}
+\have {2} {\forall a ((S_1(a) \land \neg M_1(a)) \lor (\neg S_1(a) \land M_1(a)))} \by{DPI}{}
+\have {3} {(S_1(x) \land \neg M_1(x)) \lor (\neg S_1(x) \land M_1(x))} \Ae{2}
+\open
+\hypo {4} {S_1(x) \land \neg M_1(x)}
+\have {5} {S_1(x)} \ae{4}
+\have {6} {\forall a (S_1(a) \rightarrow A_2(a,a))} \by{DPII}{}
+\have {7} {S_1(x) \rightarrow A_2(x,x)} \Ae{6}
+\have {8} {A_2(x,x)} \ie{5,7}
+\have {9} {A_2(a,b) \leftrightarrow (A_1(a) \land C_2(b,a))} \by{D4b}{}
+\have {10} {A_2(x,x) \leftrightarrow (A_1(x) \land C_2(x,x))} \Ae{9}
+\have {11} {A_1(x) \land C_2(x,x)} \ie{8,10}
+\have {12} {A_1(x)} \ae{11}
+\have {13} {\forall a (J_1(a) \rightarrow \neg A_1(a))} \by{A17d}{}
+\have {14} {J_1(x) \rightarrow \neg A_1(x)} \Ae{13}
+\have {15} {\neg A_1(x)} \ie{1,14}
+\have {16} {A_1(x) \land \neg A_1(x)} \ai{12,15}
+\have {17} {\bot} \be{16}
+\close
+\open
+\hypo {18} {\neg S_1(x) \land M_1(x)}
+\have {19} {M_1(x)} \ae{18}
+\close
+\have {20} {M_1(x)} \oe{3,4-17,18-19}
+\close
+\have {21} {J_1(x) \rightarrow M_1(x)} \ii{1-20}
+\have {22} {\forall x (J_1(x) \rightarrow M_1(x))} \Ai{21}
+\end{nd}$
+
+\clearpage
+
+\subsection{Proposition 32 (P32)}
+
+\begin{center}
+La volonté ne peut être appelée cause libre, mais seulement cause nécessaire.
+\end{center}
+
+\begin{center}
+$\forall x (W_1(x) \rightarrow (\neg B_1(x) \land N_1(x)))$
+\end{center}
+
+\resizebox{7cm}{!}{
+$\begin{nd}
+\open
+\hypo {1} {W_1(x)}
+\have {2} {W_1(x) \rightarrow M_1(x)} \by{P31b}{}
+\have {3} {M_1(x)} \ie{1,2}
+\open
+\hypo {4} {B_1(x)}
+\have {5} {B_1(x) \leftrightarrow (K_2(x,x) \land \neg \exists y (y \neq x \land K_2(y,x)))} \by{D7a}{}
+\have {6} {K_2(x,x) \land \neg \exists y (y \neq x \land K_2(y,x))} \ie{4,5}
+\have {7} {\neg \exists y (y \neq x \land K_2(y,x))} \ae{6}
+\have {8} {\forall z \exists g (G_1(g) \land K_2(g,z))} \by{P16}{}
+\have {9} {\exists g (G_1(g) \land K_2(g,x))} \Ae{8}
+\open
+\hypo {10} {G_1(g) \land K_2(g,x)}
+\have {11} {G_1(g)} \ae{10}
+\have {12} {K_2(g,x)} \ae{10}
+\have {13} {G_1(g) \leftrightarrow (S_1(g) \land \forall y (A_1(y) \rightarrow A_2(y,g)))} \by{D6}{}
+\have {14} {S_1(g) \land \forall y (A_1(y) \rightarrow A_2(y,g))} \ie{11,13}
+\have {15} {S_1(g)} \ae{14}
+\open
+\hypo {16} {g = x}
+\have {17} {S_1(x)} \by{16,15}{}
+\have {18} {\forall z ((S_1(z) \land \neg M_1(z)) \lor (\neg S_1(z) \land M_1(z)))} \by{DPI}{}
+\have {19} {(S_1(x) \land \neg M_1(x)) \lor (\neg S_1(x) \land M_1(x))} \Ae{18}
+\have {20} {M_1(x)} \r{3}
+\open
+\hypo {21} {S_1(x) \land \neg M_1(x)}
+\have {22} {\neg M_1(x)} \ae{21}
+\have {23} {M_1(x) \land \neg M_1(x)} \ai{20,22}
+\have {24} {\bot} \be{23}
+\close
+\open
+\hypo {25} {\neg S_1(x) \land M_1(x)}
+\have {26} {\neg S_1(x)} \ae{25}
+\have {27} {S_1(x)} \r{17}
+\have {28} {S_1(x) \land \neg S_1(x)} \ai{27,26}
+\have {29} {\bot} \be{28}
+\close
+\have {30} {\bot} \oe{19,21-24,25-29}
+\close
+\have {31} {g \neq x} \ni{16-30}
+\have {32} {g \neq x \land K_2(g,x)} \ai{31,12}
+\have {33} {\exists y (y \neq x \land K_2(y,x))} \Ei{32}
+\have {34} {\neg \exists y (y \neq x \land K_2(y,x))} \r{7}
+\have {35} {\exists y (y \neq x \land K_2(y,x)) \land \neg \exists y (y \neq x \land K_2(y,x))} \ai{33,34}
+\have {36} {\bot} \be{35}
+\close
+\have {37} {\bot} \Ee{9,10-36}
+\close
+\have {38} {\neg B_1(x)} \ni{4-37}
+\have {39} {N_1(x) \leftrightarrow \exists y (y \neq x \land K_2(y,x))} \by{D7b}{}
+\have {40} {\forall z \exists g (G_1(g) \land K_2(g,z))} \by{P16}{}
+\have {41} {\exists g (G_1(g) \land K_2(g,x))} \Ae{40}
+\open
+\hypo {42} {G_1(g) \land K_2(g,x)}
+\have {43} {G_1(g)} \ae{42}
+\have {44} {K_2(g,x)} \ae{42}
+\have {45} {G_1(g) \leftrightarrow (S_1(g) \land \forall y (A_1(y) \rightarrow A_2(y,g)))} \by{D6}{}
+\have {46} {S_1(g) \land \forall y (A_1(y) \rightarrow A_2(y,g))} \ie{43,45}
+\have {47} {S_1(g)} \ae{46}
+\open
+\hypo {48} {g = x}
+\have {49} {S_1(x)} \by{48,47}{}
+\have {50} {\forall z ((S_1(z) \land \neg M_1(z)) \lor (\neg S_1(z) \land M_1(z)))} \by{DPI}{}
+\have {51} {(S_1(x) \land \neg M_1(x)) \lor (\neg S_1(x) \land M_1(x))} \Ae{50}
+\have {52} {M_1(x)} \r{3}
+\open
+\hypo {53} {S_1(x) \land \neg M_1(x)}
+\have {54} {\neg M_1(x)} \ae{53}
+\have {55} {M_1(x) \land \neg M_1(x)} \ai{52,54}
+\have {56} {\bot} \be{55}
+\close
+\open
+\hypo {57} {\neg S_1(x) \land M_1(x)}
+\have {58} {\neg S_1(x)} \ae{57}
+\have {59} {S_1(x)} \r{49}
+\have {60} {S_1(x) \land \neg S_1(x)} \ai{59,58}
+\have {61} {\bot} \be{60}
+\close
+\have {62} {\bot} \oe{51,53-56,57-61}
+\close
+\have {63} {g \neq x} \ni{48-62}
+\have {64} {g \neq x \land K_2(g,x)} \ai{63,44}
+\have {65} {\exists y (y \neq x \land K_2(y,x))} \Ei{64}
+\have {66} {N_1(x)} \ie{65,39}
+\close
+\have {67} {N_1(x)} \Ee{41,42-66}
+\have {68} {\neg B_1(x) \land N_1(x)} \ai{38,67}
+\close
+\have {69} {W_1(x) \rightarrow (\neg B_1(x) \land N_1(x))} \ii{1-68}
+\have {70} {\forall x (W_1(x) \rightarrow (\neg B_1(x) \land N_1(x)))} \Ai{69}
+\end{nd}$
+}
+
+\clearpage
+
+\subsection{Proposition 33 (P33)}
+
+\begin{center}
+Les choses n’ont pu être produites par Dieu d’aucune manière autre et dans aucun ordre autre, que de la manière et dans l’ordre où elles ont été produites.
+\end{center}
+
+\begin{center}
+$\forall g \forall y (G_1(g) \land K_2(g,y) \rightarrow \neg M(\exists z (z \neq y \land K_2(g,z))))$
+\end{center}
+
+\begin{center}
+\textbf{Note:} Jarrett indique explicitement que cette proposition n'est pas dérivable du système formel tel qu'il a été présenté. Pour démontrer cette proposition, il serait nécessaire d'ajouter des axiomes supplémentaires qui formaliseraient le nécessitarisme divin de Spinoza.
+\end{center}
+
+\begin{center}
+Nous pourrions, par exemple, ajouter l'axiome suivant:
+
+$\textbf{R11:} \forall g \forall y \forall z (G_1(g) \land K_2(g,y) \land K_2(g,z) \rightarrow (y = z \lor \neg(\exists v (v = y)) \lor \neg(\exists v (v = z))))$
+
+qui stipule que si Dieu cause deux choses, elles sont soit identiques, soit l'une d'entre elles n'existe pas.
+\end{center}
+
+\clearpage
+
+\subsection{Proposition 34 (P34)}
+
+\begin{center}
+La puissance de Dieu est son essence même.
+\end{center}
+
+\begin{center}
+$\exists g (G_1(g) \land \forall x (A_2(x,g) \leftrightarrow P_2(x,g)))$
+\end{center}
+
+\resizebox{10cm}{!}{
+$\begin{nd}
+\have {1} {\exists z \forall y (G_1(y) \leftrightarrow y = z)} \by{P14-A}{}
+\open
+\hypo {2} {\forall y (G_1(y) \leftrightarrow y = g)}
+\have {3} {G_1(g) \leftrightarrow g = g} \Ae{2}
+\have {4} {g = g} \by{Réflexivité}{}
+\have {5} {G_1(g)} \ie{4,3}
+\have {6} {G_1(g) \leftrightarrow (S_1(g) \land \forall y (A_1(y) \rightarrow A_2(y,g)))} \by{D6}{}
+\have {7} {S_1(g) \land \forall y (A_1(y) \rightarrow A_2(y,g))} \ie{5,6}
+\have {8} {S_1(g)} \ae{7}
+\open
+\hypo {9} {A_2(x,g)}
+\have {10} {A_2(x,g) \leftrightarrow (A_1(x) \land C_2(g,x))} \by{D4b}{}
+\have {11} {A_1(x) \land C_2(g,x)} \ie{9,10}
+\have {12} {A_1(x)} \ae{11}
+\have {13} {C_2(g,x)} \ae{11}
+\have {14} {\forall a \forall b (A_2(a,b) \land S_1(b) \rightarrow a = b)} \by{DP7}{}
+\have {15} {A_2(x,g) \land S_1(g) \rightarrow x = g} \Ae{14}
+\have {16} {A_2(x,g) \land S_1(g)} \ai{9,8}
+\have {17} {x = g} \ie{16,15}
+\have {18} {S_1(g) \leftrightarrow (I_2(g,g) \land C_2(g,g))} \by{D3}{}
+\have {19} {I_2(g,g) \land C_2(g,g)} \ie{8,18}
+\have {20} {I_2(g,g)} \ae{19}
+\have {21} {C_2(g,g)} \ae{19}
+\have {22} {I_2(x,g)} \by{17,20}{}
+\have {23} {C_2(x,g)} \by{17,21}{}
+\have {24} {I_2(g,x)} \by{17,20}{}
+\have {25} {C_2(g,x)} \r{13}
+\have {26} {(((I_2(x,g) \land C_2(x,g)) \land I_2(g,x)) \land C_2(g,x)) \leftrightarrow P_2(x,g)} \by{A19}{}
+\have {27} {((I_2(x,g) \land C_2(x,g)) \land I_2(g,x)) \land C_2(g,x)} \ai{22,23,24,25}
+\have {28} {P_2(x,g)} \ie{27,26}
+\close
+\have {29} {A_2(x,g) \rightarrow P_2(x,g)} \ii{9-28}
+\open
+\hypo {30} {P_2(x,g)}
+\have {31} {(((I_2(x,g) \land C_2(x,g)) \land I_2(g,x)) \land C_2(g,x)) \leftrightarrow P_2(x,g)} \by{A19}{}
+\have {32} {((I_2(x,g) \land C_2(x,g)) \land I_2(g,x)) \land C_2(g,x)} \ie{30,31}
+\have {33} {I_2(x,g) \land C_2(x,g) \land I_2(g,x) \land C_2(g,x)} \by{Logique}{32}
+\have {34} {I_2(x,g)} \ae{33}
+\have {35} {C_2(x,g)} \ae{33}
+\have {36} {I_2(g,x)} \ae{33}
+\have {37} {C_2(g,x)} \ae{33}
+\have {38} {A_1(x) \leftrightarrow \exists y (S_1(y) \land I_2(x,y) \land C_2(x,y) \land I_2(y,x) \land C_2(y,x))} \by{D4a}{}
+\have {39} {\exists y (S_1(y) \land I_2(x,y) \land C_2(x,y) \land I_2(y,x) \land C_2(y,x)) \rightarrow A_1(x)} \ae{38}
+\have {40} {S_1(g) \land I_2(x,g) \land C_2(x,g) \land I_2(g,x) \land C_2(g,x)} \ai{8,34,35,36,37}
+\have {41} {\exists y (S_1(y) \land I_2(x,y) \land C_2(x,y) \land I_2(y,x) \land C_2(y,x))} \Ei{40}
+\have {42} {A_1(x)} \ie{41,39}
+\have {43} {A_1(x) \land C_2(g,x)} \ai{42,37}
+\have {44} {A_2(x,g) \leftrightarrow (A_1(x) \land C_2(g,x))} \by{D4b}{}
+\have {45} {A_2(x,g)} \ie{43,44}
+\close
+\have {46} {P_2(x,g) \rightarrow A_2(x,g)} \ii{30-45}
+\have {47} {A_2(x,g) \leftrightarrow P_2(x,g)} \ii{29,46}
+\have {48} {\forall x (A_2(x,g) \leftrightarrow P_2(x,g))} \Ai{47}
+\have {49} {G_1(g) \land \forall x (A_2(x,g) \leftrightarrow P_2(x,g))} \ai{5,48}
+\have {50} {\exists g (G_1(g) \land \forall x (A_2(x,g) \leftrightarrow P_2(x,g)))} \Ei{49}
+\close
+\have {51} {\exists g (G_1(g) \land \forall x (A_2(x,g) \leftrightarrow P_2(x,g)))} \Ee{1,2-50}
+\end{nd}$
+}
+
+\clearpage
+
+\subsection{Proposition 35 (P35)}
+
+\begin{center}
+Tout ce que nous concevons qui est au pouvoir de Dieu, est nécessairement.
+\end{center}
+
+\begin{center}
+$\exists g (G_1(g) \land L(\exists x (x = g)) \land (\forall x (x \neq g \rightarrow N_1(x))))$
+\end{center}
+
+\resizebox{12cm}{!}{
+$\begin{nd}
+\have {1} {\exists z \forall y (G_1(y) \leftrightarrow y = z)} \by{P14-A}{}
+\open
+\hypo {2} {\forall y (G_1(y) \leftrightarrow y = g)}
+\have {3} {G_1(g) \leftrightarrow g = g} \Ae{2}
+\have {4} {g = g} \by{Réflexivité}{}
+\have {5} {G_1(g)} \ie{4,3}
+\have {6} {L(\exists x (G_1(x)))} \by{P11}{}
+\open
+\hypo {7} {\exists x (G_1(x))}
+\open
+\hypo {8} {G_1(h)}
+\have {9} {G_1(h) \leftrightarrow h = g} \Ae{2}
+\have {10} {h = g} \ie{8,9}
+\have {11} {\exists x (x = g)} \Ei{10}
+\close
+\have {12} {\exists x (x = g)} \Ee{7,8-11}
+\close
+\have {13} {(\exists x (G_1(x))) \rightarrow (\exists x (x = g))} \ii{7-12}
+\have {14} {L((\exists x (G_1(x))) \rightarrow (\exists x (x = g)))} \by{R5}{13}
+\have {15} {L(\exists x (G_1(x))) \rightarrow L(\exists x (x = g))} \by{R3}{14}
+\have {16} {L(\exists x (x = g))} \ie{6,15}
+\open
+\hypo {17} {x \neq g}
+\have {18} {\forall z \exists h (G_1(h) \land K_2(h,z))} \by{P16}{}
+\have {19} {\exists h (G_1(h) \land K_2(h,x))} \Ae{18}
+\open
+\hypo {20} {G_1(h) \land K_2(h,x)}
+\have {21} {G_1(h)} \ae{20}
+\have {22} {K_2(h,x)} \ae{20}
+\have {23} {G_1(h) \leftrightarrow h = g} \Ae{2}
+\have {24} {h = g} \ie{21,23}
+\have {25} {K_2(g,x)} \by{24,22}{}
+\have {26} {x \neq g} \r{17}
+\have {27} {g \neq x} \by{Symétrie}{26}
+\have {28} {g \neq x \land K_2(g,x)} \ai{27,25}
+\have {29} {\exists y (y \neq x \land K_2(y,x))} \Ei{28}
+\have {30} {N_1(x) \leftrightarrow \exists y (y \neq x \land K_2(y,x))} \by{D7b}{}
+\have {31} {N_1(x)} \ie{29,30}
+\close
+\have {32} {N_1(x)} \Ee{19,20-31}
+\close
+\have {33} {x \neq g \rightarrow N_1(x)} \ii{17-32}
+\have {34} {\forall x (x \neq g \rightarrow N_1(x))} \Ai{33}
+\have {35} {G_1(g) \land L(\exists x (x = g)) \land (\forall x (x \neq g \rightarrow N_1(x)))} \ai{5,16,34}
+\have {36} {\exists g (G_1(g) \land L(\exists x (x = g)) \land (\forall x (x \neq g \rightarrow N_1(x))))} \Ei{35}
+\close
+\have {37} {\exists g (G_1(g) \land L(\exists x (x = g)) \land (\forall x (x \neq g \rightarrow N_1(x))))} \Ee{1,2-36}
+\end{nd}$
+}
+
+\clearpage
+
+\subsection{Proposition 36 (P36)}
+
+\begin{center}
+Rien n’existe de la nature de quoi ne suive quelque effet.
+\end{center}
+
+\begin{center}
+$\forall x ((\exists v (v = x)) \rightarrow \exists y (K_2(x,y)))$
+\end{center}
+
+\begin{center}
+\textbf{Note:} Jarrett indique explicitement que cette proposition n'est pas dérivable du système formel tel qu'il a été présenté. Pour démontrer cette proposition, il serait nécessaire d'ajouter des axiomes supplémentaires concernant la nature productive de toute chose dans le système spinoziste, notamment concernant la productivité causale des modes.
+\end{center}
+
+\begin{center}
+On pourrait esquisser la forme que prendrait une telle preuve:
+\end{center}
+
+$\begin{nd}
+\open
+\hypo {1} {\exists v (v = x)}
+\have {2} {\forall z (S_1(z) \lor M_1(z))} \by{DP5}{}
+\have {3} {S_1(x) \lor M_1(x)} \Ae{2}
+\open
+\hypo {4} {S_1(x)}
+\have {5} {\forall z (S_1(z) \leftrightarrow K_2(z,z))} \by{DPIII}{}
+\have {6} {S_1(x) \leftrightarrow K_2(x,x)} \Ae{5}
+\have {7} {K_2(x,x)} \ie{4,6}
+\have {8} {\exists y (K_2(x,y))} \Ei{7}
+\close
+\open
+\hypo {9} {M_1(x)}
+\have {10} {M_1(x) \leftrightarrow \exists y (S_1(y) \land M_2(x,y))} \by{D5b}{}
+\have {11} {\exists y (S_1(y) \land M_2(x,y))} \ie{9,10}
+\open
+\hypo {12} {S_1(s) \land M_2(x,s)}
+\have {13} {S_1(s)} \ae{12}
+\have {14} {M_2(x,s)} \ae{12}
+\have {15} {\forall z (S_1(z) \rightarrow K_2(z,z))} \by{DP4}{}
+\have {16} {S_1(s) \rightarrow K_2(s,s)} \Ae{15}
+\have {17} {K_2(s,s)} \ie{13,16}
+\have {18} {M_2(x,s) \leftrightarrow (x \neq s \land I_2(x,s) \land C_2(x,s))} \by{D5a}{}
+\have {19} {x \neq s \land I_2(x,s) \land C_2(x,s)} \ie{14,18}
+\have {20} {I_2(x,s)} \ae{19}
+\have {21} {C_2(x,s)} \ae{19}
+\have {22} {\forall z \exists g (G_1(g) \land K_2(g,z))} \by{P16}{}
+\have {23} {\exists g (G_1(g) \land K_2(g,x))} \Ae{22}
+\have {24} {\text{Nécessite d'axiomes supplémentaires concernant la productivité causale}}
+\have {25} {\exists y (K_2(x,y))} \by{Incomplet}{}
+\close
+\have {26} {\exists y (K_2(x,y))} \Ee{11,12-25}
+\close
+\have {27} {\exists y (K_2(x,y))} \oe{3,4-8,9-26}
+\close
+\have {28} {(\exists v (v = x)) \rightarrow \exists y (K_2(x,y))} \ii{1-27}
+\have {29} {\forall x ((\exists v (v = x)) \rightarrow \exists y (K_2(x,y)))} \Ai{28}
+\end{nd}$
+
+% Bibliography entries (to be used with \bibliographystyle{plain} or similar)
+\begin{thebibliography}{99}
+
+\bibitem{spinoza1965ethique}
+Spinoza, Baruch.
+\textit{Éthique}, traduit du latin par Charles Appuhn.
+Paris: GF-Flammarion, 1965.
+
+\bibitem{spinoza1985collected}
+Spinoza, Baruch.
+\textit{The Collected Works of Spinoza}, édité et traduit par Edwin Curley.
+Princeton: Princeton University Press, 1985.
+
+\bibitem{jarrett1978logical}
+Jarrett, Charles.
+``The Logical Structure of Spinoza's 'Ethics', Part I.''
+\textit{Synthese}, vol. 37, no. 1, 1978, pp. 15--65.
+
+\bibitem{gueroult1968spinoza}
+Guéroult, Martial.
+\textit{Spinoza I: Dieu (Éthique, I)}.
+Paris: Aubier-Montaigne, 1968.
+
+\bibitem{bennett1984study}
+Bennett, Jonathan.
+\textit{A Study of Spinoza's Ethics}.
+Indianapolis: Hackett, 1984.
+
+\bibitem{meles2019pratique}
+Mélès, Baptiste.
+``Spinoza en Coq : démonstration complète des premières propositions de l’Éthique.''
+\textit{Mathématiques, Informatique et Philosophie}, 2015.
+
+\bibitem{seni2018github}
+Mélès, Baptiste.
+``L'Ethique de Spinoza en Coq.'' GitHub Repository, 2015-2018.
+\url{https://github.com/BapMel/ethicoq}.
+
+\bibitem{gentzen1969investigations}
+Gentzen, Gerhard.
+``Investigations into Logical Deduction.''
+\textit{In The Collected Papers of Gerhard Gentzen}, édité par M. E. Szabo.
+Amsterdam: North-Holland, 1969.
+
+\bibitem{fitting1983proof}
+Fitting, Melvin.
+\textit{Proof Methods for Modal and Intuitionistic Logics}.
+Dordrecht: Reidel, 1983.
+
+\bibitem{rougemont}
+Lassaigne, R. et de Rougemont, M. (2004). Logique et fondements de l'informatique : logique du premier ordre, théorie des modèles, calculabilité, lambda-calcul et programmation fonctionnelle, complexité, logiques non classiques, déduction naturelle. Hermes Science Publications, Paris.
+
+\bibitem{cori2003logique}
+Cori, René, et Daniel Lascar.
+\textit{Logique mathématique}.
+Paris: Dunod, 2003.
+
+\bibitem{coq}
+Coq Development Team.
+``The Coq Proof Assistant.''
+\url{https://coq.inria.fr/}.
+
+\bibitem{pommeret2025github}
+Pommeret, Luc.
+``Projet Spinoza: Formalisation en Coq des propositions du Livre I de l'Éthique.'' GitHub Repository, 2025.
+\url{https://github.com/l-pommeret/Projet-Spinoza}.
+
+\bibitem{coquand1988calculus}
+Coquand, Thierry, et Gérard Huet.
+``The Calculus of Constructions.''
+\textit{Information and Computation},1988.
+
+\bibitem{bentzen2021computational}
+Vidal-Rosset, Joseph.
+``L’argument d’Anselme en logique du premier ordre''
+\textit{Klesis - Revue philosophique}, 2020.
+
+\end{thebibliography}
+
 
 \end{document}
